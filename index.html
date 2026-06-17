@@ -40,14 +40,27 @@ body{
   padding:14px 20px;
   border-bottom:3px solid var(--yellow);
 }
+.nav-left{display:flex;align-items:center;gap:12px}
 .nav-logo{
   font-size:26px;
   font-weight:900;
   color:var(--yellow);
   letter-spacing:-1px;
   font-style:italic;
+  text-decoration:none;
 }
 .nav-logo span{color:var(--white)}
+.nav-cta{
+  background:var(--coral);
+  color:var(--white);
+  font-weight:800;
+  font-size:12px;
+  padding:8px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  letter-spacing:.5px;
+  border:2px solid var(--white);
+}
 .nav-wa{
   background:var(--yellow);
   color:var(--black);
@@ -314,6 +327,98 @@ body{
   font-weight:800;
 }
 
+/* ── DIGITAL PLAYGROUND CTA ── */
+.digital-cta{
+  background:var(--coral);
+  padding:60px 20px;
+  text-align:center;
+  border-top:4px solid var(--black);
+  border-bottom:4px solid var(--black);
+  position:relative;
+  overflow:hidden;
+}
+.digital-cta::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(13,13,13,0.05) 10px,
+    rgba(13,13,13,0.05) 20px
+  );
+  animation:slide 20s linear infinite;
+}
+@keyframes slide{
+  0%{transform:translate(0,0)}
+  100%{transform:translate(50px,50px)}
+}
+.digital-content{
+  position:relative;
+  z-index:2;
+  max-width:600px;
+  margin:0 auto;
+}
+.digital-icon{
+  font-size:64px;
+  margin-bottom:16px;
+  display:block;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.digital-title{
+  font-size:clamp(32px,10vw,48px);
+  font-weight:900;
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:-2px;
+  font-style:italic;
+  margin-bottom:12px;
+}
+.digital-title .black{color:var(--black)}
+.digital-sub{
+  font-size:15px;
+  color:rgba(255,255,255,.9);
+  line-height:1.7;
+  margin-bottom:32px;
+}
+.digital-sub strong{color:var(--yellow)}
+.digital-btn{
+  display:inline-block;
+  background:var(--yellow);
+  color:var(--black);
+  font-size:20px;
+  font-weight:900;
+  padding:20px 40px;
+  border-radius:12px;
+  text-decoration:none;
+  box-shadow:6px 6px 0 var(--black);
+  border:3px solid var(--black);
+  margin-bottom:16px;
+  transition:transform 0.1s;
+}
+.digital-btn:active{
+  transform:translate(3px,3px);
+  box-shadow:3px 3px 0 var(--black);
+}
+.digital-note{
+  font-size:13px;
+  color:rgba(255,255,255,.8);
+  margin-top:20px;
+}
+.digital-note a{
+  color:var(--white);
+  text-decoration:underline;
+  font-weight:700;
+}
+
 /* ── TESTIMONIALS ── */
 .testi{background:var(--white)}
 .testi-list{display:flex;flex-direction:column;gap:16px}
@@ -480,8 +585,11 @@ footer{
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-logo">B<span>Club</span></div>
-  <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp Kami</a>
+  <div class="nav-left">
+    <a href="#" class="nav-logo">B<span>Club</span></a>
+    <a href="/bclub_preschool/play/" class="nav-cta">🎮 Main Game</a>
+  </div>
+  <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp</a>
 </nav>
 
 <!-- HERO -->
@@ -613,6 +721,29 @@ footer{
         <li>Portfolio Assessment</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<!-- DIGITAL PLAYGROUND CTA -->
+<section class="digital-cta">
+  <div class="digital-content">
+    <span class="digital-icon">🎮</span>
+    <h2 class="digital-title">
+      Kelas Digital<br>
+      <span class="black">B Club</span>
+    </h2>
+    <p class="digital-sub">
+      Akses <strong>12 Game Edukatif</strong> berbasis riset World Economic Forum & OECD. 
+      Latih logika, pola pikir, dan problem solving anak. 
+      <strong>Cukup Rp 99.000/semester!</strong>
+    </p>
+    <a href="/bclub_preschool/play/" class="digital-btn">
+      🚀 MAIN SEKARANG!
+    </a>
+    <p class="digital-note">
+      💡 Untuk Orang Tua & Guru: 
+      <a href="/bclub_preschool/play/parents.html">Lihat Metode & Riset Ilmiah →</a>
+    </p>
   </div>
 </section>
 
