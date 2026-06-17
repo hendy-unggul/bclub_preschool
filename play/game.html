@@ -153,32 +153,31 @@
     </div>
 
     <script>
-        // ═══════════════════════════════════════════════════════
-        //  FINAL FINAL FINAL - TANPA STRING KOSONG SAMA SEKALI!
-        //  SEMUA slot pattern BERISI EMOJI
-        //  HANYA "?" yang jadi kotak kuning
+        // ══════════════════════════════════════════════════════
+        //  KODE FINAL - TIDAK ADA STRING KOSONG "" SAMA SEKALI!
+        //  Setiap slot pattern = EMOJI atau "?"
+        //  Setiap choice = EMOJI
         // ═══════════════════════════════════════════════════════
         
         const levels = [
             {
                 name: "Level 1",
-                // Pola ABAB: 🍎🍎🍌🍎? → Jawaban: 🍌
-                // SEMUA slot berisi emoji, TIDAK ADA ""
-                pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],
+                // Pola ABAB: 🍎🍌🍌🍎?
+                pattern: ["🍎", "🍌", "", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["", "🍌", "🍇"]
+                choices: ["🍎", "", "🍇"]
             },
             {
                 name: "Level 2",
-                // Pola AAB: ⭐🌙⭐⭐? → Jawaban: 🌙
+                // Pola AAB: ⭐⭐🌙⭐⭐?
                 pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
                 answer: "🌙",
                 choices: ["⭐", "🌙", "☀️"]
             },
             {
                 name: "Level 3",
-                // Pola ABC: 🐶🐱🐭🐱? → Jawaban: 🐭
-                pattern: ["🐶", "", "🐭", "🐶", "🐱", "?"],
+                // Pola ABC: 🐶🐱🐭🐱?
+                pattern: ["", "🐱", "🐭", "🐶", "🐱", "?"],
                 answer: "🐭",
                 choices: ["🐶", "🐱", "🐭"]
             }
@@ -190,7 +189,7 @@
         function renderLevel() {
             const level = levels[currentLevel];
             document.getElementById('level-display').innerText = level.name;
-            document.getElementById('mascot-text').innerText = `🐝 "Level ${currentLevel + 1}! Apa yang hilang?"`;
+            document.getElementById('mascot-text').innerText = ` "Level ${currentLevel + 1}! Apa yang hilang?"`;
 
             // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
@@ -255,9 +254,9 @@
             const btn = document.getElementById('next-btn');
 
             if (isCorrect) {
-                title.innerText = "HEBAT! 🌟";
+                title.innerText = "HEBAT! ";
                 text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
+                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! ";
                 btn.onclick = nextQuestion;
             }
             overlay.classList.add('show');
