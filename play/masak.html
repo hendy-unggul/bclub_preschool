@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
     <title>Masak Bareng - B Club</title>
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gTWFzYWsgQmFyZW5nIiwic2hvcnRfbmFtZSI6IkIgQ2x1YiIsInN0YXJ0X3VybCI6Ii4vaW5kZXguaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGNUY1RjAiLCJ0aGVtZV9jb2xvciI6IiNGRkU2MDAiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0In0=">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gTWFzYWsgQmFyZW5nIiwic2hvcnRfbmFtZSI6IkIgQ2x1YiIsInN0YXJ0X3VybCI6Ii4vbWFzYWsuaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGNUY1RjAiLCJ0aGVtZV9jb2xvciI6IiNGRkU2MDAiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0In0=">
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -110,7 +110,6 @@
             50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
         }
 
-        /* Wrong count indicator - visual for PAUD */
         .wrong-area {
             display: flex; justify-content: center; gap: 8px;
             min-height: 40px; align-items: center;
@@ -229,10 +228,7 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        .step-btn.disabled {
-            opacity: 0.3; pointer-events: none;
-            transform: scale(0.9);
-        }
+        /* FIX: Jangan pakai .disabled class untuk salah */
         @keyframes bigPop {
             0% { transform: scale(1); }
             50% { transform: scale(1.15); }
@@ -329,12 +325,10 @@
     <div class="game-container">
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">👨‍🍳</div>
-            <div class="mascot-bubble" id="mascot-bubble">Urutkan! 🤔</div>
+            <div class="mascot-bubble" id="mascot-bubble">Urutkan langkahnya! 🤔</div>
         </div>
 
         <div class="progress-area" id="progress-dots"></div>
-        
-        <!-- Wrong count visual indicator (dots, not hearts) -->
         <div class="wrong-area" id="wrong-dots">
             <div class="wrong-dot"></div>
             <div class="wrong-dot"></div>
@@ -381,19 +375,11 @@
     </div>
 
     <script>
-        // ═══════════════════════════════════════════════════════
-        //  CONFIG - FIXED: No MAX_ATTEMPTS, scoring by wrongCount
-        // ═══════════════════════════════════════════════════════
         const CONFIG = {
             QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST: 100,   // 0 wrong
-            SCORE_SECOND: 50,   // 1-2 wrong
-            SCORE_THIRD: 25     // 3+ wrong
+            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25
         };
 
-        // ═══════════════════════════════════════════════════════
-        //  TEMPLATES
-        // ═══════════════════════════════════════════════════════
         const TEMPLATES = [
             {
                 name: "1️⃣",
@@ -433,29 +419,25 @@
             }
         ];
 
-        // ═══════════════════════════════════════════════════════
-        //  STATE - FIXED: wrongCount per question, not attempts
-        // ═══════════════════════════════════════════════════════
         let currentLevel = 0, currentQuestion = 0, currentStepIndex = 0, isProcessing = false;
-        let wrongCount = 0; // ← KEY FIX: Track wrong answers per question
+        let wrongCount = 0;
         let levelStats = { first: 0, second: 0, third: 0, score: 0 };
         let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
         let currentQuestions = [];
 
         function initLevel() {
             currentQuestion = 0; currentStepIndex = 0; isProcessing = false;
-            wrongCount = 0; // ← Reset wrong count
+            wrongCount = 0;
             levelStats = { first: 0, second: 0, third: 0, score: 0 };
             const t = TEMPLATES[currentLevel];
             currentQuestions = [];
             
             for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
                 const q = t.questions[i];
-                // Shuffle steps untuk ditampilkan
                 const shuffledSteps = [...q.steps].sort(() => Math.random() - 0.5);
                 currentQuestions.push({
-                    steps: q.steps, // Urutan benar
-                    shuffledSteps: shuffledSteps // Urutan acak untuk pilihan
+                    steps: q.steps,
+                    shuffledSteps: shuffledSteps
                 });
             }
             renderProgressDots(); updateScoreBoard(); renderWrongDots(); renderQuestion();
@@ -473,10 +455,8 @@
             }
         }
 
-        // FIXED: Visual wrong dots (not hearts - different game mechanic)
         function renderWrongDots() {
-            const dots = document.querySelectorAll('.wrong-dot');
-            dots.forEach((d, i) => {
+            document.querySelectorAll('.wrong-dot').forEach((d, i) => {
                 d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
             });
         }
@@ -484,8 +464,7 @@
         function renderQuestion() {
             const t = TEMPLATES[currentLevel];
             const q = currentQuestions[currentQuestion];
-            currentStepIndex = 0;
-            wrongCount = 0; // ← Reset for new question
+            currentStepIndex = 0; wrongCount = 0;
             
             document.getElementById('level-display').innerText = t.name;
             document.getElementById('recipe-title').innerText = t.title;
@@ -493,7 +472,6 @@
             document.getElementById('mascot-bubble').innerText = t.mascot.think;
             renderWrongDots(); renderProgressDots();
 
-            // Render Sequence Slots
             const slotsContainer = document.getElementById('sequence-slots');
             slotsContainer.innerHTML = '';
             q.steps.forEach((step, index) => {
@@ -504,7 +482,6 @@
                 slotsContainer.appendChild(slot);
             });
 
-            // Render Available Steps (shuffled)
             const stepsContainer = document.getElementById('steps-container');
             stepsContainer.innerHTML = '';
             q.shuffledSteps.forEach((step) => {
@@ -519,7 +496,7 @@
         }
 
         // ═══════════════════════════════════════════════════════
-        //  CHECK ANSWER - FIXED: wrongCount based, unlimited tries
+        //  FIX: checkAnswer - JANGAN disable tombol yang salah!
         // ═══════════════════════════════════════════════════════
         function checkAnswer(selectedStep, btnElement) {
             if (isProcessing) return;
@@ -542,41 +519,37 @@
                 
                 currentStepIndex++;
                 
-                // Next step or finish
                 if (currentStepIndex < q.steps.length) {
+                    // Next step
                     slots[currentStepIndex].classList.add('current');
                     isProcessing = false;
                     document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else {
-                    // 🎉 ALL STEPS CORRECT - Calculate score based on wrongCount
+                    // All done
                     finishQuestion(t);
                 }
+                
             } else {
-                // ✗ SALAH - Unlimited tries, just track wrongCount
+                // ✗ SALAH - JANGAN disable, biarkan coba lagi!
                 wrongCount++;
                 gameStats.wrongTotal++;
                 btnElement.classList.add('wrong');
                 
-                // Visual feedback
                 renderWrongDots();
                 updateScoreBoard();
                 document.getElementById('mascot-bubble').innerText = t.mascot.sad;
                 
-                // Disable wrong button so child can't click same wrong answer
+                // FIX: Hanya hapus class wrong, JANGAN disable
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
-                    btnElement.classList.add('disabled');
+                    // NO btnElement.classList.add('disabled') ← DIHAPUS
                 }, 400);
             }
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  FINISH QUESTION - FIXED: Score by wrongCount
-        // ═══════════════════════════════════════════════════════
         function finishQuestion(t) {
             let points = 0, type = '';
             
-            // KEY FIX: Score based on wrongCount, not attempts
             if (wrongCount === 0) {
                 points = CONFIG.SCORE_FIRST;
                 levelStats.first++;
@@ -597,7 +570,7 @@
             levelStats.score += points;
             gameStats.score += points;
             gameStats.questions++;
-            gameStats.correct++; // ← 1x per question (not per step!)
+            gameStats.correct++;
             
             updateScoreBoard();
             setTimeout(() => showFeedback(true, type, points), 800);
