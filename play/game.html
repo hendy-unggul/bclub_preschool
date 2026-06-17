@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
-    <title>Detektif Pola - B Club</title>
-    <link rel="manifest" href="./manifest.json">
+    <title>B Club - Detektif Cilik</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gRGV0ZWt0aWYgQ2lsaWsiLCJzaG9ydF9uYW1lIjoiQiBDbHViIiwic3RhcnRfdXJsIjoiLi9pbmRleC5odG1sIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0Y1RjVGMCIsInRoZW1lX2NvbG9yIjoiI0ZGRTYwMCIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQifQ==">
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -41,7 +41,6 @@
             border: 2px solid var(--black);
         }
 
-        /* SCORE BOARD */
         .score-board {
             display: flex; gap: 12px; justify-content: center;
             padding: 8px 16px; background: var(--white);
@@ -75,7 +74,6 @@
             border-style: solid; border-color: var(--black) transparent transparent transparent;
         }
 
-        /* PROGRESS BAR */
         .progress-container {
             width: 100%; max-width: 300px; margin-bottom: 16px;
         }
@@ -122,6 +120,10 @@
             background: var(--green) !important;
             border: 3px solid var(--black) !important;
             animation: pop 0.3s;
+        }
+        .pattern-item.wrong-fill {
+            background: var(--orange) !important;
+            border: 3px solid var(--black) !important;
         }
 
         @keyframes pulse {
@@ -215,7 +217,6 @@
         <div class="level-indicator" id="level-display">Level 1</div>
     </header>
 
-    <!-- SCORE BOARD -->
     <div class="score-board">
         <div class="score-item stars">
             <span>⭐ Stars</span>
@@ -236,7 +237,6 @@
             🐝 "Halo Detektif! Temukan polanya!"
         </div>
 
-        <!-- PROGRESS BAR -->
         <div class="progress-container">
             <div class="progress-label">
                 <span>Progress Level</span>
@@ -253,7 +253,6 @@
         <div class="choices-row" id="choices-container"></div>
     </div>
 
-    <!-- FEEDBACK OVERLAY -->
     <div class="overlay" id="feedback-overlay">
         <h2 id="feedback-title">HEBAT!</h2>
         <div class="stars-display" id="feedback-stars"></div>
@@ -261,7 +260,6 @@
         <button id="next-btn" onclick="nextQuestion()">Lanjut! 🚀</button>
     </div>
 
-    <!-- LEVEL COMPLETE OVERLAY -->
     <div class="overlay" id="level-complete-overlay">
         <h2>LEVEL SELESAI! 🎉</h2>
         <div class="stars-display" id="level-stars"></div>
@@ -284,7 +282,6 @@
         <button onclick="restartLevel()" style="background: var(--white);">Ulangi Level 🔄</button>
     </div>
 
-    <!-- GAME COMPLETE OVERLAY -->
     <div class="overlay" id="game-complete-overlay">
         <h2>🎉 SELAMAT! 🎉</h2>
         <div class="stars-display" id="final-stars">⭐⭐⭐</div>
@@ -309,9 +306,6 @@
     <script>
         // ═══════════════════════════════════════════════════════
         //  GAME CONFIGURATION
-        //  - 3 Levels, masing-masing 5 pertanyaan (shuffle)
-        //  - Scoring: 1st attempt = 100pts, 2nd = 50pts, 3rd+ = 25pts
-        //  - Stars: 5x first try = ⭐⭐⭐, 3-4 = ⭐⭐, <3 = ⭐
         // ═══════════════════════════════════════════════════════
 
         const CONFIG = {
@@ -322,47 +316,58 @@
             MAX_ATTEMPTS: 3
         };
 
-        // Pattern templates untuk generate pertanyaan
+        // ═══════════════════════════════════════════════════════
+        //  PATTERN TEMPLATES - Hanya 1 missing slot per soal
+        // ═══════════════════════════════════════════════════════
+
         const PATTERN_TEMPLATES = [
             {
                 name: "Level 1",
                 type: "ABAB",
-                // Pola dasar: 🍎🍌🍎🍌🍎? → jawaban 🍌
-                basePattern: ["🍎", "🍌", "🍎", "🍌", "🍎", "?"],
-                answer: "🍌",
                 choices: ["🍇", "🍌", "🍎"],
-                // Variasi posisi missing untuk 5 pertanyaan berbeda
-                missingPositions: [5, 1, 3, 0, 4], // index yang di-replace dengan "?"
-                // Untuk setiap posisi, answer yang sesuai
-                answers: ["🍌", "🍎", "🍌", "🍎", "🍌"]
+                questions: [
+                    { pattern: ["?", "🍌", "🍎", "🍌", "🍎", "🍌"], answer: "🍎" },
+                    { pattern: ["🍎", "?", "🍎", "🍌", "🍎", "🍌"], answer: "🍌" },
+                    { pattern: ["🍎", "🍌", "?", "🍌", "🍎", "🍌"], answer: "🍎" },
+                    { pattern: ["🍎", "🍌", "🍎", "?", "🍎", "🍌"], answer: "🍌" },
+                    { pattern: ["🍎", "🍌", "🍎", "🍌", "?", "🍌"], answer: "🍎" }
+                ]
             },
             {
                 name: "Level 2",
                 type: "AAB",
-                // Pola dasar: ⭐⭐🌙⭐⭐🌙 → variasi missing
-                basePattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "🌙"],
                 choices: ["⭐", "🌙", "☀️"],
-                missingPositions: [5, 2, 4, 1, 3],
-                answers: ["🌙", "🌙", "⭐", "⭐", "⭐"]
+                questions: [
+                    { pattern: ["?", "⭐", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
+                    { pattern: ["⭐", "?", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
+                    { pattern: ["⭐", "⭐", "?", "⭐", "⭐", "🌙"], answer: "🌙" },
+                    { pattern: ["⭐", "⭐", "🌙", "?", "⭐", "🌙"], answer: "⭐" },
+                    { pattern: ["⭐", "⭐", "🌙", "⭐", "?", "🌙"], answer: "⭐" }
+                ]
             },
             {
                 name: "Level 3",
                 type: "ABC",
-                // Pola dasar: 🐶🐱🐭🐶🐱🐭
-                basePattern: ["🐶", "🐱", "🐭", "🐶", "🐱", "🐭"],
                 choices: ["🐶", "🐱", "🐭"],
-                missingPositions: [5, 2, 4, 0, 3],
-                answers: ["🐭", "🐭", "🐱", "🐶", "🐱"]
+                questions: [
+                    { pattern: ["?", "🐱", "🐭", "🐶", "🐱", "🐭"], answer: "🐶" },
+                    { pattern: ["🐶", "?", "🐭", "🐶", "🐱", "🐭"], answer: "🐱" },
+                    { pattern: ["🐶", "🐱", "?", "🐶", "🐱", "🐭"], answer: "🐭" },
+                    { pattern: ["🐶", "🐱", "🐭", "?", "🐱", "🐭"], answer: "🐶" },
+                    { pattern: ["🐶", "🐱", "🐭", "🐶", "?", "🐭"], answer: "🐱" }
+                ]
             }
         ];
 
-        // State game
+        // ═══════════════════════════════════════════════════════
+        //  GAME STATE
+        // ═══════════════════════════════════════════════════════
+
         let currentLevel = 0;
         let currentQuestion = 0;
         let currentAttempts = 0;
         let isProcessing = false;
         
-        // Level stats
         let levelStats = {
             firstTry: 0,
             secondTry: 0,
@@ -370,7 +375,6 @@
             totalScore: 0
         };
         
-        // Game-wide stats
         let gameStats = {
             totalStars: 0,
             totalScore: 0,
@@ -379,41 +383,34 @@
             totalAttempts: 0
         };
 
-        // Generate 5 pertanyaan untuk level saat ini
-        function generateQuestions(levelIndex) {
-            const template = PATTERN_TEMPLATES[levelIndex];
-            const questions = [];
-            
-            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
-                const pos = template.missingPositions[i];
-                const ans = template.answers[i];
-                
-                // Buat pattern dengan missing di posisi yang ditentukan
-                const pattern = [...template.basePattern];
-                pattern[pos] = "?";
-                
-                // Shuffle choices
-                const shuffledChoices = [...template.choices].sort(() => Math.random() - 0.5);
-                
-                questions.push({
-                    pattern: pattern,
-                    answer: ans,
-                    choices: shuffledChoices,
-                    missingPosition: pos
-                });
-            }
-            
-            return questions;
-        }
-
-        // Current level questions
         let currentQuestions = [];
+
+        // ═══════════════════════════════════════════════════════
+        //  INIT & RENDER
+        // ═══════════════════════════════════════════════════════
 
         function initLevel() {
             currentQuestion = 0;
             currentAttempts = 0;
+            isProcessing = false;
             levelStats = { firstTry: 0, secondTry: 0, thirdTry: 0, totalScore: 0 };
-            currentQuestions = generateQuestions(currentLevel);
+            
+            // Generate 5 questions dengan shuffle choices
+            const template = PATTERN_TEMPLATES[currentLevel];
+            currentQuestions = [];
+            
+            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
+                const q = template.questions[i];
+                const shuffledChoices = [...template.choices].sort(() => Math.random() - 0.5);
+                
+                currentQuestions.push({
+                    pattern: [...q.pattern],
+                    answer: q.answer,
+                    choices: shuffledChoices,
+                    missingPosition: q.pattern.indexOf("?")
+                });
+            }
+            
             updateScoreBoard();
             renderQuestion();
         }
@@ -421,27 +418,25 @@
         function renderQuestion() {
             const q = currentQuestions[currentQuestion];
             
-            // Update UI
             document.getElementById('level-display').innerText = PATTERN_TEMPLATES[currentLevel].name;
             document.getElementById('mascot-text').innerText = 
                 `🐝 "Soal ${currentQuestion + 1}/5 - Pola ${PATTERN_TEMPLATES[currentLevel].type}!"`;
             
-            // Progress bar
             const progress = ((currentQuestion + 1) / CONFIG.QUESTIONS_PER_LEVEL) * 100;
             document.getElementById('progress-fill').style.width = progress + '%';
             document.getElementById('progress-text').innerText = `${currentQuestion + 1}/${CONFIG.QUESTIONS_PER_LEVEL}`;
             
-            // Attempt indicator
             document.getElementById('attempt-indicator').innerText = '';
-            
+
             // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
             patternContainer.innerHTML = '';
-            q.pattern.forEach((item) => {
+            
+            q.pattern.forEach((item, index) => {
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
-                    div.innerText = '';
+                    div.id = 'missing-slot';
                 } else {
                     div.className = 'pattern-item';
                     div.innerText = item;
@@ -463,6 +458,10 @@
             });
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  CHECK ANSWER
+        // ═══════════════════════════════════════════════════════
+
         function checkAnswer(choice, btnElement) {
             if (isProcessing) return;
             
@@ -474,7 +473,6 @@
                 isProcessing = true;
                 btnElement.classList.add('correct');
                 
-                // Hitung skor berdasarkan attempt
                 let points = 0;
                 let attemptType = '';
                 
@@ -498,18 +496,16 @@
                 gameStats.totalQuestions++;
                 gameStats.totalAttempts += currentAttempts;
                 
-                // Update score board
                 updateScoreBoard();
                 
-                // Isi missing slot
-                const missingSlot = document.querySelector('.pattern-item.missing');
+                // Fill missing slot
+                const missingSlot = document.getElementById('missing-slot');
                 if (missingSlot) {
                     missingSlot.innerText = q.answer;
                     missingSlot.classList.remove('missing');
                     missingSlot.classList.add('correct-fill');
                 }
                 
-                // Tampilkan feedback
                 setTimeout(() => showFeedback(true, attemptType, points), 500);
                 
             } else {
@@ -517,40 +513,44 @@
                 btnElement.classList.add('wrong');
                 btnElement.classList.add('disabled');
                 
-                // Tampilkan attempt indicator
                 const remaining = CONFIG.MAX_ATTEMPTS - currentAttempts;
-                let msg = `❌ Salah! (${currentAttempts}/${CONFIG.MAX_ATTEMPTS} attempt)`;
-                if (remaining <= 0) {
-                    msg = `❌ Salah! Jawaban: ${q.answer}`;
+                let msg = '';
+                
+                if (remaining > 0) {
+                    msg = `❌ Salah! (${currentAttempts}/${CONFIG.MAX_ATTEMPTS} attempt)`;
+                } else {
+                    msg = `❌ Max attempts! Jawaban: ${q.answer}`;
                 }
+                
                 document.getElementById('attempt-indicator').innerText = msg;
                 
                 setTimeout(() => {
-                    btnElement.classList.remove('wrong');
                     if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
-                        // Max attempts reached, show correct answer
+                        // Max attempts - auto reveal
                         isProcessing = true;
                         levelStats.thirdTry++;
                         gameStats.totalQuestions++;
                         gameStats.totalAttempts += currentAttempts;
                         
-                        // Auto-fill correct answer
-                        const missingSlot = document.querySelector('.pattern-item.missing');
+                        const missingSlot = document.getElementById('missing-slot');
                         if (missingSlot) {
                             missingSlot.innerText = q.answer;
                             missingSlot.classList.remove('missing');
-                            missingSlot.style.background = 'var(--orange)';
-                            missingSlot.style.border = '3px solid var(--black)';
+                            missingSlot.classList.add('wrong-fill');
                         }
                         
                         updateScoreBoard();
                         setTimeout(() => showFeedback(false, 'failed', 0), 800);
                     } else {
-                        isProcessing = false;
+                        btnElement.classList.remove('wrong');
                     }
                 }, 400);
             }
         }
+
+        // ═══════════════════════════════════════════════════════
+        //  FEEDBACK & NAVIGATION
+        // ═══════════════════════════════════════════════════════
 
         function showFeedback(isCorrect, attemptType, points) {
             const overlay = document.getElementById('feedback-overlay');
@@ -575,15 +575,14 @@
                 }
                 
                 btn.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? "Soal Berikutnya! 🚀" : "Lihat Hasil! 📊";
-                btn.onclick = nextQuestion;
             } else {
                 title.innerText = "JAWABANNYA...";
                 starsDiv.innerText = "💡";
                 text.innerText = `Jawaban yang benar adalah ${currentQuestions[currentQuestion].answer}. Lanjut ya!`;
                 btn.innerText = "Lanjut 🚀";
-                btn.onclick = nextQuestion;
             }
             
+            btn.onclick = nextQuestion;
             overlay.classList.add('show');
         }
 
@@ -596,15 +595,17 @@
                 currentQuestion++;
                 renderQuestion();
             } else {
-                // Level complete!
                 showLevelComplete();
             }
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  LEVEL COMPLETE
+        // ═══════════════════════════════════════════════════════
+
         function showLevelComplete() {
             const overlay = document.getElementById('level-complete-overlay');
             
-            // Calculate stars for this level
             let stars = '';
             if (levelStats.firstTry >= 4) {
                 stars = '⭐⭐⭐';
@@ -642,21 +643,22 @@
 
         function restartLevel() {
             document.getElementById('level-complete-overlay').classList.remove('show');
-            // Kurangi stars yang sudah ditambahkan untuk level ini
             const stars = document.getElementById('level-stars').innerText.length;
             gameStats.totalStars -= stars;
             initLevel();
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  GAME COMPLETE
+        // ═══════════════════════════════════════════════════════
+
         function showGameComplete() {
             const overlay = document.getElementById('game-complete-overlay');
             
-            // Calculate final stars
             const maxStars = PATTERN_TEMPLATES.length * 3;
-            const starRating = Math.round((gameStats.totalStars / maxStars) * 3);
+            const starRating = Math.max(1, Math.round((gameStats.totalStars / maxStars) * 3));
             let finalStars = '';
             for (let i = 0; i < starRating; i++) finalStars += '⭐';
-            if (finalStars === '') finalStars = '⭐';
             
             document.getElementById('final-stars').innerText = finalStars;
             document.getElementById('final-total-stars').innerText = `${gameStats.totalStars}/${maxStars}`;
@@ -683,6 +685,10 @@
             initLevel();
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  UTILS
+        // ═══════════════════════════════════════════════════════
+
         function updateScoreBoard() {
             document.getElementById('stars-count').innerText = gameStats.totalStars;
             document.getElementById('wrong-count').innerText = 
@@ -690,7 +696,10 @@
             document.getElementById('total-score').innerText = gameStats.totalScore;
         }
 
-        // Init
+        // ═══════════════════════════════════════════════════════
+        //  START
+        // ═══════════════════════════════════════════════════════
+
         initLevel();
     </script>
 </body>
