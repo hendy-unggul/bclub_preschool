@@ -1,0 +1,7 @@
+{
+  "name": "B Club - Detektif Cilik",
+  "short_name": "B Club",
+  "start_url": "./index.html",  // <--- TAMBAHKAN TITIK (.)
+  "display": "standalone",
+  ...
+}
