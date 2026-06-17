@@ -1,822 +1,215 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>B Club — Elite Kindergarten Tigaraksa</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-:root{
-  --black:#0D0D0D;
-  --yellow:#FFE600;
-  --coral:#FF4D4D;
-  --white:#FFFFFF;
-  --gray:#F5F5F0;
-  --textmuted:rgba(13,13,13,0.5);
-}
-body{
-  background:var(--white);
-  color:var(--black);
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  font-size:16px;
-  line-height:1.5;
-  overflow-x:hidden;
-}
-.nav{
-  position:sticky;
-  top:0;
-  z-index:99;
-  background:var(--black);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 20px;
-  border-bottom:3px solid var(--yellow);
-}
-.nav-left{display:flex;align-items:center;gap:12px}
-.nav-logo{
-  font-size:26px;
-  font-weight:900;
-  color:var(--yellow);
-  letter-spacing:-1px;
-  font-style:italic;
-  text-decoration:none;
-}
-.nav-logo span{color:var(--white)}
-.nav-cta{
-  background:var(--coral);
-  color:var(--white);
-  font-weight:800;
-  font-size:12px;
-  padding:8px 14px;
-  border-radius:6px;
-  text-decoration:none;
-  letter-spacing:.5px;
-  border:2px solid var(--white);
-}
-.nav-wa{
-  background:var(--yellow);
-  color:var(--black);
-  font-weight:800;
-  font-size:13px;
-  padding:8px 16px;
-  border-radius:6px;
-  text-decoration:none;
-  letter-spacing:.5px;
-}
-.hero{
-  background:var(--black);
-  padding:40px 20px 0;
-  position:relative;
-  overflow:hidden;
-  min-height:88vw;
-}
-.hero-tag{
-  display:inline-block;
-  background:var(--coral);
-  color:var(--white);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:2px;
-  padding:5px 12px;
-  text-transform:uppercase;
-  margin-bottom:20px;
-  border-radius:3px;
-}
-.hero-title{
-  font-size:clamp(52px,14vw,80px);
-  font-weight:900;
-  line-height:.92;
-  letter-spacing:-3px;
-  color:var(--white);
-  margin-bottom:8px;
-  font-style:italic;
-}
-.hero-title .y{color:var(--yellow)}
-.hero-sub{
-  font-size:14px;
-  color:rgba(255,255,255,.6);
-  line-height:1.6;
-  max-width:280px;
-  margin-bottom:32px;
-}
-.hero-sub b{color:var(--white)}
-.big-b{
-  position:absolute;
-  right:-10px;
-  bottom:-20px;
-  font-size:220px;
-  font-weight:900;
-  color:var(--yellow);
-  line-height:1;
-  opacity:.15;
-  font-style:italic;
-  pointer-events:none;
-  user-select:none;
-}
-.hero-btns{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding-bottom:40px;
-  position:relative;
-  z-index:2;
-}
-.btn-main{
-  display:block;
-  background:var(--yellow);
-  color:var(--black);
-  font-weight:800;
-  font-size:15px;
-  text-align:center;
-  padding:16px;
-  border-radius:8px;
-  text-decoration:none;
-  letter-spacing:.5px;
-}
-.btn-outline{
-  display:block;
-  background:transparent;
-  color:var(--white);
-  font-weight:700;
-  font-size:14px;
-  text-align:center;
-  padding:14px;
-  border-radius:8px;
-  text-decoration:none;
-  border:2px solid rgba(255,255,255,.25);
-}
-.marquee-wrap{
-  background:var(--yellow);
-  overflow:hidden;
-  padding:12px 0;
-  border-top:3px solid var(--black);
-  border-bottom:3px solid var(--black);
-}
-.marquee-track{
-  display:flex;
-  animation:scroll 18s linear infinite;
-  width:max-content;
-}
-.m-item{
-  font-size:12px;
-  font-weight:800;
-  color:var(--black);
-  text-transform:uppercase;
-  letter-spacing:2px;
-  white-space:nowrap;
-  padding:0 28px;
-}
-.m-dot{color:var(--coral)}
-@keyframes scroll{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-.section{padding:48px 20px}
-.eyebrow{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--coral);
-  margin-bottom:8px;
-}
-.sec-title{
-  font-size:clamp(32px,9vw,48px);
-  font-weight:900;
-  line-height:1.0;
-  letter-spacing:-1.5px;
-  margin-bottom:32px;
-  font-style:italic;
-}
-.pillars{background:var(--black);color:var(--white)}
-.pillars .eyebrow{color:var(--yellow)}
-.pillars .sec-title{color:var(--white)}
-.pillar-list{display:flex;flex-direction:column;gap:3px}
-.pillar{
-  background:#141414;
-  border:1px solid #222;
-  border-left:4px solid var(--yellow);
-  padding:24px 20px;
-  display:flex;
-  gap:16px;
-  align-items:flex-start;
-}
-.pillar-icon{font-size:32px;flex-shrink:0;margin-top:2px}
-.pillar-num{
-  font-size:11px;
-  font-weight:800;
-  color:var(--yellow);
-  letter-spacing:2px;
-  margin-bottom:4px;
-  opacity:.7;
-}
-.pillar-title{
-  font-size:20px;
-  font-weight:900;
-  color:var(--white);
-  margin-bottom:6px;
-  letter-spacing:-.5px;
-}
-.pillar-desc{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6}
-.stats{
-  background:var(--yellow);
-  border-top:3px solid var(--black);
-  border-bottom:3px solid var(--black);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-}
-.stat{
-  padding:28px 20px;
-  text-align:center;
-  border-right:2px solid var(--black);
-  border-bottom:2px solid var(--black);
-}
-.stat:nth-child(2n){border-right:none}
-.stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
-.stat-num{
-  font-size:48px;
-  font-weight:900;
-  color:var(--black);
-  display:block;
-  line-height:1;
-  font-style:italic;
-}
-.stat-label{
-  font-size:10px;
-  font-weight:800;
-  color:rgba(0,0,0,.5);
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  display:block;
-  margin-top:6px;
-}
-.programs{background:var(--gray)}
-.prog-list{display:flex;flex-direction:column;gap:16px}
-.prog-card{
-  background:var(--black);
-  color:var(--white);
-  padding:28px 24px;
-  border-radius:4px;
-  position:relative;
-  overflow:hidden;
-}
-.prog-card.feat{border:3px solid var(--yellow)}
-.feat-badge{
-  position:absolute;
-  top:16px;right:16px;
-  background:var(--yellow);
-  color:var(--black);
-  font-size:9px;
-  font-weight:800;
-  padding:4px 8px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  border-radius:3px;
-}
-.prog-age{
-  font-size:10px;
-  font-weight:800;
-  color:var(--yellow);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-.prog-name{
-  font-size:26px;
-  font-weight:900;
-  margin-bottom:10px;
-  letter-spacing:-1px;
-  font-style:italic;
-}
-.prog-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:20px}
-.prog-features{list-style:none;display:flex;flex-direction:column;gap:8px}
-.prog-features li{
-  font-size:13px;
-  color:rgba(255,255,255,.75);
-  padding-left:20px;
-  position:relative;
-}
-.prog-features li::before{
-  content:'→';
-  position:absolute;left:0;
-  color:var(--yellow);
-  font-weight:800;
-}
-.digital-cta{
-  background:var(--coral);
-  padding:60px 20px;
-  text-align:center;
-  border-top:4px solid var(--black);
-  border-bottom:4px solid var(--black);
-  position:relative;
-  overflow:hidden;
-}
-.digital-cta::before{
-  content:'';
-  position:absolute;
-  top:-50%;
-  left:-50%;
-  width:200%;
-  height:200%;
-  background:repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    rgba(13,13,13,0.05) 10px,
-    rgba(13,13,13,0.05) 20px
-  );
-  animation:slide 20s linear infinite;
-}
-@keyframes slide{
-  0%{transform:translate(0,0)}
-  100%{transform:translate(50px,50px)}
-}
-.digital-content{
-  position:relative;
-  z-index:2;
-  max-width:600px;
-  margin:0 auto;
-}
-.digital-icon{
-  font-size:64px;
-  margin-bottom:16px;
-  display:block;
-  animation:bounce 2s infinite;
-}
-@keyframes bounce{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
-.digital-title{
-  font-size:clamp(32px,10vw,48px);
-  font-weight:900;
-  color:var(--white);
-  line-height:1.1;
-  letter-spacing:-2px;
-  font-style:italic;
-  margin-bottom:12px;
-}
-.digital-title .black{color:var(--black)}
-.digital-sub{
-  font-size:15px;
-  color:rgba(255,255,255,.9);
-  line-height:1.7;
-  margin-bottom:32px;
-}
-.digital-sub strong{color:var(--yellow)}
-.digital-btn{
-  display:inline-block;
-  background:var(--yellow);
-  color:var(--black);
-  font-size:20px;
-  font-weight:900;
-  padding:20px 40px;
-  border-radius:12px;
-  text-decoration:none;
-  box-shadow:6px 6px 0 var(--black);
-  border:3px solid var(--black);
-  margin-bottom:16px;
-  transition:transform 0.1s;
-}
-.digital-btn:active{
-  transform:translate(3px,3px);
-  box-shadow:3px 3px 0 var(--black);
-}
-.digital-note{
-  font-size:13px;
-  color:rgba(255,255,255,.8);
-  margin-top:20px;
-}
-.digital-note a{
-  color:var(--white);
-  text-decoration:underline;
-  font-weight:700;
-}
-.testi{background:var(--white)}
-.testi-list{display:flex;flex-direction:column;gap:16px}
-.testi-card{
-  background:var(--black);
-  color:var(--white);
-  padding:28px 24px;
-  border-radius:4px;
-}
-.testi-q{
-  font-size:56px;
-  font-weight:900;
-  color:var(--yellow);
-  line-height:.5;
-  opacity:.4;
-  margin-bottom:12px;
-  font-style:italic;
-  display:block;
-}
-.testi-text{
-  font-size:14px;
-  color:rgba(255,255,255,.8);
-  line-height:1.7;
-  font-style:italic;
-  margin-bottom:20px;
-}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-av{
-  width:40px;height:40px;border-radius:50%;
-  background:var(--yellow);
-  display:flex;align-items:center;justify-content:center;
-  font-size:17px;font-weight:900;color:var(--black);
-  flex-shrink:0;
-}
-.testi-name{font-size:13px;font-weight:700;color:var(--white)}
-.testi-role{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1px}
-.action-section{
-  background:var(--coral);
-  padding:48px 20px;
-  text-align:center;
-}
-.action-title{
-  font-size:clamp(36px,10vw,56px);
-  font-weight:900;
-  color:var(--white);
-  line-height:.95;
-  letter-spacing:-2px;
-  font-style:italic;
-  margin-bottom:6px;
-}
-.action-title .black{color:var(--black)}
-.action-sub{
-  font-size:13px;
-  color:rgba(255,255,255,.85);
-  line-height:1.6;
-  margin:16px auto 32px;
-  max-width:300px;
-}
-.action-btns{display:flex;flex-direction:column;gap:12px}
-.btn-wa{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  background:var(--black);
-  color:var(--yellow);
-  font-weight:800;
-  font-size:15px;
-  padding:18px 20px;
-  border-radius:8px;
-  text-decoration:none;
-  letter-spacing:.5px;
-}
-.btn-maps{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  background:rgba(0,0,0,.2);
-  color:var(--white);
-  font-weight:700;
-  font-size:14px;
-  padding:16px 20px;
-  border-radius:8px;
-  text-decoration:none;
-  border:2px solid rgba(255,255,255,.3);
-}
-.info-section{background:var(--gray);padding:48px 20px}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.info-card{
-  background:var(--white);
-  border:2px solid #E5E5E0;
-  padding:20px 16px;
-  border-radius:6px;
-  text-align:center;
-}
-.info-icon{font-size:32px;margin-bottom:8px;display:block}
-.info-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--textmuted);margin-bottom:4px}
-.info-val{font-size:14px;font-weight:700;color:var(--black);line-height:1.4}
-footer{
-  background:var(--black);
-  padding:40px 20px 80px;
-  text-align:center;
-  border-top:3px solid var(--yellow);
-}
-.ft-logo{
-  font-size:48px;
-  font-weight:900;
-  color:var(--yellow);
-  letter-spacing:-2px;
-  font-style:italic;
-  line-height:1;
-  margin-bottom:8px;
-}
-.ft-logo span{color:var(--white)}
-.ft-tagline{
-  font-size:13px;
-  color:rgba(255,255,255,.45);
-  line-height:1.7;
-  max-width:260px;
-  margin:0 auto 24px;
-}
-.ft-socials{display:flex;justify-content:center;gap:16px;margin-bottom:32px}
-.ft-socials a{
-  background:#1a1a1a;
-  color:rgba(255,255,255,.6);
-  font-size:12px;
-  font-weight:700;
-  padding:10px 18px;
-  border-radius:6px;
-  text-decoration:none;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-.ft-copy{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:1px}
-.sticky-bar{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  background:var(--black);
-  border-top:3px solid var(--yellow);
-  display:flex;
-  z-index:100;
-}
-.sticky-bar a{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:14px 8px;
-  font-size:13px;
-  font-weight:800;
-  text-decoration:none;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-.sticky-bar .sb-wa{background:var(--yellow);color:var(--black)}
-.sticky-bar .sb-call{background:#1a1a1a;color:var(--white);border-right:1px solid #333}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#FFE600">
+    <!-- Cache buster -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>B Club — Game Edukatif</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gR2FtZSIsInNob3J0X25hbWUiOiJCIENsdWIiLCJzdGFydF91cmwiOiIuL2luZGV4Lmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+        :root {
+            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D;
+            --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
+        }
+
+        body {
+            background: var(--gray); color: var(--black);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
+            overflow-x: hidden; touch-action: manipulation;
+        }
+
+        header {
+            background: var(--black); padding: 12px 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--yellow);
+        }
+        .btn-back {
+            background: var(--white); border: 3px solid var(--black);
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
+        .page-title {
+            color: var(--yellow); font-size: 20px; font-weight: 900;
+            font-style: italic;
+        }
+
+        .hero {
+            background: var(--black); padding: 32px 20px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .hero-emoji {
+            font-size: 80px;
+            animation: bounce 2s infinite;
+            display: block; margin-bottom: 12px;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .hero-title {
+            font-size: 32px; font-weight: 900; color: var(--white);
+            font-style: italic; letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        .hero-title span { color: var(--yellow); }
+        .hero-sub {
+            font-size: 14px; color: rgba(255,255,255,0.6);
+            max-width: 280px; margin: 0 auto;
+        }
+
+        .games-grid {
+            display: flex; flex-direction: column;
+            gap: 16px; padding: 20px;
+            flex: 1;
+        }
+        .game-card {
+            background: var(--white);
+            border: 4px solid var(--black);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 6px 6px 0 var(--black);
+            display: flex; gap: 16px;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+            color: var(--black);
+        }
+        .game-card:active {
+            transform: translate(4px, 4px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+        .game-icon {
+            font-size: 56px;
+            width: 80px; height: 80px;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--yellow);
+            border-radius: 16px;
+            border: 3px solid var(--black);
+            flex-shrink: 0;
+        }
+        .game-info { flex: 1; }
+        .game-name {
+            font-size: 22px; font-weight: 900;
+            font-style: italic; margin-bottom: 4px;
+        }
+        .game-desc {
+            font-size: 13px; color: rgba(13,13,13,0.5);
+            line-height: 1.5;
+        }
+        .game-badge {
+            display: inline-block;
+            background: var(--green); color: var(--black);
+            font-size: 10px; font-weight: 800;
+            padding: 4px 10px; border-radius: 20px;
+            margin-top: 8px;
+            border: 2px solid var(--black);
+        }
+
+        .stats-bar {
+            background: var(--yellow);
+            border-top: 3px solid var(--black);
+            border-bottom: 3px solid var(--black);
+            display: flex; justify-content: center;
+            gap: 24px; padding: 16px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 28px; font-weight: 900;
+            display: block;
+        }
+        .stat-label {
+            font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        footer {
+            background: var(--black);
+            padding: 20px;
+            text-align: center;
+            border-top: 3px solid var(--yellow);
+        }
+        .ft-logo {
+            font-size: 24px; font-weight: 900;
+            color: var(--yellow); font-style: italic;
+        }
+        .ft-logo span { color: var(--white); }
+    </style>
 </head>
 <body>
 
-<<nav class="nav">
-  <div class="nav-left">
-    <a href="#" class="nav-logo">B<span>Club</span></a>
-    <a href="./play/index.html" class="nav-cta">🎮 Main Game</a>
-  </div>
-  <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp</a>
-</nav>
+    <header>
+        <a href="../index.html" class="btn-back">🔙</a>
+        <div class="page-title">B Club Games</div>
+        <div style="width: 40px;"></div>
+    </header>
 
-<section class="hero">
-  <div class="hero-tag">🏆 Elite Kindergarten · Tigaraksa</div>
-  <h1 class="hero-title">
-    <span class="y">Belajar</span><br>
-    Tanpa<br>
-    <span class="y">Batas.</span>
-  </h1>
-  <p class="hero-sub">Bukan sekadar TK biasa. <b>B Club</b> adalah sekolah pertama yang dirancang untuk anak-anak yang lahir untuk memimpin.</p>
-
-  <div class="hero-btns">
-    <a class="btn-main" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20daftar%20untuk%20tahun%20ajaran%202025%2F2026" target="_blank">✉️ Daftar via WhatsApp</a>
-    <a class="btn-outline" href="#programs">📚 Lihat Program</a>
-  </div>
-
-  <div class="big-b" aria-hidden="true">B</div>
-</section>
-
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="m-item">Playful Learning</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Elite Curriculum</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Tigaraksa · Tangerang</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Bilingual Program</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Born to Lead</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Character First</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Playful Learning</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Elite Curriculum</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Tigaraksa · Tangerang</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Bilingual Program</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Born to Lead</span><span class="m-item m-dot">✦</span>
-    <span class="m-item">Character First</span><span class="m-item m-dot">✦</span>
-  </div>
-</div>
-
-<section class="section pillars">
-  <div class="eyebrow">Filosofi Kami</div>
-  <h2 class="sec-title">Tiga Pilar.<br>Satu Tujuan.</h2>
-
-  <div class="pillar-list">
-    <div class="pillar">
-      <div class="pillar-icon">🧠</div>
-      <div>
-        <div class="pillar-num">PILAR 01</div>
-        <div class="pillar-title">Think Bold</div>
-        <p class="pillar-desc">Kami tidak mengajarkan menghafal. Kami mengajarkan anak untuk mempertanyakan, berimajinasi, dan membangun ide sendiri.</p>
-      </div>
-    </div>
-    <div class="pillar">
-      <div class="pillar-icon">🎨</div>
-      <div>
-        <div class="pillar-num">PILAR 02</div>
-        <div class="pillar-title">Play Deep</div>
-        <p class="pillar-desc">Setiap permainan dirancang dengan tujuan. Menyenangkan di luar, bermakna di dalam.</p>
-      </div>
-    </div>
-    <div class="pillar">
-      <div class="pillar-icon">🌱</div>
-      <div>
-        <div class="pillar-num">PILAR 03</div>
-        <div class="pillar-title">Grow Strong</div>
-        <p class="pillar-desc">Karakter dibangun sebelum karir. Empati, disiplin, dan keberanian adalah fondasi kami.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat">
-    <span class="stat-num">8:1</span>
-    <span class="stat-label">Rasio Guru — Murid</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">3</span>
-    <span class="stat-label">Bahasa Diajarkan</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">98%</span>
-    <span class="stat-label">Orang Tua Puas</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num">∞</span>
-    <span class="stat-label">Potensi Anak Anda</span>
-  </div>
-</div>
-
-<section class="section programs" id="programs">
-  <div class="eyebrow">Program Unggulan</div>
-  <h2 class="sec-title">Pilih Jalur<br>Tumbuhnya.</h2>
-
-  <div class="prog-list">
-    <div class="prog-card feat">
-      <div class="feat-badge">⭐ Unggulan</div>
-      <div class="prog-age">Usia 3 — 4 Tahun</div>
-      <div class="prog-name">B Club Junior</div>
-      <p class="prog-desc">Pondasi terbaik untuk sang petualang kecil. Fokus sensorik, motorik, dan kecerdasan emosional.</p>
-      <ul class="prog-features">
-        <li>Sensory Play Lab</li>
-        <li>Bahasa Inggris & Mandarin Dasar</li>
-        <li>Music & Movement Daily</li>
-        <li>Laporan Perkembangan Mingguan</li>
-      </ul>
+    <div class="hero">
+        <span class="hero-emoji">🎮</span>
+        <h1 class="hero-title">Pilih <span>Game!</span></h1>
+        <p class="hero-sub">Belajar sambil bermain. Tap gambar untuk mulai!</p>
     </div>
 
-    <div class="prog-card">
-      <div class="prog-age">Usia 4 — 5 Tahun</div>
-      <div class="prog-name">B Club Core</div>
-      <p class="prog-desc">Dari bermain ke berpikir kritis. Literasi awal, numerasi, dan kemampuan kolaborasi.</p>
-      <ul class="prog-features">
-        <li>STEAM Projects</li>
-        <li>Early Literacy Program</li>
-        <li>Coding for Kids (Unplugged)</li>
-      </ul>
-    </div>
-
-    <div class="prog-card">
-      <div class="prog-age">Usia 5 — 6 Tahun</div>
-      <div class="prog-name">B Club Elite</div>
-      <p class="prog-desc">Persiapan SD terbaik. Anak melangkah masuk dengan percaya diri dan keunggulan nyata.</p>
-      <ul class="prog-features">
-        <li>Leadership Mini Projects</li>
-        <li>Full Bilingual Environment</li>
-        <li>Portfolio Assessment</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="digital-cta">
-  <div class="digital-content">
-    <span class="digital-icon">🎮</span>
-    <h2 class="digital-title">
-      Kelas Digital<br>
-      <span class="black">B Club</span>
-    </h2>
-    <p class="digital-sub">
-      Akses <strong>12 Game Edukatif</strong> berbasis riset World Economic Forum & OECD. 
-      Latih logika, pola pikir, dan problem solving anak. 
-      <strong>Cukup Rp 99.000/semester!</strong>
-    </p>
-    <a href="./play/index.html" class="digital-btn">
-      🚀 MAIN SEKARANG!
-    </a>
-    <p class="digital-note">
-      💡 Untuk Orang Tua & Guru: 
-      <a href="./play/index.html">Lihat Semua Game →</a>
-    </p>
-  </div>
-</section>
-
-<section class="section testi">
-  <div class="eyebrow">Suara Orang Tua</div>
-  <h2 class="sec-title">Mereka<br>Bicara.</h2>
-
-  <div class="testi-list">
-    <div class="testi-card">
-      <span class="testi-q">"</span>
-      <p class="testi-text">Anak saya yang dulunya pemalu, sekarang jadi presenter terbaik di kelasnya. B Club ngajarin keberanian, bukan cuma akademik.</p>
-      <div class="testi-author">
-        <div class="testi-av">R</div>
-        <div>
-          <div class="testi-name">Rizky Maharani</div>
-          <div class="testi-role">Orang Tua · 2023</div>
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-num">3</span>
+            <span class="stat-label">Game</span>
         </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <span class="testi-q">"</span>
-      <p class="testi-text">Fasilitasnya beda level. Tapi yang lebih luar biasa adalah cara guru-gurunya memperlakukan setiap anak sebagai individu unik.</p>
-      <div class="testi-author">
-        <div class="testi-av">D</div>
-        <div>
-          <div class="testi-name">Dinda Prasetya</div>
-          <div class="testi-role">Orang Tua · 2024</div>
+        <div class="stat-item">
+            <span class="stat-num">24</span>
+            <span class="stat-label">Level</span>
         </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <span class="testi-q">"</span>
-      <p class="testi-text">Saya engineer, istri saya dokter. Standar kami tinggi. B Club satu-satunya TK di Tangerang yang memenuhi ekspektasi kami.</p>
-      <div class="testi-author">
-        <div class="testi-av">A</div>
-        <div>
-          <div class="testi-name">Andri Kusuma</div>
-          <div class="testi-role">Orang Tua · 2024</div>
+        <div class="stat-item">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Seru</span>
         </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<section class="action-section">
-  <h2 class="action-title">
-    Masa depan<br>
-    anak Anda<br>
-    dimulai <span class="black">di sini.</span>
-  </h2>
-  <p class="action-sub">Tempat terbatas. Pendaftaran Tahun Ajaran 2025/2026 sekarang dibuka untuk daftar tunggu prioritas.</p>
+    <div class="games-grid">
+        <a href="./detektif.html" class="game-card">
+            <div class="game-icon">🕵️</div>
+            <div class="game-info">
+                <div class="game-name">Detektif Pola</div>
+                <div class="game-desc">Cari pola yang hilang! Latih logika dan pengamatan.</div>
+                <span class="game-badge">🧠 Logika</span>
+            </div>
+        </a>
 
-  <div class="action-btns">
-    <a class="btn-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20mendaftarkan%20anak%20saya.%20Mohon%20informasi%20lebih%20lanjut." target="_blank">
-      <span>💬</span> Daftar via WhatsApp
-    </a>
-    <a class="btn-maps" href="https://maps.google.com/?q=Tigaraksa+Kabupaten+Tangerang" target="_blank">
-      <span>📍</span> Lihat Lokasi di Maps
-    </a>
-  </div>
-</section>
+        <a href="./masak.html" class="game-card">
+            <div class="game-icon">👨‍🍳</div>
+            <div class="game-info">
+                <div class="game-name">Masak Bareng</div>
+                <div class="game-desc">Urutkan langkah memasak! Latih sequencing.</div>
+                <span class="game-badge">🎯 Urutan</span>
+            </div>
+        </a>
 
-<section class="info-section">
-  <div class="eyebrow" style="text-align:center;margin-bottom:20px">Informasi Sekolah</div>
-  <div class="info-grid">
-    <div class="info-card">
-      <span class="info-icon">⏰</span>
-      <div class="info-label">Jam Sekolah</div>
-      <div class="info-val">07.30 — 11.30 WIB</div>
+        <!-- CTA KARTU MEMORI - BARU -->
+        <a href="./memori.html" class="game-card">
+            <div class="game-icon">🦉</div>
+            <div class="game-info">
+                <div class="game-name">Kartu Memori</div>
+                <div class="game-desc">Cocokkan pasangan kartu! Latih konsentrasi dan ingatan.</div>
+                <span class="game-badge">🧠 Ingatan</span>
+            </div>
+        </a>
     </div>
-    <div class="info-card">
-      <span class="info-icon">📅</span>
-      <div class="info-label">Hari Aktif</div>
-      <div class="info-val">Senin — Jumat</div>
-    </div>
-    <div class="info-card">
-      <span class="info-icon">👦</span>
-      <div class="info-label">Usia Masuk</div>
-      <div class="info-val">3 — 6 Tahun</div>
-    </div>
-    <div class="info-card">
-      <span class="info-icon">📍</span>
-      <div class="info-label">Lokasi</div>
-      <div class="info-val">Tigaraksa, Kab. Tangerang</div>
-    </div>
-    <div class="info-card">
-      <span class="info-icon">🏫</span>
-      <div class="info-label">Kapasitas</div>
-      <div class="info-val">Kelas kecil, maks 15 murid</div>
-    </div>
-    <div class="info-card">
-      <span class="info-icon">🌐</span>
-      <div class="info-label">Bahasa</div>
-      <div class="info-val">Indonesia · Inggris · Mandarin</div>
-    </div>
-  </div>
-</section>
 
-<<footer>
-  <div class="ft-logo">B<span>Club</span></div>
-  <p class="ft-tagline">Elite Kindergarten di Tigaraksa. Setiap anak lahir jenius — tugas kita adalah menjaga apinya tetap menyala.</p>
-  <div class="ft-socials">
-    <a href="https://instagram.com/bclub_tigaraksa" target="_blank">📸 Instagram</a>
-    <a href="https://tiktok.com/@bclub_tigaraksa" target="_blank"> TikTok</a>
-  </div>
-  <p class="ft-copy">© 2025 B Club · Elite Kindergarten Tigaraksa</p>
-</footer>
-
-<div class="sticky-bar">
-  <a class="sb-call" href="tel:+6281234567890">📞 Telepon</a>
-  <a class="sb-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20informasi%20pendaftaran" target="_blank">💬 WhatsApp Kami</a>
-</div>
+    <footer>
+        <div class="ft-logo">B<span>Club</span></div>
+    </footer>
 
 </body>
 </html>
