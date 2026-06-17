@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
-    <title>B Club - Detektif Cilik</title>
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gRGV0ZWt0aWYgQ2lsaWsiLCJzaG9ydF9uYW1lIjoiQiBDbHViIiwic3RhcnRfdXJsIjoiLi9pbmRleC5odG1sIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0Y1RjVGMCIsInRoZW1lX2NvbG9yIjoiI0ZGRTYwMCIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQifQ==">
+    <title>Detektif Pola - B Club</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gRGV0ZWt0aWYgUG9sYSIsInNob3J0X25hbWUiOiJCIENsdWIiLCJzdGFydF91cmwiOiIuL2RldGVrdGlmLmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -109,27 +109,25 @@
             50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
         }
 
-        .attempt-area {
+        .wrong-area {
             display: flex; justify-content: center; gap: 8px;
             min-height: 40px; align-items: center;
         }
-        .heart {
-            font-size: 32px; transition: all 0.3s;
+        .wrong-dot {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--white); border: 3px solid var(--coral);
+            transition: all 0.3s;
         }
-        .heart.broken {
-            animation: heartBreak 0.5s;
-            filter: grayscale(1) opacity(0.2);
+        .wrong-dot.filled {
+            background: var(--coral);
+            animation: wrongPulse 0.5s;
         }
-        @keyframes heartBreak {
-            0% { transform: scale(1) rotate(0); }
-            25% { transform: scale(1.3) rotate(-10deg); }
-            50% { transform: scale(0.8) rotate(10deg); }
-            100% { transform: scale(0.8) rotate(0); }
+        @keyframes wrongPulse {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           PATTERN ROW
-        ═══════════════════════════════════════════════════════ */
         .pattern-row {
             display: flex; gap: 12px; margin: 12px 0;
             background: var(--white); padding: 16px; border-radius: 20px;
@@ -175,15 +173,10 @@
             100% { transform: scale(1); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           CHOICES AREA - Visual cue yang tidak misleading
-        ═══════════════════════════════════════════════════════ */
         .choices-container {
             display: flex; flex-direction: column;
             align-items: center; gap: 12px;
         }
-        
-        /* Visual cue: Bouncing arrow ABOVE choices, not pointing at specific one */
         .choices-cue {
             font-size: 36px;
             animation: cueBounce 1s infinite;
@@ -193,34 +186,6 @@
             0%, 100% { transform: translateY(0); opacity: 1; }
             50% { transform: translateY(-8px); opacity: 0.7; }
         }
-        
-        /* OR: Sparkle effect around choices area */
-        .choices-sparkle {
-            position: relative;
-            padding: 8px 24px;
-            border-radius: 20px;
-            border: 3px dashed var(--blue);
-            background: rgba(33, 150, 243, 0.1);
-        }
-        .choices-sparkle::before {
-            content: '✨';
-            position: absolute;
-            top: -16px; left: -8px;
-            font-size: 24px;
-            animation: sparkle 1.5s infinite;
-        }
-        .choices-sparkle::after {
-            content: '✨';
-            position: absolute;
-            bottom: -16px; right: -8px;
-            font-size: 24px;
-            animation: sparkle 1.5s infinite 0.7s;
-        }
-        @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0); }
-            50% { transform: scale(1.3) rotate(15deg); }
-        }
-
         .choices-row {
             display: flex; gap: 16px; justify-content: center;
         }
@@ -247,7 +212,7 @@
             box-shadow: 5px 5px 0 #800000;
         }
         .choice-btn.disabled {
-            opacity: 0.4; pointer-events: none;
+            opacity: 0.3; pointer-events: none;
             transform: scale(0.9);
         }
         @keyframes bigPop {
@@ -263,9 +228,6 @@
             80% { transform: translateX(8px) rotate(3deg); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           OVERLAYS
-        ═══════════════════════════════════════════════════════ */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(13,13,13,0.92);
@@ -338,7 +300,7 @@
             <span class="icon">⭐</span><span id="stars-count">0</span>
         </div>
         <div class="score-item hearts">
-            <span class="icon">❤️</span><span id="wrong-count">0</span>
+            <span class="icon">❌</span><span id="wrong-count">0</span>
         </div>
         <div class="score-item points">
             <span class="icon">💎</span><span id="total-score">0</span>
@@ -352,20 +314,16 @@
         </div>
 
         <div class="progress-area" id="progress-dots"></div>
-        <div class="attempt-area" id="attempt-hearts">
-            <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span>
+        <div class="wrong-area" id="wrong-dots">
+            <div class="wrong-dot"></div>
+            <div class="wrong-dot"></div>
+            <div class="wrong-dot"></div>
         </div>
 
         <div class="pattern-row" id="pattern-container"></div>
 
-        <!-- CHOICES: Visual cue yang tidak misleading -->
         <div class="choices-container">
-            <!-- Opsi 1: Bouncing arrow di atas area (tidak pointing spesifik) -->
-            <div class="choices-cue" id="choices-cue">⬇️</div>
-            
-            <!-- Opsi 2: Sparkle border around choices (alternatif, bisa aktifkan via JS) -->
-            <!-- <div class="choices-sparkle" id="choices-sparkle" style="display:none;"></div> -->
-            
+            <div class="choices-cue">⬇️</div>
             <div class="choices-row" id="choices-container"></div>
         </div>
     </div>
@@ -380,9 +338,9 @@
         <div class="trophy">🏆</div>
         <div class="star-rating" id="level-stars"></div>
         <div class="stats-visual">
-            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇1st</div></div>
-            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈2nd</div></div>
-            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3rd</div></div>
+            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇0❌</div></div>
+            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈1-2❌</div></div>
+            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3+❌</div></div>
         </div>
         <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
         <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
@@ -402,8 +360,7 @@
     <script>
         const CONFIG = {
             QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25,
-            MAX_ATTEMPTS: 3
+            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25
         };
 
         const TEMPLATES = [
@@ -442,13 +399,15 @@
             }
         ];
 
-        let currentLevel = 0, currentQuestion = 0, currentAttempts = 0, isProcessing = false;
+        let currentLevel = 0, currentQuestion = 0, currentStepIndex = 0, isProcessing = false;
+        let wrongCount = 0;
         let levelStats = { first: 0, second: 0, third: 0, score: 0 };
-        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
         let currentQuestions = [];
 
         function initLevel() {
-            currentQuestion = 0; currentAttempts = 0; isProcessing = false;
+            currentQuestion = 0; currentStepIndex = 0; isProcessing = false;
+            wrongCount = 0;
             levelStats = { first: 0, second: 0, third: 0, score: 0 };
             const t = TEMPLATES[currentLevel];
             currentQuestions = [];
@@ -459,7 +418,7 @@
                     choices: [...t.choices].sort(() => Math.random() - 0.5)
                 });
             }
-            renderProgressDots(); updateScoreBoard(); renderQuestion();
+            renderProgressDots(); updateScoreBoard(); renderWrongDots(); renderQuestion();
         }
 
         function renderProgressDots() {
@@ -474,23 +433,21 @@
             }
         }
 
-        function renderHearts() {
-            document.querySelectorAll('.heart').forEach((h, i) => {
-                h.className = 'heart' + (i < currentAttempts ? ' broken' : '');
+        function renderWrongDots() {
+            document.querySelectorAll('.wrong-dot').forEach((d, i) => {
+                d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
             });
-        }
-
-        function resetHearts() {
-            document.querySelectorAll('.heart').forEach(h => h.className = 'heart');
         }
 
         function renderQuestion() {
             const t = TEMPLATES[currentLevel];
             const q = currentQuestions[currentQuestion];
+            currentStepIndex = 0; wrongCount = 0;
+            
             document.getElementById('level-display').innerText = t.name;
             document.getElementById('mascot-emoji').innerText = t.mascot.think.split('')[0];
             document.getElementById('mascot-bubble').innerText = t.mascot.think;
-            resetHearts(); renderProgressDots();
+            renderWrongDots(); renderProgressDots();
 
             const pc = document.getElementById('pattern-container');
             pc.innerHTML = '';
@@ -518,40 +475,39 @@
             if (isProcessing) return;
             const q = currentQuestions[currentQuestion];
             const t = TEMPLATES[currentLevel];
-            currentAttempts++; renderHearts();
 
             if (choice === q.answer) {
                 isProcessing = true; btn.classList.add('correct');
+                
                 let points = 0, type = '';
-                if (currentAttempts === 1) {
+                if (wrongCount === 0) {
                     points = CONFIG.SCORE_FIRST; levelStats.first++; type = 'first';
                     gameStats.correct++; document.getElementById('mascot-bubble').innerText = t.mascot.happy;
-                } else if (currentAttempts === 2) {
+                } else if (wrongCount <= 2) {
                     points = CONFIG.SCORE_SECOND; levelStats.second++; type = 'second';
                     document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else {
                     points = CONFIG.SCORE_THIRD; levelStats.third++; type = 'third';
                     document.getElementById('mascot-bubble').innerText = '😅👍';
                 }
+                
                 levelStats.score += points; gameStats.score += points;
-                gameStats.questions++; gameStats.attempts += currentAttempts;
+                gameStats.questions++; gameStats.wrongTotal += wrongCount;
+                
                 updateScoreBoard();
                 const s = document.getElementById('missing-slot');
                 if (s) { s.innerText = q.answer; s.classList.remove('missing'); s.classList.add('correct-fill'); }
                 setTimeout(() => showFeedback(true, type, points), 600);
             } else {
-                btn.classList.add('wrong'); btn.classList.add('disabled');
-                if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
-                    isProcessing = true; levelStats.third++;
-                    gameStats.questions++; gameStats.attempts += currentAttempts;
-                    document.getElementById('mascot-bubble').innerText = t.mascot.sad;
-                    const s = document.getElementById('missing-slot');
-                    if (s) { s.innerText = q.answer; s.classList.remove('missing'); s.style.background = 'var(--orange)'; s.style.border = '3px solid var(--black)'; }
-                    updateScoreBoard();
-                    setTimeout(() => showFeedback(false, 'failed', 0), 800);
-                } else {
-                    setTimeout(() => btn.classList.remove('wrong'), 400);
-                }
+                wrongCount++; gameStats.wrongTotal++;
+                btn.classList.add('wrong');
+                renderWrongDots(); updateScoreBoard();
+                document.getElementById('mascot-bubble').innerText = t.mascot.sad;
+                
+                setTimeout(() => {
+                    btn.classList.remove('wrong');
+                    btn.classList.add('disabled');
+                }, 400);
             }
         }
 
@@ -565,16 +521,13 @@
                 else if (type === 'second') { e.innerText = '😄'; s.innerText = '⭐⭐'; }
                 else { e.innerText = '👍'; s.innerText = '⭐'; }
                 b.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
-            } else {
-                e.innerText = '💡'; s.innerText = currentQuestions[currentQuestion].answer;
-                b.innerText = '▶️';
             }
             o.classList.add('show');
         }
 
         function nextQuestion() {
             document.getElementById('feedback-overlay').classList.remove('show');
-            isProcessing = false; currentAttempts = 0;
+            isProcessing = false; wrongCount = 0;
             if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
                 currentQuestion++; renderQuestion();
             } else { showLevelComplete(); }
@@ -586,6 +539,7 @@
             if (levelStats.first >= 4) { stars = '⭐⭐⭐'; gameStats.stars += 3; }
             else if (levelStats.first >= 2) { stars = '⭐⭐'; gameStats.stars += 2; }
             else { stars = '⭐'; gameStats.stars += 1; }
+            
             document.getElementById('level-stars').innerText = stars;
             document.getElementById('stat-first').innerText = levelStats.first;
             document.getElementById('stat-second').innerText = levelStats.second;
@@ -609,7 +563,9 @@
             const o = document.getElementById('game-complete-overlay');
             const maxStars = TEMPLATES.length * 3;
             const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
-            let fs = ''; for (let i = 0; i < rating; i++) fs += '⭐';
+            let fs = '';
+            for (let i = 0; i < rating; i++) fs += '⭐';
+            
             document.getElementById('final-stars').innerText = fs;
             document.getElementById('final-total-stars').innerText = gameStats.stars;
             document.getElementById('final-total-score').innerText = gameStats.score;
@@ -621,13 +577,13 @@
         function restartGame() {
             document.getElementById('game-complete-overlay').classList.remove('show');
             currentLevel = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
             initLevel();
         }
 
         function updateScoreBoard() {
             document.getElementById('stars-count').innerText = gameStats.stars;
-            document.getElementById('wrong-count').innerText = gameStats.attempts - gameStats.correct;
+            document.getElementById('wrong-count').innerText = gameStats.wrongTotal;
             document.getElementById('total-score').innerText = gameStats.score;
         }
 
