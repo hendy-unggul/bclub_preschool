@@ -153,35 +153,33 @@
     </div>
 
     <script>
-        // ══════════════════════════════════════════════════════════
-        //  ATURAN PENTING:
-        //  1. TIDAK BOLEH ada string kosong "" di pattern
-        //  2. TIDAK BOLEH ada string kosong "" di choices
-        //  3. HANYA "?" yang jadi kotak kuning blinking
-        //  4. Semua slot lain HARUS berisi emoji
-        // ═══════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════
+        //  FINAL FIX - TANPA STRING KOSONG SAMA SEKALI!
+        //  - Pattern: Semua emoji, HANYA "?" yang kosong
+        //  - Choices: SEMUA emoji (3 pilihan), tidak ada yang kosong
+        // ═══════════════════════════════════════════════════════
         
         const levels = [
             {
                 name: "Level 1",
-                // Pola ABAB: 🍎🍌🍎🍎? → Jawaban: 🍌
-                pattern: ["🍎", "🍌", "🍎", "🍌", "🍎", "?"],
+                // Pola ABAB: 🍎🍌🍌🍎? → Jawaban: 🍌
+                pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["", "🍌", "🍇"]
+                choices: ["🍎", "🍌", "🍇"]  // SEMUA emoji, tidak ada ""
             },
             {
                 name: "Level 2",
-                // Pola AAB: ⭐🌙⭐⭐? → Jawaban: 🌙
+                // Pola AAB: ⭐⭐🌙⭐⭐? → Jawaban: 🌙
                 pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
                 answer: "🌙",
-                choices: ["⭐", "🌙", "☀️"]
+                choices: ["⭐", "🌙", "☀️"]  // SEMUA emoji
             },
             {
                 name: "Level 3",
-                // Pola ABC: 🐶🐱🐭🐶🐱? → Jawaban: 
+                // Pola ABC: 🐶🐱🐭🐱? → Jawaban: 🐭
                 pattern: ["🐶", "", "🐭", "🐶", "🐱", "?"],
                 answer: "🐭",
-                choices: ["", "🐱", "🐭"]
+                choices: ["🐶", "🐱", "🐭"]  // SEMUA emoji (3 pilihan)
             }
         ];
 
@@ -209,7 +207,7 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices - SEMUA berisi emoji, tidak ada yang kosong
+            // Render Choices - SEMUA berisi emoji (tidak ada yang kosong)
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
             const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
@@ -217,7 +215,7 @@
             shuffledChoices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
-                btn.innerText = choice; // Selalu emoji, tidak pernah kosong
+                btn.innerText = choice; // SELALU emoji (tidak pernah kosong)
                 btn.onclick = () => checkAnswer(choice, btn);
                 choicesContainer.appendChild(btn);
             });
@@ -258,9 +256,9 @@
             const btn = document.getElementById('next-btn');
 
             if (isCorrect) {
-                title.innerText = "HEBAT! ";
+                title.innerText = "HEBAT! 🌟";
                 text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! ";
+                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
                 btn.onclick = nextQuestion;
             }
             overlay.classList.add('show');
