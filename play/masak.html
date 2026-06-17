@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
+    <!-- Cache buster -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Masak Bareng - B Club</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gTWFzYWsgQmFyZW5nIiwic2hvcnRfbmFtZSI6IkIgQ2x1YiIsInN0YXJ0X3VybCI6Ii4vbWFzYWsuaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGNUY1RjAiLCJ0aGVtZV9jb2xvciI6IiNGRkU2MDAiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0In0=">
 
@@ -195,6 +199,10 @@
             display: flex; gap: 12px; justify-content: center;
             flex-wrap: wrap;
         }
+
+        /* ═══════════════════════════════════════════════════════
+           FIX: Force tombol selalu clickable, tidak pernah disable
+        ═══════════════════════════════════════════════════════ */
         .step-btn {
             width: 80px; height: 100px;
             display: flex; flex-direction: column;
@@ -204,6 +212,10 @@
             box-shadow: 5px 5px 0 var(--black);
             cursor: pointer; transition: all 0.15s;
             padding: 8px;
+            /* FORCE: Selalu bisa diklik */
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: none !important;
         }
         .step-btn .step-emoji {
             font-size: 36px; margin-bottom: 4px;
@@ -213,22 +225,20 @@
             text-align: center; line-height: 1.2;
         }
         .step-btn:active {
-            transform: translate(4px, 4px);
+            transform: translate(4px, 4px) !important;
             box-shadow: 1px 1px 0 var(--black);
         }
         .step-btn.correct {
-            background: var(--green);
+            background: var(--green) !important;
             animation: bigPop 0.4s;
             box-shadow: 5px 5px 0 #004d00;
-            opacity: 0.5;
-            pointer-events: none;
         }
         .step-btn.wrong {
-            background: var(--coral);
+            background: var(--coral) !important;
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        /* FIX: Jangan pakai .disabled class untuk salah */
+        /* HAPUS .disabled class - tidak dipakai lagi */
         @keyframes bigPop {
             0% { transform: scale(1); }
             50% { transform: scale(1.15); }
@@ -497,6 +507,7 @@
 
         // ═══════════════════════════════════════════════════════
         //  FIX: checkAnswer - JANGAN disable tombol yang salah!
+        //  Hanya visual feedback, tetap bisa diklik
         // ═══════════════════════════════════════════════════════
         function checkAnswer(selectedStep, btnElement) {
             if (isProcessing) return;
@@ -542,7 +553,7 @@
                 // FIX: Hanya hapus class wrong, JANGAN disable
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
-                    // NO btnElement.classList.add('disabled') ← DIHAPUS
+                    // PASTIKAN tidak ada: btnElement.classList.add('disabled')
                 }, 400);
             }
         }
