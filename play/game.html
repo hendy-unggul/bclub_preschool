@@ -149,33 +149,38 @@
     <div class="overlay" id="feedback-overlay">
         <h2 id="feedback-title">HEBAT!</h2>
         <p id="feedback-text">Kamu menemukan polanya!</p>
-        <button id="next-btn" onclick="nextQuestion()">Lanjut! 🚀</button>
+        <button id="next-btn" onclick="nextQuestion()">Lanjut! </button>
     </div>
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  DATA LEVEL - SEMUA SLOT BERISI EMOJI ATAU "?"
+        //  FINAL CODE - SEMUA SLOT BERISI EMOJI
         //  TIDAK ADA STRING KOSONG "" DI MANAPUN
+        //  Pattern: 6 slot, 5 emoji + 1 "?"
+        //  Choices: 3 emoji (TIDAK ADA YANG KOSONG)
         // ═══════════════════════════════════════════════════════
         
         const levels = [
             {
                 name: "Level 1",
-                pattern: ["🍎", "🍌", "🍎", "🍌", "", "?"],
+                // Pola ABABAB: 🍌🍎🍌?
+                pattern: ["🍎", "🍌", "🍎", "", "🍎", "?"],
                 answer: "🍌",
-                choices: ["🍎", "", "🍇"]
+                choices: ["🍎", "🍌", ""]
             },
             {
                 name: "Level 2",
-                pattern: ["⭐", "⭐", "", "⭐", "⭐", "?"],
+                // Pola AABAAB: ⭐⭐🌙⭐⭐?
+                pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
                 answer: "🌙",
                 choices: ["⭐", "🌙", "☀️"]
             },
             {
                 name: "Level 3",
-                pattern: ["🐶", "🐱", "🐭", "🐶", "🐱", "?"],
+                // Pola ABCABC: 🐶🐱🐭🐶🐱?
+                pattern: ["🐶", "", "🐭", "🐶", "🐱", "?"],
                 answer: "🐭",
-                choices: ["🐶", "🐱", "🐭"]
+                choices: ["", "🐱", "🐭"]
             }
         ];
 
@@ -185,22 +190,21 @@
         function renderLevel() {
             const level = levels[currentLevel];
             document.getElementById('level-display').innerText = level.name;
-            document.getElementById('mascot-text').innerText = ` "Level ${currentLevel + 1}! Apa yang hilang?"`;
+            document.getElementById('mascot-text').innerText = `🐝 "Level ${currentLevel + 1}! Apa yang hilang?"`;
 
-            // DEBUG: Cek apakah ada string kosong
-            console.log('Pattern:', level.pattern);
-            console.log('Choices:', level.choices);
+            // VALIDASI: Cek tidak ada string kosong
+            const hasEmptyPattern = level.pattern.some(item => item === "");
+            const hasEmptyChoice = level.choices.some(item => item === "");
+            if (hasEmptyPattern || hasEmptyChoice) {
+                console.error('❌ ERROR: Ada string kosong di data level!');
+                console.error('Pattern:', level.pattern);
+                console.error('Choices:', level.choices);
+            }
 
-            // Render Pattern - VALIDASI: skip jika string kosong
+            // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
             patternContainer.innerHTML = '';
             level.pattern.forEach((item) => {
-                // SKIP jika string kosong (safety check)
-                if (item === "" || item === null || item === undefined) {
-                    console.warn('⚠️ Ditemukan string kosong di pattern! Skip item ini.');
-                    return;
-                }
-                
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
@@ -212,23 +216,24 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices - VALIDASI: skip jika string kosong
+            // Render Choices - SEMUA berisi emoji
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
             const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
             
             shuffledChoices.forEach(choice => {
-                // SKIP jika string kosong (safety check)
-                if (choice === "" || choice === null || choice === undefined) {
-                    console.warn('⚠️ Ditemukan string kosong di choices! Skip item ini.');
-                    return;
-                }
-                
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
                 btn.innerText = choice;
                 btn.onclick = () => checkAnswer(choice, btn);
                 choicesContainer.appendChild(btn);
+            });
+
+            // Debug log
+            console.log(`✅ Level ${currentLevel + 1} rendered:`, {
+                pattern: level.pattern,
+                choices: level.choices,
+                choicesCount: level.choices.length
             });
         }
 
@@ -266,9 +271,9 @@
             const btn = document.getElementById('next-btn');
 
             if (isCorrect) {
-                title.innerText = "HEBAT! 🌟";
+                title.innerText = "HEBAT! ";
                 text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
+                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! ";
                 btn.onclick = nextQuestion;
             }
             overlay.classList.add('show');
