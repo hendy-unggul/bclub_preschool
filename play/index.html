@@ -7,9 +7,9 @@
     <title>B Club - Detektif Cilik</title>
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="assets/icon-192.png">
-    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/png" href="./assets/icon-192.png">
+    <link rel="apple-touch-icon" href="./assets/icon-192.png">
 
     <style>
         /* ── RESET & ROOT ── */
@@ -30,7 +30,7 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            padding-bottom: 80px; /* Space for sticky footer */
+            padding-bottom: 80px;
         }
 
         /* ── HEADER ── */
@@ -176,7 +176,7 @@
         }
         .parent-link:hover { color: var(--white); }
 
-        /* ── INSTALL PROMPT (PWA) ── */
+        /* ── INSTALL PROMPT (PWA) ─ */
         #install-banner {
             display: none;
             position: fixed;
@@ -206,7 +206,7 @@
 
     <!-- PWA Install Banner -->
     <div id="install-banner">
-        <span> Install B Club di HP kamu!</span>
+        <span>📲 Install B Club di HP kamu!</span>
         <button onclick="installPWA()">Install</button>
     </div>
 
@@ -218,7 +218,7 @@
 
     <!-- Hero -->
     <section class="hero">
-        <span class="mascot"></span>
+        <span class="mascot">🐝</span>
         <h1>Halo Detektif Cilik!<br><span class="y">Siap Berpetualang?</span></h1>
         <p>Pilih permainanmu dan kumpulkan semua bintang!</p>
     </section>
@@ -228,16 +228,16 @@
         <h2 class="section-title">Pilih Misi Kamu:</h2>
         <div class="game-grid">
             
-            <!-- Game 1: Active -->
-            <div class="game-card" onclick="startGame('pola')">
-                <span class="game-icon"></span>
+            <!-- Game 1: Detektif Pola (ACTIVE) -->
+            <a href="./game.html" class="game-card" style="text-decoration:none;color:inherit;">
+                <span class="game-icon">🔍</span>
                 <div class="game-title">Detektif<br>Pola</div>
                 <div class="level-dots">
                     <span class="dot active"></span>
                     <span class="dot"></span>
                     <span class="dot"></span>
                 </div>
-            </div>
+            </a>
 
             <!-- Game 2: Locked -->
             <div class="game-card locked">
@@ -263,7 +263,7 @@
 
             <!-- Game 4: Locked -->
             <div class="game-card locked">
-                <span class="game-icon">⚙️</span>
+                <span class="game-icon">️</span>
                 <div class="game-title">Mesin<br>Ajaib</div>
                 <div class="level-dots">
                     <span class="dot"></span>
@@ -277,20 +277,20 @@
 
     <!-- Sticky Footer -->
     <footer class="sticky-footer">
-        <a href="parents.html" class="parent-link">🔒 Untuk Ayah/Bunda/Guru →</a>
+        <a href="./parents.html" class="parent-link">🔒 Untuk Ayah/Bunda/Guru →</a>
     </footer>
 
     <script>
         // ── PWA Service Worker Registration ──
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('SW registered:', reg))
                     .catch(err => console.log('SW failed:', err));
             });
         }
 
-        // ── PWA Install Prompt Logic ──
+        // ── PWA Install Prompt Logic ─
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -308,17 +308,6 @@
                     deferredPrompt = null;
                     document.getElementById('install-banner').style.display = 'none';
                 });
-            }
-        }
-
-        // ── Game Navigation (Dummy for now) ─
-        function startGame(gameId) {
-            if(gameId === 'pola') {
-                // Nanti kita arahkan ke game.html
-                alert('Membuka Detektif Pola... (Akan dibuat di langkah berikutnya)');
-                // window.location.href = 'game.html?game=pola&level=1';
-            } else {
-                alert('Selesaikan Detektif Pola dulu untuk membuka misi ini!');
             }
         }
     </script>
