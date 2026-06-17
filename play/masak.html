@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#FFE600">
+    <title>Masak Bareng - B Club</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gTWFzYWsgQmFyZW5nIiwic2hvcnRfbmFtZSI6IkIgQ2x1YiIsInN0YXJ0X3VybCI6Ii4vaW5kZXguaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGNUY1RjAiLCJ0aGVtZV9jb2xvciI6IiNGRkU2MDAiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0In0=">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+        :root {
+            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
+            --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
+            --orange: #FF9800; --blue: #2196F3;
+        }
+
+        body {
+            background: var(--gray); color: var(--black);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
+            overflow: hidden; touch-action: manipulation;
+        }
+
+        header {
+            background: var(--black); padding: 8px 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--yellow);
+        }
+        .btn-back {
+            background: var(--white); border: 3px solid var(--black);
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
+        .level-badge {
+            background: var(--yellow); border: 3px solid var(--black);
+            padding: 6px 16px; border-radius: 20px;
+            font-weight: 900; font-size: 16px; box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .score-board {
+            display: flex; gap: 20px; justify-content: center;
+            padding: 10px; background: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+        .score-item {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 24px; font-weight: 900;
+        }
+        .score-item .icon { font-size: 28px; }
+        .score-item.stars { color: #FF9800; }
+        .score-item.hearts { color: var(--coral); }
+        .score-item.points { color: var(--green); }
+
+        .mascot-area {
+            display: flex; justify-content: center; align-items: center;
+            padding: 12px; gap: 12px;
+        }
+        .mascot {
+            font-size: 64px;
+            animation: mascotBounce 2s infinite;
+            filter: drop-shadow(3px 3px 0 var(--black));
+        }
+        @keyframes mascotBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .mascot-bubble {
+            background: var(--white); border: 4px solid var(--black);
+            padding: 12px 20px; border-radius: 20px;
+            box-shadow: 4px 4px 0 var(--black);
+            position: relative; font-size: 24px;
+            max-width: 200px; text-align: center;
+        }
+        .mascot-bubble::after {
+            content: ''; position: absolute; left: -16px; top: 50%;
+            transform: translateY(-50%);
+            border-width: 12px 16px 12px 0;
+            border-style: solid;
+            border-color: transparent var(--black) transparent transparent;
+        }
+        .mascot-bubble::before {
+            content: ''; position: absolute; left: -10px; top: 50%;
+            transform: translateY(-50%); z-index: 1;
+            border-width: 10px 14px 10px 0;
+            border-style: solid;
+            border-color: transparent var(--white) transparent transparent;
+        }
+
+        .progress-area {
+            display: flex; justify-content: center; gap: 8px;
+            padding: 6px;
+        }
+        .progress-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            border: 3px solid var(--black); background: var(--white);
+            transition: all 0.3s;
+        }
+        .progress-dot.done { background: var(--green); transform: scale(1.2); }
+        .progress-dot.current {
+            background: var(--yellow);
+            animation: pulseDot 1s infinite;
+            transform: scale(1.3);
+        }
+        @keyframes pulseDot {
+            0%, 100% { box-shadow: 0 0 0 0 var(--yellow); }
+            50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
+        }
+
+        .attempt-area {
+            display: flex; justify-content: center; gap: 8px;
+            min-height: 40px; align-items: center;
+        }
+        .heart {
+            font-size: 32px; transition: all 0.3s;
+        }
+        .heart.broken {
+            animation: heartBreak 0.5s;
+            filter: grayscale(1) opacity(0.2);
+        }
+        @keyframes heartBreak {
+            0% { transform: scale(1) rotate(0); }
+            25% { transform: scale(1.3) rotate(-10deg); }
+            50% { transform: scale(0.8) rotate(10deg); }
+            100% { transform: scale(0.8) rotate(0); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           RECIPE TITLE
+        ═══════════════════════════════════════════════════════ */
+        .recipe-title {
+            text-align: center; padding: 12px;
+            font-size: 24px; font-weight: 900;
+            color: var(--black);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           SEQUENCE SLOTS (Urutan yang harus diisi)
+        ═══════════════════════════════════════════════════════ */
+        .sequence-slots {
+            display: flex; gap: 8px; margin: 12px 16px;
+            background: var(--white); padding: 12px; border-radius: 20px;
+            border: 4px solid var(--black); box-shadow: 6px 6px 0 var(--black);
+            justify-content: center; flex-wrap: wrap;
+        }
+        .sequence-slot {
+            width: 70px; height: 90px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            font-size: 16px; background: var(--gray);
+            border-radius: 12px; border: 3px dashed var(--black);
+            box-shadow: 2px 2px 0 var(--black);
+            transition: all 0.3s ease;
+        }
+        .sequence-slot .slot-number {
+            font-size: 14px; font-weight: 900;
+            color: var(--black); margin-bottom: 4px;
+        }
+        .sequence-slot .slot-emoji {
+            font-size: 32px;
+        }
+        .sequence-slot.filled {
+            background: var(--green);
+            border: 3px solid var(--black);
+            animation: slotFill 0.5s;
+        }
+        @keyframes slotFill {
+            0% { transform: scale(0.5); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .sequence-slot.current {
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            animation: pulseCurrent 1.5s infinite;
+        }
+        @keyframes pulseCurrent {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           AVAILABLE STEPS (Langkah yang bisa dipilih)
+        ═══════════════════════════════════════════════════════ */
+        .steps-container {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 12px;
+            padding: 12px;
+        }
+        
+        .steps-cue {
+            font-size: 36px;
+            animation: cueBounce 1s infinite;
+            margin-bottom: 4px;
+        }
+        @keyframes cueBounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 0.7; }
+        }
+
+        .steps-row {
+            display: flex; gap: 12px; justify-content: center;
+            flex-wrap: wrap;
+        }
+        .step-btn {
+            width: 80px; height: 100px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            font-size: 14px; background: var(--white);
+            border: 4px solid var(--black); border-radius: 16px;
+            box-shadow: 5px 5px 0 var(--black);
+            cursor: pointer; transition: all 0.15s;
+            padding: 8px;
+        }
+        .step-btn .step-emoji {
+            font-size: 36px; margin-bottom: 4px;
+        }
+        .step-btn .step-text {
+            font-size: 11px; font-weight: 700;
+            text-align: center; line-height: 1.2;
+        }
+        .step-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 1px 1px 0 var(--black);
+        }
+        .step-btn.correct {
+            background: var(--green);
+            animation: bigPop 0.4s;
+            box-shadow: 5px 5px 0 #004d00;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .step-btn.wrong {
+            background: var(--coral);
+            animation: bigShake 0.5s;
+            box-shadow: 5px 5px 0 #800000;
+        }
+        .step-btn.disabled {
+            opacity: 0.3; pointer-events: none;
+            transform: scale(0.9);
+        }
+        @keyframes bigPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        @keyframes bigShake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            20% { transform: translateX(-8px) rotate(-3deg); }
+            40% { transform: translateX(8px) rotate(3deg); }
+            60% { transform: translateX(-6px) rotate(-2deg); }
+            80% { transform: translateX(6px) rotate(2deg); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           OVERLAYS
+        ═══════════════════════════════════════════════════════ */
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13,13,13,0.92);
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000; padding: 20px;
+        }
+        .overlay.show { display: flex; }
+
+        .feedback-emoji {
+            font-size: 80px;
+            animation: celebrate 1s infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+        }
+        .feedback-stars { font-size: 48px; margin-bottom: 16px; }
+        .feedback-btn {
+            background: var(--yellow); color: var(--black);
+            border: 4px solid var(--black); border-radius: 16px;
+            padding: 16px 32px; font-size: 32px;
+            font-weight: 900; box-shadow: 4px 4px 0 var(--white);
+            cursor: pointer; margin-top: 16px;
+        }
+        .feedback-btn:active {
+            transform: translate(4px, 4px); box-shadow: none;
+        }
+
+        .trophy {
+            font-size: 100px;
+            animation: trophyBounce 1s infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .star-rating { font-size: 64px; margin: 16px 0; }
+        .stats-visual {
+            display: flex; gap: 20px; margin: 16px 0;
+        }
+        .stat-circle {
+            width: 80px; height: 80px; border-radius: 50%;
+            border: 4px solid var(--yellow);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: var(--black);
+        }
+        .stat-circle .number { font-size: 32px; font-weight: 900; color: var(--yellow); }
+        .stat-circle .label { font-size: 10px; color: #aaa; font-weight: 700; }
+
+        @media (max-width: 360px) {
+            .sequence-slot { width: 60px; height: 80px; }
+            .step-btn { width: 70px; height: 90px; }
+            .step-btn .step-emoji { font-size: 28px; }
+            .mascot { font-size: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="./index.html" class="btn-back">🔙</a>
+        <div class="level-badge" id="level-display">1️⃣</div>
+    </header>
+
+    <div class="score-board">
+        <div class="score-item stars">
+            <span class="icon">⭐</span><span id="stars-count">0</span>
+        </div>
+        <div class="score-item hearts">
+            <span class="icon">❤️</span><span id="wrong-count">0</span>
+        </div>
+        <div class="score-item points">
+            <span class="icon">💎</span><span id="total-score">0</span>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="mascot-area">
+            <div class="mascot" id="mascot-emoji">👨‍🍳</div>
+            <div class="mascot-bubble" id="mascot-bubble">Urutkan langkahnya! 🤔</div>
+        </div>
+
+        <div class="progress-area" id="progress-dots"></div>
+        <div class="attempt-area" id="attempt-hearts">
+            <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span>
+        </div>
+
+        <div class="recipe-title" id="recipe-title">🥪 Roti Selai</div>
+
+        <div class="sequence-slots" id="sequence-slots"></div>
+
+        <div class="steps-container">
+            <div class="steps-cue">⬇️</div>
+            <div class="steps-row" id="steps-container"></div>
+        </div>
+    </div>
+
+    <div class="overlay" id="feedback-overlay">
+        <div class="feedback-emoji" id="feedback-emoji">🎉</div>
+        <div class="feedback-stars" id="feedback-stars"></div>
+        <button class="feedback-btn" id="next-btn" onclick="nextQuestion()">▶️</button>
+    </div>
+
+    <div class="overlay" id="level-complete-overlay">
+        <div class="trophy">🏆</div>
+        <div class="star-rating" id="level-stars"></div>
+        <div class="stats-visual">
+            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇1st</div></div>
+            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈2nd</div></div>
+            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3rd</div></div>
+        </div>
+        <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
+        <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
+    </div>
+
+    <div class="overlay" id="game-complete-overlay">
+        <div class="trophy">👑</div>
+        <div class="star-rating" id="final-stars"></div>
+        <div class="stats-visual">
+            <div class="stat-circle"><div class="number" id="final-total-stars">0</div><div class="label">⭐Total</div></div>
+            <div class="stat-circle"><div class="number" id="final-total-score">0</div><div class="label">💎Score</div></div>
+            <div class="stat-circle"><div class="number" id="final-accuracy">0%</div><div class="label">🎯Rate</div></div>
+        </div>
+        <button class="feedback-btn" onclick="restartGame()" style="margin-top: 16px;">🔄🎮</button>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════
+        //  CONFIG - Sama persis dengan Detektif Pola
+        // ═══════════════════════════════════════════════════════
+        const CONFIG = {
+            QUESTIONS_PER_LEVEL: 5,
+            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25,
+            MAX_ATTEMPTS: 3
+        };
+
+        // ═══════════════════════════════════════════════════════
+        //  TEMPLATES - 3 Level dengan resep berbeda
+        // ═══════════════════════════════════════════════════════
+        const TEMPLATES = [
+            {
+                name: "1️⃣",
+                title: "🥪 Roti Selai",
+                mascot: { think: "Urutkan! 🤔", happy: "Benar! 😄", sad: "Oops! 😢" },
+                questions: [
+                    {
+                        steps: [
+                            { emoji: "🍞", text: "Ambil Roti" },
+                            { emoji: "🥄", text: "Oles Selai" },
+                            { emoji: "🥪", text: "Tutup Roti" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥛", text: "Siapkan Susu" },
+                            { emoji: "🍫", text: "Tambah Coklat" },
+                            { emoji: "🥤", text: "Aduk Rata" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍌", text: "Kupas Pisang" },
+                            { emoji: "🥣", text: "Taruh di Mangkuk" },
+                            { emoji: "🥄", text: "Hancurkan" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍎", text: "Cuci Apel" },
+                            { emoji: "🔪", text: "Potong Apel" },
+                            { emoji: "🍽️", text: "Sajikan" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥚", text: "Pecahkan Telur" },
+                            { emoji: "🍳", text: "Goreng Telur" },
+                            { emoji: "🍽️", text: "Angkat" }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "2️⃣",
+                title: "☕ Teh Manis",
+                mascot: { think: "4 langkah! 🤔", happy: "Hebat! 🤩", sad: "Coba lagi! 😵" },
+                questions: [
+                    {
+                        steps: [
+                            { emoji: "🫖", text: "Siapkan Gelas" },
+                            { emoji: "🍵", text: "Masukkan Teh" },
+                            { emoji: "💧", text: "Tuang Air Panas" },
+                            { emoji: "🍯", text: "Tambah Gula" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍚", text: "Cuci Beras" },
+                            { emoji: "🍲", text: "Masukkan Rice Cooker" },
+                            { emoji: "💧", text: "Tambah Air" },
+                            { emoji: "⏰", text: "Tekan Tombol" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥕", text: "Kupas Wortel" },
+                            { emoji: "🔪", text: "Potong Wortel" },
+                            { emoji: "🍳", text: "Tumis Wortel" },
+                            { emoji: "🧂", text: "Tambah Garam" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍋", text: "Peras Lemon" },
+                            { emoji: "🥤", text: "Tuang ke Gelas" },
+                            { emoji: "💧", text: "Tambah Air" },
+                            { emoji: "🧊", text: "Tambah Es" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥔", text: "Kupas Kentang" },
+                            { emoji: "🔪", text: "Potong Kentang" },
+                            { emoji: "🍳", text: "Goreng Kentang" },
+                            { emoji: "🧂", text: "Bumbui" }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "3️⃣",
+                title: "🥙 Sandwich",
+                mascot: { think: "5 langkah! 🤔", happy: "Sempurna! 🥳", sad: "Hampir! 🙀" },
+                questions: [
+                    {
+                        steps: [
+                            { emoji: "🍞", text: "Ambil 2 Roti" },
+                            { emoji: "🧈", text: "Oles Mentega" },
+                            { emoji: "🧀", text: "Taruh Keju" },
+                            { emoji: "🍅", text: "Taruh Tomat" },
+                            { emoji: "🥙", text: "Tutup Roti" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍝", text: "Rebus Pasta" },
+                            { emoji: "🍅", text: "Buat Saus" },
+                            { emoji: "🧀", text: "Tambah Keju" },
+                            { emoji: "🌿", text: "Taburi Herbs" },
+                            { emoji: "🍽️", text: "Sajikan" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥗", text: "Cuci Sayur" },
+                            { emoji: "🔪", text: "Potong Sayur" },
+                            { emoji: "🥕", text: "Tambah Wortel" },
+                            { emoji: "🥒", text: "Tambah Timun" },
+                            { emoji: "🥗", text: "Campur Rata" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🍕", text: "Siapkan Adonan" },
+                            { emoji: "🍅", text: "Oles Saus Tomat" },
+                            { emoji: "🧀", text: "Taburi Keju" },
+                            { emoji: "🍖", text: "Taruh Topping" },
+                            { emoji: "🔥", text: "Panggang" }
+                        ]
+                    },
+                    {
+                        steps: [
+                            { emoji: "🥞", text: "Buat Adonan" },
+                            { emoji: "🍳", text: "Panaskan Wajan" },
+                            { emoji: "🥞", text: "Tuang Adonan" },
+                            { emoji: "🍯", text: "Balik Pancake" },
+                            { emoji: "🍽️", text: "Sajikan" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════
+        //  STATE MANAGEMENT - Sama dengan Detektif Pola
+        // ═══════════════════════════════════════════════════════
+        let currentLevel = 0, currentQuestion = 0, currentAttempts = 0, isProcessing = false;
+        let levelStats = { first: 0, second: 0, third: 0, score: 0 };
+        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+        let currentQuestions = [];
+        let currentStepIndex = 0; // Index langkah yang harus diisi berikutnya
+
+        function initLevel() {
+            currentQuestion = 0; currentAttempts = 0; isProcessing = false;
+            levelStats = { first: 0, second: 0, third: 0, score: 0 };
+            const t = TEMPLATES[currentLevel];
+            currentQuestions = [];
+            
+            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
+                const q = t.questions[i];
+                // Shuffle steps untuk ditampilkan
+                const shuffledSteps = [...q.steps].sort(() => Math.random() - 0.5);
+                currentQuestions.push({
+                    steps: q.steps, // Urutan yang benar
+                    shuffledSteps: shuffledSteps // Urutan acak untuk ditampilkan
+                });
+            }
+            renderProgressDots(); updateScoreBoard(); renderQuestion();
+        }
+
+        function renderProgressDots() {
+            const c = document.getElementById('progress-dots');
+            c.innerHTML = '';
+            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
+                const d = document.createElement('div');
+                d.className = 'progress-dot';
+                if (i < currentQuestion) d.classList.add('done');
+                else if (i === currentQuestion) d.classList.add('current');
+                c.appendChild(d);
+            }
+        }
+
+        function renderHearts() {
+            document.querySelectorAll('.heart').forEach((h, i) => {
+                h.className = 'heart' + (i < currentAttempts ? ' broken' : '');
+            });
+        }
+
+        function resetHearts() {
+            document.querySelectorAll('.heart').forEach(h => h.className = 'heart');
+        }
+
+        function renderQuestion() {
+            const t = TEMPLATES[currentLevel];
+            const q = currentQuestions[currentQuestion];
+            currentStepIndex = 0; // Reset ke langkah pertama
+            
+            document.getElementById('level-display').innerText = t.name;
+            document.getElementById('recipe-title').innerText = t.title;
+            document.getElementById('mascot-emoji').innerText = '👨‍🍳';
+            document.getElementById('mascot-bubble').innerText = t.mascot.think;
+            resetHearts(); renderProgressDots();
+
+            // Render Sequence Slots (urutan yang harus diisi)
+            const slotsContainer = document.getElementById('sequence-slots');
+            slotsContainer.innerHTML = '';
+            q.steps.forEach((step, index) => {
+                const slot = document.createElement('div');
+                slot.className = 'sequence-slot';
+                if (index === 0) slot.classList.add('current'); // Slot pertama yang harus diisi
+                
+                slot.innerHTML = `
+                    <div class="slot-number">${index + 1}</div>
+                    <div class="slot-emoji">❓</div>
+                `;
+                slot.dataset.index = index;
+                slotsContainer.appendChild(slot);
+            });
+
+            // Render Available Steps (langkah yang bisa dipilih)
+            const stepsContainer = document.getElementById('steps-container');
+            stepsContainer.innerHTML = '';
+            q.shuffledSteps.forEach((step, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'step-btn';
+                btn.innerHTML = `
+                    <div class="step-emoji">${step.emoji}</div>
+                    <div class="step-text">${step.text}</div>
+                `;
+                btn.dataset.stepIndex = index;
+                btn.onclick = () => checkAnswer(step, btn);
+                stepsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedStep, btnElement) {
+            if (isProcessing) return;
+            
+            const q = currentQuestions[currentQuestion];
+            const t = TEMPLATES[currentLevel];
+            const correctStep = q.steps[currentStepIndex]; // Langkah yang seharusnya dipilih
+            
+            currentAttempts++; renderHearts();
+
+            // Cek apakah step yang dipilih benar
+            if (selectedStep.emoji === correctStep.emoji && selectedStep.text === correctStep.text) {
+                // JAWABAN BENAR
+                isProcessing = true;
+                btnElement.classList.add('correct');
+                
+                // Isi slot dengan step yang benar
+                const slots = document.querySelectorAll('.sequence-slot');
+                const currentSlot = slots[currentStepIndex];
+                currentSlot.innerHTML = `
+                    <div class="slot-number">${currentStepIndex + 1}</div>
+                    <div class="slot-emoji">${correctStep.emoji}</div>
+                `;
+                currentSlot.classList.remove('current');
+                currentSlot.classList.add('filled');
+                
+                // Move to next step
+                currentStepIndex++;
+                
+                // Jika masih ada step berikutnya
+                if (currentStepIndex < q.steps.length) {
+                    // Highlight slot berikutnya
+                    slots[currentStepIndex].classList.add('current');
+                    isProcessing = false;
+                    
+                    // Update mascot
+                    document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+                } else {
+                    // Semua step selesai!
+                    let points = 0, type = '';
+                    if (currentAttempts <= q.steps.length) {
+                        // Sempurna (tidak ada salah)
+                        points = CONFIG.SCORE_FIRST;
+                        levelStats.first++;
+                        type = 'first';
+                        document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+                    } else if (currentAttempts <= q.steps.length + 2) {
+                        // Sedikit salah
+                        points = CONFIG.SCORE_SECOND;
+                        levelStats.second++;
+                        type = 'second';
+                        document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+                    } else {
+                        // Banyak salah
+                        points = CONFIG.SCORE_THIRD;
+                        levelStats.third++;
+                        type = 'third';
+                        document.getElementById('mascot-bubble').innerText = '😅👍';
+                    }
+                    
+                    levelStats.score += points;
+                    gameStats.score += points;
+                    gameStats.questions++;
+                    gameStats.correct++;
+                    gameStats.attempts += currentAttempts;
+                    updateScoreBoard();
+                    
+                    setTimeout(() => showFeedback(true, type, points), 800);
+                }
+            } else {
+                // JAWABAN SALAH
+                btnElement.classList.add('wrong');
+                
+                if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
+                    // Game over untuk question ini
+                    isProcessing = true;
+                    levelStats.third++;
+                    gameStats.questions++;
+                    gameStats.attempts += currentAttempts;
+                    document.getElementById('mascot-bubble').innerText = t.mascot.sad;
+                    
+                    // Tampilkan urutan yang benar
+                    const slots = document.querySelectorAll('.sequence-slot');
+                    q.steps.forEach((step, index) => {
+                        slots[index].innerHTML = `
+                            <div class="slot-number">${index + 1}</div>
+                            <div class="slot-emoji">${step.emoji}</div>
+                        `;
+                        slots[index].classList.remove('current');
+                        if (!slots[index].classList.contains('filled')) {
+                            slots[index].style.background = 'var(--orange)';
+                            slots[index].style.border = '3px solid var(--black)';
+                        }
+                    });
+                    
+                    updateScoreBoard();
+                    setTimeout(() => showFeedback(false, 'failed', 0), 1000);
+                } else {
+                    // Bisa coba lagi
+                    setTimeout(() => {
+                        btnElement.classList.remove('wrong');
+                    }, 400);
+                }
+            }
+        }
+
+        function showFeedback(isCorrect, type, points) {
+            const o = document.getElementById('feedback-overlay');
+            const e = document.getElementById('feedback-emoji');
+            const s = document.getElementById('feedback-stars');
+            const b = document.getElementById('next-btn');
+            
+            if (isCorrect) {
+                if (type === 'first') { e.innerText = '🤩'; s.innerText = '⭐⭐⭐'; }
+                else if (type === 'second') { e.innerText = '😄'; s.innerText = '⭐⭐'; }
+                else { e.innerText = '👍'; s.innerText = '⭐'; }
+                b.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
+            } else {
+                e.innerText = '💡';
+                s.innerText = 'Coba lagi!';
+                b.innerText = '▶️';
+            }
+            o.classList.add('show');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-overlay').classList.remove('show');
+            isProcessing = false; currentAttempts = 0;
+            
+            if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
+                currentQuestion++; renderQuestion();
+            } else { showLevelComplete(); }
+        }
+
+        function showLevelComplete() {
+            const o = document.getElementById('level-complete-overlay');
+            let stars = '';
+            if (levelStats.first >= 4) { stars = '⭐⭐⭐'; gameStats.stars += 3; }
+            else if (levelStats.first >= 2) { stars = '⭐⭐'; gameStats.stars += 2; }
+            else { stars = '⭐'; gameStats.stars += 1; }
+            
+            document.getElementById('level-stars').innerText = stars;
+            document.getElementById('stat-first').innerText = levelStats.first;
+            document.getElementById('stat-second').innerText = levelStats.second;
+            document.getElementById('stat-third').innerText = levelStats.third;
+            updateScoreBoard(); o.classList.add('show');
+        }
+
+        function nextLevel() {
+            document.getElementById('level-complete-overlay').classList.remove('show');
+            if (currentLevel < TEMPLATES.length - 1) { currentLevel++; initLevel(); }
+            else { showGameComplete(); }
+        }
+
+        function restartLevel() {
+            document.getElementById('level-complete-overlay').classList.remove('show');
+            gameStats.stars -= document.getElementById('level-stars').innerText.length;
+            initLevel();
+        }
+
+        function showGameComplete() {
+            const o = document.getElementById('game-complete-overlay');
+            const maxStars = TEMPLATES.length * 3;
+            const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
+            let fs = ''; for (let i = 0; i < rating; i++) fs += '⭐';
+            
+            document.getElementById('final-stars').innerText = fs;
+            document.getElementById('final-total-stars').innerText = gameStats.stars;
+            document.getElementById('final-total-score').innerText = gameStats.score;
+            const acc = gameStats.questions > 0 ? Math.round((gameStats.correct / gameStats.questions) * 100) : 0;
+            document.getElementById('final-accuracy').innerText = acc + '%';
+            o.classList.add('show');
+        }
+
+        function restartGame() {
+            document.getElementById('game-complete-overlay').classList.remove('show');
+            currentLevel = 0;
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+            initLevel();
+        }
+
+        function updateScoreBoard() {
+            document.getElementById('stars-count').innerText = gameStats.stars;
+            document.getElementById('wrong-count').innerText = gameStats.attempts - gameStats.correct;
+            document.getElementById('total-score').innerText = gameStats.score;
+        }
+
+        initLevel();
+    </script>
+</body>
+</html>
