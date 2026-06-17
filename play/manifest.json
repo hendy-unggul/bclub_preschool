@@ -8,14 +8,14 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%230D0D0D' width='192' height='192'/%3E%3Ctext fill='%23FFE600' font-family='Arial' font-size='120' font-weight='bold' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EB%3C/text%3E%3C/svg%3E",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
-      "src": "icon-512.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%230D0D0D' width='512' height='512'/%3E%3Ctext fill='%23FFE600' font-family='Arial' font-size='320' font-weight='bold' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EB%3C/text%3E%3C/svg%3E",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml"
     }
   ]
 }
