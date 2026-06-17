@@ -110,36 +110,32 @@
             50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
         }
 
-        .attempt-area {
+        /* Wrong count indicator - visual for PAUD */
+        .wrong-area {
             display: flex; justify-content: center; gap: 8px;
             min-height: 40px; align-items: center;
         }
-        .heart {
-            font-size: 32px; transition: all 0.3s;
+        .wrong-dot {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--white); border: 3px solid var(--coral);
+            transition: all 0.3s;
         }
-        .heart.broken {
-            animation: heartBreak 0.5s;
-            filter: grayscale(1) opacity(0.2);
+        .wrong-dot.filled {
+            background: var(--coral);
+            animation: wrongPulse 0.5s;
         }
-        @keyframes heartBreak {
-            0% { transform: scale(1) rotate(0); }
-            25% { transform: scale(1.3) rotate(-10deg); }
-            50% { transform: scale(0.8) rotate(10deg); }
-            100% { transform: scale(0.8) rotate(0); }
+        @keyframes wrongPulse {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           RECIPE TITLE
-        ═══════════════════════════════════════════════════════ */
         .recipe-title {
             text-align: center; padding: 12px;
             font-size: 24px; font-weight: 900;
             color: var(--black);
         }
 
-        /* ═══════════════════════════════════════════════════════
-           SEQUENCE SLOTS (Urutan yang harus diisi)
-        ═══════════════════════════════════════════════════════ */
         .sequence-slots {
             display: flex; gap: 8px; margin: 12px 16px;
             background: var(--white); padding: 12px; border-radius: 20px;
@@ -182,15 +178,11 @@
             50% { transform: scale(1.05); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           AVAILABLE STEPS (Langkah yang bisa dipilih)
-        ═══════════════════════════════════════════════════════ */
         .steps-container {
             display: flex; flex-direction: column;
             align-items: center; gap: 12px;
             padding: 12px;
         }
-        
         .steps-cue {
             font-size: 36px;
             animation: cueBounce 1s infinite;
@@ -200,7 +192,6 @@
             0%, 100% { transform: translateY(0); opacity: 1; }
             50% { transform: translateY(-8px); opacity: 0.7; }
         }
-
         .steps-row {
             display: flex; gap: 12px; justify-content: center;
             flex-wrap: wrap;
@@ -255,9 +246,6 @@
             80% { transform: translateX(6px) rotate(2deg); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           OVERLAYS
-        ═══════════════════════════════════════════════════════ */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(13,13,13,0.92);
@@ -331,7 +319,7 @@
             <span class="icon">⭐</span><span id="stars-count">0</span>
         </div>
         <div class="score-item hearts">
-            <span class="icon">❤️</span><span id="wrong-count">0</span>
+            <span class="icon">❌</span><span id="wrong-count">0</span>
         </div>
         <div class="score-item points">
             <span class="icon">💎</span><span id="total-score">0</span>
@@ -341,12 +329,16 @@
     <div class="game-container">
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">👨‍🍳</div>
-            <div class="mascot-bubble" id="mascot-bubble">Urutkan langkahnya! 🤔</div>
+            <div class="mascot-bubble" id="mascot-bubble">Urutkan! 🤔</div>
         </div>
 
         <div class="progress-area" id="progress-dots"></div>
-        <div class="attempt-area" id="attempt-hearts">
-            <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span>
+        
+        <!-- Wrong count visual indicator (dots, not hearts) -->
+        <div class="wrong-area" id="wrong-dots">
+            <div class="wrong-dot"></div>
+            <div class="wrong-dot"></div>
+            <div class="wrong-dot"></div>
         </div>
 
         <div class="recipe-title" id="recipe-title">🥪 Roti Selai</div>
@@ -369,9 +361,9 @@
         <div class="trophy">🏆</div>
         <div class="star-rating" id="level-stars"></div>
         <div class="stats-visual">
-            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇1st</div></div>
-            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈2nd</div></div>
-            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3rd</div></div>
+            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇0❌</div></div>
+            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈1-2❌</div></div>
+            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3+❌</div></div>
         </div>
         <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
         <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
@@ -390,16 +382,17 @@
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  CONFIG - Sama persis dengan Detektif Pola
+        //  CONFIG - FIXED: No MAX_ATTEMPTS, scoring by wrongCount
         // ═══════════════════════════════════════════════════════
         const CONFIG = {
             QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25,
-            MAX_ATTEMPTS: 3
+            SCORE_FIRST: 100,   // 0 wrong
+            SCORE_SECOND: 50,   // 1-2 wrong
+            SCORE_THIRD: 25     // 3+ wrong
         };
 
         // ═══════════════════════════════════════════════════════
-        //  TEMPLATES - 3 Level dengan resep berbeda
+        //  TEMPLATES
         // ═══════════════════════════════════════════════════════
         const TEMPLATES = [
             {
@@ -407,41 +400,11 @@
                 title: "🥪 Roti Selai",
                 mascot: { think: "Urutkan! 🤔", happy: "Benar! 😄", sad: "Oops! 😢" },
                 questions: [
-                    {
-                        steps: [
-                            { emoji: "🍞", text: "Ambil Roti" },
-                            { emoji: "🥄", text: "Oles Selai" },
-                            { emoji: "🥪", text: "Tutup Roti" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥛", text: "Siapkan Susu" },
-                            { emoji: "🍫", text: "Tambah Coklat" },
-                            { emoji: "🥤", text: "Aduk Rata" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍌", text: "Kupas Pisang" },
-                            { emoji: "🥣", text: "Taruh di Mangkuk" },
-                            { emoji: "🥄", text: "Hancurkan" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍎", text: "Cuci Apel" },
-                            { emoji: "🔪", text: "Potong Apel" },
-                            { emoji: "🍽️", text: "Sajikan" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥚", text: "Pecahkan Telur" },
-                            { emoji: "🍳", text: "Goreng Telur" },
-                            { emoji: "🍽️", text: "Angkat" }
-                        ]
-                    }
+                    { steps: [{ emoji: "🍞", text: "Ambil Roti" }, { emoji: "🥄", text: "Oles Selai" }, { emoji: "🥪", text: "Tutup Roti" }] },
+                    { steps: [{ emoji: "🥛", text: "Siapkan Susu" }, { emoji: "🍫", text: "Tambah Coklat" }, { emoji: "🥤", text: "Aduk Rata" }] },
+                    { steps: [{ emoji: "🍌", text: "Kupas Pisang" }, { emoji: "🥣", text: "Taruh di Mangkuk" }, { emoji: "🥄", text: "Hancurkan" }] },
+                    { steps: [{ emoji: "🍎", text: "Cuci Apel" }, { emoji: "🔪", text: "Potong Apel" }, { emoji: "🍽️", text: "Sajikan" }] },
+                    { steps: [{ emoji: "🥚", text: "Pecahkan Telur" }, { emoji: "🍳", text: "Goreng Telur" }, { emoji: "🍽️", text: "Angkat" }] }
                 ]
             },
             {
@@ -449,46 +412,11 @@
                 title: "☕ Teh Manis",
                 mascot: { think: "4 langkah! 🤔", happy: "Hebat! 🤩", sad: "Coba lagi! 😵" },
                 questions: [
-                    {
-                        steps: [
-                            { emoji: "🫖", text: "Siapkan Gelas" },
-                            { emoji: "🍵", text: "Masukkan Teh" },
-                            { emoji: "💧", text: "Tuang Air Panas" },
-                            { emoji: "🍯", text: "Tambah Gula" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍚", text: "Cuci Beras" },
-                            { emoji: "🍲", text: "Masukkan Rice Cooker" },
-                            { emoji: "💧", text: "Tambah Air" },
-                            { emoji: "⏰", text: "Tekan Tombol" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥕", text: "Kupas Wortel" },
-                            { emoji: "🔪", text: "Potong Wortel" },
-                            { emoji: "🍳", text: "Tumis Wortel" },
-                            { emoji: "🧂", text: "Tambah Garam" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍋", text: "Peras Lemon" },
-                            { emoji: "🥤", text: "Tuang ke Gelas" },
-                            { emoji: "💧", text: "Tambah Air" },
-                            { emoji: "🧊", text: "Tambah Es" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥔", text: "Kupas Kentang" },
-                            { emoji: "🔪", text: "Potong Kentang" },
-                            { emoji: "🍳", text: "Goreng Kentang" },
-                            { emoji: "🧂", text: "Bumbui" }
-                        ]
-                    }
+                    { steps: [{ emoji: "🫖", text: "Siapkan Gelas" }, { emoji: "🍵", text: "Masukkan Teh" }, { emoji: "💧", text: "Tuang Air Panas" }, { emoji: "🍯", text: "Tambah Gula" }] },
+                    { steps: [{ emoji: "🍚", text: "Cuci Beras" }, { emoji: "🍲", text: "Masukkan Rice Cooker" }, { emoji: "💧", text: "Tambah Air" }, { emoji: "⏰", text: "Tekan Tombol" }] },
+                    { steps: [{ emoji: "🥕", text: "Kupas Wortel" }, { emoji: "🔪", text: "Potong Wortel" }, { emoji: "🍳", text: "Tumis Wortel" }, { emoji: "🧂", text: "Tambah Garam" }] },
+                    { steps: [{ emoji: "🍋", text: "Peras Lemon" }, { emoji: "🥤", text: "Tuang ke Gelas" }, { emoji: "💧", text: "Tambah Air" }, { emoji: "🧊", text: "Tambah Es" }] },
+                    { steps: [{ emoji: "🥔", text: "Kupas Kentang" }, { emoji: "🔪", text: "Potong Kentang" }, { emoji: "🍳", text: "Goreng Kentang" }, { emoji: "🧂", text: "Bumbui" }] }
                 ]
             },
             {
@@ -496,66 +424,27 @@
                 title: "🥙 Sandwich",
                 mascot: { think: "5 langkah! 🤔", happy: "Sempurna! 🥳", sad: "Hampir! 🙀" },
                 questions: [
-                    {
-                        steps: [
-                            { emoji: "🍞", text: "Ambil 2 Roti" },
-                            { emoji: "🧈", text: "Oles Mentega" },
-                            { emoji: "🧀", text: "Taruh Keju" },
-                            { emoji: "🍅", text: "Taruh Tomat" },
-                            { emoji: "🥙", text: "Tutup Roti" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍝", text: "Rebus Pasta" },
-                            { emoji: "🍅", text: "Buat Saus" },
-                            { emoji: "🧀", text: "Tambah Keju" },
-                            { emoji: "🌿", text: "Taburi Herbs" },
-                            { emoji: "🍽️", text: "Sajikan" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥗", text: "Cuci Sayur" },
-                            { emoji: "🔪", text: "Potong Sayur" },
-                            { emoji: "🥕", text: "Tambah Wortel" },
-                            { emoji: "🥒", text: "Tambah Timun" },
-                            { emoji: "🥗", text: "Campur Rata" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🍕", text: "Siapkan Adonan" },
-                            { emoji: "🍅", text: "Oles Saus Tomat" },
-                            { emoji: "🧀", text: "Taburi Keju" },
-                            { emoji: "🍖", text: "Taruh Topping" },
-                            { emoji: "🔥", text: "Panggang" }
-                        ]
-                    },
-                    {
-                        steps: [
-                            { emoji: "🥞", text: "Buat Adonan" },
-                            { emoji: "🍳", text: "Panaskan Wajan" },
-                            { emoji: "🥞", text: "Tuang Adonan" },
-                            { emoji: "🍯", text: "Balik Pancake" },
-                            { emoji: "🍽️", text: "Sajikan" }
-                        ]
-                    }
+                    { steps: [{ emoji: "🍞", text: "Ambil 2 Roti" }, { emoji: "🧈", text: "Oles Mentega" }, { emoji: "🧀", text: "Taruh Keju" }, { emoji: "🍅", text: "Taruh Tomat" }, { emoji: "🥙", text: "Tutup Roti" }] },
+                    { steps: [{ emoji: "🍝", text: "Rebus Pasta" }, { emoji: "🍅", text: "Buat Saus" }, { emoji: "🧀", text: "Tambah Keju" }, { emoji: "🌿", text: "Taburi Herbs" }, { emoji: "🍽️", text: "Sajikan" }] },
+                    { steps: [{ emoji: "🥗", text: "Cuci Sayur" }, { emoji: "🔪", text: "Potong Sayur" }, { emoji: "🥕", text: "Tambah Wortel" }, { emoji: "🥒", text: "Tambah Timun" }, { emoji: "🥗", text: "Campur Rata" }] },
+                    { steps: [{ emoji: "🍕", text: "Siapkan Adonan" }, { emoji: "🍅", text: "Oles Saus Tomat" }, { emoji: "🧀", text: "Taburi Keju" }, { emoji: "🍖", text: "Taruh Topping" }, { emoji: "🔥", text: "Panggang" }] },
+                    { steps: [{ emoji: "🥞", text: "Buat Adonan" }, { emoji: "🍳", text: "Panaskan Wajan" }, { emoji: "🥞", text: "Tuang Adonan" }, { emoji: "🍯", text: "Balik Pancake" }, { emoji: "🍽️", text: "Sajikan" }] }
                 ]
             }
         ];
 
         // ═══════════════════════════════════════════════════════
-        //  STATE MANAGEMENT - Sama dengan Detektif Pola
+        //  STATE - FIXED: wrongCount per question, not attempts
         // ═══════════════════════════════════════════════════════
-        let currentLevel = 0, currentQuestion = 0, currentAttempts = 0, isProcessing = false;
+        let currentLevel = 0, currentQuestion = 0, currentStepIndex = 0, isProcessing = false;
+        let wrongCount = 0; // ← KEY FIX: Track wrong answers per question
         let levelStats = { first: 0, second: 0, third: 0, score: 0 };
-        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
         let currentQuestions = [];
-        let currentStepIndex = 0; // Index langkah yang harus diisi berikutnya
 
         function initLevel() {
-            currentQuestion = 0; currentAttempts = 0; isProcessing = false;
+            currentQuestion = 0; currentStepIndex = 0; isProcessing = false;
+            wrongCount = 0; // ← Reset wrong count
             levelStats = { first: 0, second: 0, third: 0, score: 0 };
             const t = TEMPLATES[currentLevel];
             currentQuestions = [];
@@ -565,11 +454,11 @@
                 // Shuffle steps untuk ditampilkan
                 const shuffledSteps = [...q.steps].sort(() => Math.random() - 0.5);
                 currentQuestions.push({
-                    steps: q.steps, // Urutan yang benar
-                    shuffledSteps: shuffledSteps // Urutan acak untuk ditampilkan
+                    steps: q.steps, // Urutan benar
+                    shuffledSteps: shuffledSteps // Urutan acak untuk pilihan
                 });
             }
-            renderProgressDots(); updateScoreBoard(); renderQuestion();
+            renderProgressDots(); updateScoreBoard(); renderWrongDots(); renderQuestion();
         }
 
         function renderProgressDots() {
@@ -584,162 +473,134 @@
             }
         }
 
-        function renderHearts() {
-            document.querySelectorAll('.heart').forEach((h, i) => {
-                h.className = 'heart' + (i < currentAttempts ? ' broken' : '');
+        // FIXED: Visual wrong dots (not hearts - different game mechanic)
+        function renderWrongDots() {
+            const dots = document.querySelectorAll('.wrong-dot');
+            dots.forEach((d, i) => {
+                d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
             });
-        }
-
-        function resetHearts() {
-            document.querySelectorAll('.heart').forEach(h => h.className = 'heart');
         }
 
         function renderQuestion() {
             const t = TEMPLATES[currentLevel];
             const q = currentQuestions[currentQuestion];
-            currentStepIndex = 0; // Reset ke langkah pertama
+            currentStepIndex = 0;
+            wrongCount = 0; // ← Reset for new question
             
             document.getElementById('level-display').innerText = t.name;
             document.getElementById('recipe-title').innerText = t.title;
             document.getElementById('mascot-emoji').innerText = '👨‍🍳';
             document.getElementById('mascot-bubble').innerText = t.mascot.think;
-            resetHearts(); renderProgressDots();
+            renderWrongDots(); renderProgressDots();
 
-            // Render Sequence Slots (urutan yang harus diisi)
+            // Render Sequence Slots
             const slotsContainer = document.getElementById('sequence-slots');
             slotsContainer.innerHTML = '';
             q.steps.forEach((step, index) => {
                 const slot = document.createElement('div');
-                slot.className = 'sequence-slot';
-                if (index === 0) slot.classList.add('current'); // Slot pertama yang harus diisi
-                
-                slot.innerHTML = `
-                    <div class="slot-number">${index + 1}</div>
-                    <div class="slot-emoji">❓</div>
-                `;
+                slot.className = 'sequence-slot' + (index === 0 ? ' current' : '');
+                slot.innerHTML = `<div class="slot-number">${index + 1}</div><div class="slot-emoji">❓</div>`;
                 slot.dataset.index = index;
                 slotsContainer.appendChild(slot);
             });
 
-            // Render Available Steps (langkah yang bisa dipilih)
+            // Render Available Steps (shuffled)
             const stepsContainer = document.getElementById('steps-container');
             stepsContainer.innerHTML = '';
-            q.shuffledSteps.forEach((step, index) => {
+            q.shuffledSteps.forEach((step) => {
                 const btn = document.createElement('div');
                 btn.className = 'step-btn';
-                btn.innerHTML = `
-                    <div class="step-emoji">${step.emoji}</div>
-                    <div class="step-text">${step.text}</div>
-                `;
-                btn.dataset.stepIndex = index;
+                btn.innerHTML = `<div class="step-emoji">${step.emoji}</div><div class="step-text">${step.text}</div>`;
+                btn.dataset.emoji = step.emoji;
+                btn.dataset.text = step.text;
                 btn.onclick = () => checkAnswer(step, btn);
                 stepsContainer.appendChild(btn);
             });
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  CHECK ANSWER - FIXED: wrongCount based, unlimited tries
+        // ═══════════════════════════════════════════════════════
         function checkAnswer(selectedStep, btnElement) {
             if (isProcessing) return;
             
             const q = currentQuestions[currentQuestion];
+            const correctStep = q.steps[currentStepIndex];
             const t = TEMPLATES[currentLevel];
-            const correctStep = q.steps[currentStepIndex]; // Langkah yang seharusnya dipilih
-            
-            currentAttempts++; renderHearts();
 
-            // Cek apakah step yang dipilih benar
             if (selectedStep.emoji === correctStep.emoji && selectedStep.text === correctStep.text) {
-                // JAWABAN BENAR
+                // ✓ BENAR
                 isProcessing = true;
                 btnElement.classList.add('correct');
                 
-                // Isi slot dengan step yang benar
+                // Fill slot
                 const slots = document.querySelectorAll('.sequence-slot');
                 const currentSlot = slots[currentStepIndex];
-                currentSlot.innerHTML = `
-                    <div class="slot-number">${currentStepIndex + 1}</div>
-                    <div class="slot-emoji">${correctStep.emoji}</div>
-                `;
+                currentSlot.innerHTML = `<div class="slot-number">${currentStepIndex + 1}</div><div class="slot-emoji">${correctStep.emoji}</div>`;
                 currentSlot.classList.remove('current');
                 currentSlot.classList.add('filled');
                 
-                // Move to next step
                 currentStepIndex++;
                 
-                // Jika masih ada step berikutnya
+                // Next step or finish
                 if (currentStepIndex < q.steps.length) {
-                    // Highlight slot berikutnya
                     slots[currentStepIndex].classList.add('current');
                     isProcessing = false;
-                    
-                    // Update mascot
                     document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else {
-                    // Semua step selesai!
-                    let points = 0, type = '';
-                    if (currentAttempts <= q.steps.length) {
-                        // Sempurna (tidak ada salah)
-                        points = CONFIG.SCORE_FIRST;
-                        levelStats.first++;
-                        type = 'first';
-                        document.getElementById('mascot-bubble').innerText = t.mascot.happy;
-                    } else if (currentAttempts <= q.steps.length + 2) {
-                        // Sedikit salah
-                        points = CONFIG.SCORE_SECOND;
-                        levelStats.second++;
-                        type = 'second';
-                        document.getElementById('mascot-bubble').innerText = t.mascot.happy;
-                    } else {
-                        // Banyak salah
-                        points = CONFIG.SCORE_THIRD;
-                        levelStats.third++;
-                        type = 'third';
-                        document.getElementById('mascot-bubble').innerText = '😅👍';
-                    }
-                    
-                    levelStats.score += points;
-                    gameStats.score += points;
-                    gameStats.questions++;
-                    gameStats.correct++;
-                    gameStats.attempts += currentAttempts;
-                    updateScoreBoard();
-                    
-                    setTimeout(() => showFeedback(true, type, points), 800);
+                    // 🎉 ALL STEPS CORRECT - Calculate score based on wrongCount
+                    finishQuestion(t);
                 }
             } else {
-                // JAWABAN SALAH
+                // ✗ SALAH - Unlimited tries, just track wrongCount
+                wrongCount++;
+                gameStats.wrongTotal++;
                 btnElement.classList.add('wrong');
                 
-                if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
-                    // Game over untuk question ini
-                    isProcessing = true;
-                    levelStats.third++;
-                    gameStats.questions++;
-                    gameStats.attempts += currentAttempts;
-                    document.getElementById('mascot-bubble').innerText = t.mascot.sad;
-                    
-                    // Tampilkan urutan yang benar
-                    const slots = document.querySelectorAll('.sequence-slot');
-                    q.steps.forEach((step, index) => {
-                        slots[index].innerHTML = `
-                            <div class="slot-number">${index + 1}</div>
-                            <div class="slot-emoji">${step.emoji}</div>
-                        `;
-                        slots[index].classList.remove('current');
-                        if (!slots[index].classList.contains('filled')) {
-                            slots[index].style.background = 'var(--orange)';
-                            slots[index].style.border = '3px solid var(--black)';
-                        }
-                    });
-                    
-                    updateScoreBoard();
-                    setTimeout(() => showFeedback(false, 'failed', 0), 1000);
-                } else {
-                    // Bisa coba lagi
-                    setTimeout(() => {
-                        btnElement.classList.remove('wrong');
-                    }, 400);
-                }
+                // Visual feedback
+                renderWrongDots();
+                updateScoreBoard();
+                document.getElementById('mascot-bubble').innerText = t.mascot.sad;
+                
+                // Disable wrong button so child can't click same wrong answer
+                setTimeout(() => {
+                    btnElement.classList.remove('wrong');
+                    btnElement.classList.add('disabled');
+                }, 400);
             }
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  FINISH QUESTION - FIXED: Score by wrongCount
+        // ═══════════════════════════════════════════════════════
+        function finishQuestion(t) {
+            let points = 0, type = '';
+            
+            // KEY FIX: Score based on wrongCount, not attempts
+            if (wrongCount === 0) {
+                points = CONFIG.SCORE_FIRST;
+                levelStats.first++;
+                type = 'first';
+                document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+            } else if (wrongCount <= 2) {
+                points = CONFIG.SCORE_SECOND;
+                levelStats.second++;
+                type = 'second';
+                document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+            } else {
+                points = CONFIG.SCORE_THIRD;
+                levelStats.third++;
+                type = 'third';
+                document.getElementById('mascot-bubble').innerText = '😅👍';
+            }
+            
+            levelStats.score += points;
+            gameStats.score += points;
+            gameStats.questions++;
+            gameStats.correct++; // ← 1x per question (not per step!)
+            
+            updateScoreBoard();
+            setTimeout(() => showFeedback(true, type, points), 800);
         }
 
         function showFeedback(isCorrect, type, points) {
@@ -753,21 +614,20 @@
                 else if (type === 'second') { e.innerText = '😄'; s.innerText = '⭐⭐'; }
                 else { e.innerText = '👍'; s.innerText = '⭐'; }
                 b.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
-            } else {
-                e.innerText = '💡';
-                s.innerText = 'Coba lagi!';
-                b.innerText = '▶️';
             }
             o.classList.add('show');
         }
 
         function nextQuestion() {
             document.getElementById('feedback-overlay').classList.remove('show');
-            isProcessing = false; currentAttempts = 0;
+            isProcessing = false;
             
             if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
-                currentQuestion++; renderQuestion();
-            } else { showLevelComplete(); }
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showLevelComplete();
+            }
         }
 
         function showLevelComplete() {
@@ -781,7 +641,8 @@
             document.getElementById('stat-first').innerText = levelStats.first;
             document.getElementById('stat-second').innerText = levelStats.second;
             document.getElementById('stat-third').innerText = levelStats.third;
-            updateScoreBoard(); o.classList.add('show');
+            updateScoreBoard();
+            o.classList.add('show');
         }
 
         function nextLevel() {
@@ -800,7 +661,8 @@
             const o = document.getElementById('game-complete-overlay');
             const maxStars = TEMPLATES.length * 3;
             const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
-            let fs = ''; for (let i = 0; i < rating; i++) fs += '⭐';
+            let fs = '';
+            for (let i = 0; i < rating; i++) fs += '⭐';
             
             document.getElementById('final-stars').innerText = fs;
             document.getElementById('final-total-stars').innerText = gameStats.stars;
@@ -813,13 +675,13 @@
         function restartGame() {
             document.getElementById('game-complete-overlay').classList.remove('show');
             currentLevel = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
             initLevel();
         }
 
         function updateScoreBoard() {
             document.getElementById('stars-count').innerText = gameStats.stars;
-            document.getElementById('wrong-count').innerText = gameStats.attempts - gameStats.correct;
+            document.getElementById('wrong-count').innerText = gameStats.wrongTotal;
             document.getElementById('total-score').innerText = gameStats.score;
         }
 
