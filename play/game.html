@@ -12,319 +12,465 @@
         :root {
             --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
             --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
-            --orange: #FF9800; --blue: #2196F3;
+            --orange: #FF9800; --blue: #2196F3; --purple: #9C27B0;
         }
 
         body {
             background: var(--gray); color: var(--black);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
             min-height: 100vh; display: flex; flex-direction: column;
             overflow: hidden;
             touch-action: manipulation;
         }
 
+        /* ═══════════════════════════════════════════════════════
+           HEADER - Minimal text, maximum visual
+        ═══════════════════════════════════════════════════════ */
         header {
-            background: var(--black); padding: 12px 16px;
+            background: var(--black); padding: 8px 12px;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 4px solid var(--yellow);
         }
         .btn-back {
-            background: var(--white); color: var(--black); border: 2px solid var(--black);
-            padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 14px;
-            text-decoration: none; box-shadow: 2px 2px 0 var(--black);
-            cursor: pointer;
+            background: var(--white); border: 3px solid var(--black);
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; text-decoration: none;
         }
-        .btn-back:active { transform: translate(2px, 2px); box-shadow: none; }
-        .level-indicator {
-            background: var(--yellow); color: var(--black);
-            padding: 8px 16px; border-radius: 20px; font-weight: 900; font-size: 14px;
-            border: 2px solid var(--black);
+        .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
+        
+        .level-badge {
+            background: var(--yellow); border: 3px solid var(--black);
+            padding: 6px 16px; border-radius: 20px;
+            font-weight: 900; font-size: 16px;
+            box-shadow: 3px 3px 0 var(--black);
         }
 
+        /* ═══════════════════════════════════════════════════════
+           SCORE BOARD - Icons only, no text labels
+        ═══════════════════════════════════════════════════════ */
         .score-board {
-            display: flex; gap: 12px; justify-content: center;
-            padding: 8px 16px; background: var(--white);
-            border-bottom: 2px solid var(--black);
+            display: flex; gap: 20px; justify-content: center;
+            padding: 10px; background: var(--white);
+            border-bottom: 3px solid var(--black);
         }
         .score-item {
-            display: flex; flex-direction: column; align-items: center;
-            font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
+            font-size: 24px; font-weight: 900;
         }
-        .score-item .value {
-            font-size: 18px; font-weight: 900;
-        }
-        .score-item.stars .value { color: var(--yellow); text-shadow: 1px 1px 0 var(--black); }
-        .score-item.attempts .value { color: var(--coral); }
-        .score-item.total .value { color: var(--green); }
+        .score-item .icon { font-size: 28px; }
+        .score-item.stars { color: var(--orange); }
+        .score-item.hearts { color: var(--coral); }
+        .score-item.points { color: var(--green); }
 
-        .game-container {
-            flex: 1; display: flex; flex-direction: column;
-            padding: 20px; justify-content: center; align-items: center;
+        /* ═══════════════════════════════════════════════════════
+           MASCOT - Big, animated, attention-grabbing
+        ═══════════════════════════════════════════════════════ */
+        .mascot-area {
+            display: flex; justify-content: center; align-items: center;
+            padding: 16px; gap: 12px;
         }
-        .mascot-speech {
-            background: var(--white); border: 3px solid var(--black);
-            padding: 16px; border-radius: 16px; margin-bottom: 16px;
-            text-align: center; font-weight: 800; font-size: 16px;
-            box-shadow: 4px 4px 0 var(--black); position: relative;
-            max-width: 300px;
+        .mascot {
+            font-size: 64px;
+            animation: mascotBounce 2s infinite;
+            filter: drop-shadow(3px 3px 0 var(--black));
         }
-        .mascot-speech::after {
-            content: ''; position: absolute; bottom: -12px; left: 50%;
-            transform: translateX(-50%); border-width: 12px 12px 0;
-            border-style: solid; border-color: var(--black) transparent transparent transparent;
+        @keyframes mascotBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .mascot-bubble {
+            background: var(--white); border: 4px solid var(--black);
+            padding: 12px 20px; border-radius: 20px;
+            box-shadow: 4px 4px 0 var(--black);
+            position: relative;
+            font-size: 32px;
+        }
+        .mascot-bubble::after {
+            content: ''; position: absolute; left: -16px; top: 50%;
+            transform: translateY(-50%);
+            border-width: 12px 16px 12px 0;
+            border-style: solid;
+            border-color: transparent var(--black) transparent transparent;
+        }
+        .mascot-bubble::before {
+            content: ''; position: absolute; left: -10px; top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 14px 10px 0;
+            border-style: solid;
+            border-color: transparent var(--white) transparent transparent;
+            z-index: 1;
         }
 
-        .progress-container {
-            width: 100%; max-width: 300px; margin-bottom: 16px;
+        /* ═══════════════════════════════════════════════════════
+           PROGRESS - Visual dots, not numbers
+        ═══════════════════════════════════════════════════════ */
+        .progress-area {
+            display: flex; justify-content: center; gap: 8px;
+            padding: 8px;
         }
-        .progress-label {
-            font-size: 12px; font-weight: 700; margin-bottom: 4px;
-            display: flex; justify-content: space-between;
+        .progress-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            border: 3px solid var(--black);
+            background: var(--white);
+            transition: all 0.3s;
         }
-        .progress-bar {
-            width: 100%; height: 12px; background: var(--white);
-            border: 2px solid var(--black); border-radius: 6px;
-            overflow: hidden;
+        .progress-dot.done {
+            background: var(--green);
+            transform: scale(1.2);
         }
-        .progress-fill {
-            height: 100%; background: var(--yellow);
-            transition: width 0.3s ease;
-            border-right: 2px solid var(--black);
+        .progress-dot.current {
+            background: var(--yellow);
+            animation: pulseDot 1s infinite;
+            transform: scale(1.3);
+        }
+        @keyframes pulseDot {
+            0%, 100% { box-shadow: 0 0 0 0 var(--yellow); }
+            50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
         }
 
+        /* ═══════════════════════════════════════════════════════
+           ATTEMPT INDICATOR - Hearts, not text
+        ═══════════════════════════════════════════════════════ */
+        .attempt-area {
+            display: flex; justify-content: center; gap: 8px;
+            min-height: 40px; align-items: center;
+        }
+        .heart {
+            font-size: 32px;
+            transition: all 0.3s;
+        }
+        .heart.lost {
+            filter: grayscale(1) opacity(0.3);
+            transform: scale(0.8);
+        }
+        .heart.broken {
+            animation: heartBreak 0.5s;
+            filter: grayscale(1) opacity(0.2);
+        }
+        @keyframes heartBreak {
+            0% { transform: scale(1) rotate(0); }
+            25% { transform: scale(1.3) rotate(-10deg); }
+            50% { transform: scale(0.8) rotate(10deg); }
+            100% { transform: scale(0.8) rotate(0); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           PATTERN ROW - Big, colorful, tactile
+        ═══════════════════════════════════════════════════════ */
         .pattern-row {
-            display: flex; gap: 8px; margin-bottom: 32px;
-            background: var(--white); padding: 12px; border-radius: 16px;
-            border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--black);
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 12px; margin: 16px 0;
+            background: var(--white); padding: 16px; border-radius: 20px;
+            border: 4px solid var(--black); box-shadow: 6px 6px 0 var(--black);
+            flex-wrap: wrap; justify-content: center;
         }
         .pattern-item {
-            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
-            font-size: 32px; background: var(--white); border-radius: 12px;
-            border: 2px solid var(--black);
+            width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--white);
+            border-radius: 16px; border: 3px solid var(--black);
             transition: all 0.3s ease;
+            box-shadow: 2px 2px 0 var(--black);
         }
         .pattern-item.missing {
-            background: var(--yellow); 
-            border: 3px dashed var(--black);
-            animation: pulse 1.5s infinite;
+            background: var(--yellow);
+            border: 4px dashed var(--black);
+            animation: pulseMissing 1.5s infinite;
+            box-shadow: none;
         }
         .pattern-item.missing::before {
-            content: '?';
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--black);
+            content: '❓';
+            font-size: 32px;
+            animation: questionWiggle 1s infinite;
+        }
+        @keyframes pulseMissing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes questionWiggle {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
         }
         .pattern-item.correct-fill {
             background: var(--green) !important;
             border: 3px solid var(--black) !important;
-            animation: pop 0.3s;
+            animation: correctPop 0.5s;
+            box-shadow: 2px 2px 0 var(--black);
         }
-        .pattern-item.wrong-fill {
-            background: var(--orange) !important;
-            border: 3px solid var(--black) !important;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 230, 0, 0.7); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 230, 0, 0); }
+        @keyframes correctPop {
+            0% { transform: scale(0.5); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
 
+        /* ═══════════════════════════════════════════════════════
+           CHOICES - Big touch targets, visual feedback
+        ═══════════════════════════════════════════════════════ */
+        .choices-label {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            animation: pointDown 1.5s infinite;
+        }
+        @keyframes pointDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
         .choices-row {
-            display: flex; gap: 12px; justify-content: center;
+            display: flex; gap: 16px; justify-content: center;
             margin-bottom: 16px;
         }
         .choice-btn {
-            width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
-            font-size: 36px; background: var(--white); border: 3px solid var(--black);
-            border-radius: 16px; box-shadow: 4px 4px 0 var(--black);
-            cursor: pointer; transition: all 0.1s;
-            position: relative;
+            width: 80px; height: 80px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 48px; background: var(--white);
+            border: 4px solid var(--black); border-radius: 20px;
+            box-shadow: 5px 5px 0 var(--black);
+            cursor: pointer; transition: all 0.15s;
         }
         .choice-btn:active {
-            transform: translate(2px, 2px); 
-            box-shadow: 2px 2px 0 var(--black);
+            transform: translate(4px, 4px);
+            box-shadow: 1px 1px 0 var(--black);
         }
-        .choice-btn.correct { 
-            background: var(--green); 
-            animation: pop 0.3s;
+        .choice-btn.correct {
+            background: var(--green);
+            animation: bigPop 0.4s;
+            box-shadow: 5px 5px 0 #004d00;
         }
-        .choice-btn.wrong { 
-            background: var(--coral); 
-            animation: shake 0.4s;
+        .choice-btn.wrong {
+            background: var(--coral);
+            animation: bigShake 0.5s;
+            box-shadow: 5px 5px 0 #800000;
         }
         .choice-btn.disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             pointer-events: none;
+            transform: scale(0.9);
+        }
+        @keyframes bigPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+        @keyframes bigShake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            20% { transform: translateX(-12px) rotate(-5deg); }
+            40% { transform: translateX(12px) rotate(5deg); }
+            60% { transform: translateX(-8px) rotate(-3deg); }
+            80% { transform: translateX(8px) rotate(3deg); }
         }
 
-        .attempt-indicator {
-            font-size: 14px; font-weight: 700;
-            color: var(--coral);
-            min-height: 20px;
-            margin-bottom: 8px;
-        }
-
-        @keyframes pop { 50% { transform: scale(1.2); } }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
+        /* ═══════════════════════════════════════════════════════
+           OVERLAYS - Visual celebration, minimal text
+        ═══════════════════════════════════════════════════════ */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(13,13,13,0.95); display: none;
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1000; color: var(--white); text-align: center; padding: 20px;
+            background: rgba(13,13,13,0.92);
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000; padding: 20px;
         }
         .overlay.show { display: flex; }
-        .overlay h2 { font-size: 32px; font-weight: 900; font-style: italic; color: var(--yellow); margin-bottom: 16px; }
-        .overlay p { font-size: 18px; margin-bottom: 16px; line-height: 1.5; }
-        .overlay .stars-display {
-            font-size: 48px; margin-bottom: 24px;
-        }
-        .overlay button {
-            background: var(--yellow); color: var(--black); border: none;
-            padding: 16px 32px; border-radius: 12px; font-weight: 900; font-size: 18px;
-            box-shadow: 4px 4px 0 var(--white); cursor: pointer;
-            margin: 4px;
-        }
-        .overlay button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--white); }
 
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; margin-bottom: 24px; width: 100%; max-width: 300px;
+        /* Feedback overlay */
+        .feedback-emoji {
+            font-size: 80px;
+            animation: celebrate 1s infinite;
+            margin-bottom: 16px;
         }
-        .stat-box {
-            background: var(--black); border: 2px solid var(--yellow);
-            border-radius: 12px; padding: 12px;
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
         }
-        .stat-box .label { font-size: 11px; color: #aaa; font-weight: 700; }
-        .stat-box .value { font-size: 24px; font-weight: 900; color: var(--yellow); }
+        .feedback-stars {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .feedback-btn {
+            background: var(--yellow); color: var(--black);
+            border: 4px solid var(--black); border-radius: 16px;
+            padding: 16px 32px; font-size: 32px;
+            font-weight: 900; box-shadow: 4px 4px 0 var(--white);
+            cursor: pointer; margin-top: 16px;
+        }
+        .feedback-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+
+        /* Level complete */
+        .trophy {
+            font-size: 100px;
+            animation: trophyBounce 1s infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .star-rating {
+            font-size: 64px;
+            margin: 16px 0;
+        }
+        .stats-visual {
+            display: flex; gap: 20px;
+            margin: 16px 0;
+        }
+        .stat-circle {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            border: 4px solid var(--yellow);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: var(--black);
+        }
+        .stat-circle .number {
+            font-size: 32px; font-weight: 900; color: var(--yellow);
+        }
+        .stat-circle .label {
+            font-size: 10px; color: #aaa; font-weight: 700;
+        }
+
+        /* Game complete */
+        .confetti {
+            position: absolute;
+            font-size: 24px;
+            animation: confettiFall 3s linear infinite;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
 
         @media (max-width: 360px) {
-            .pattern-item { width: 45px; height: 45px; font-size: 28px; }
-            .choice-btn { width: 60px; height: 60px; font-size: 32px; }
+            .pattern-item { width: 50px; height: 50px; font-size: 32px; }
+            .choice-btn { width: 70px; height: 70px; font-size: 40px; }
+            .mascot { font-size: 48px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="./index.html" class="btn-back">← Kembali</a>
-        <div class="level-indicator" id="level-display">Level 1</div>
+        <a href="./index.html" class="btn-back">🔙</a>
+        <div class="level-badge" id="level-display">1️⃣</div>
     </header>
 
+    <!-- SCORE: Icons only -->
     <div class="score-board">
         <div class="score-item stars">
-            <span>⭐ Stars</span>
-            <span class="value" id="stars-count">0</span>
+            <span class="icon">⭐</span>
+            <span id="stars-count">0</span>
         </div>
-        <div class="score-item attempts">
-            <span>❌ Salah</span>
-            <span class="value" id="wrong-count">0</span>
+        <div class="score-item hearts">
+            <span class="icon">❤️</span>
+            <span id="wrong-count">0</span>
         </div>
-        <div class="score-item total">
-            <span>🏆 Skor</span>
-            <span class="value" id="total-score">0</span>
+        <div class="score-item points">
+            <span class="icon">💎</span>
+            <span id="total-score">0</span>
         </div>
     </div>
 
     <div class="game-container">
-        <div class="mascot-speech" id="mascot-text">
-            🐝 "Halo Detektif! Temukan polanya!"
+        <!-- MASCOT -->
+        <div class="mascot-area">
+            <div class="mascot" id="mascot-emoji">🐝</div>
+            <div class="mascot-bubble" id="mascot-bubble">🤔❓</div>
         </div>
 
-        <div class="progress-container">
-            <div class="progress-label">
-                <span>Progress Level</span>
-                <span id="progress-text">1/5</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
-            </div>
+        <!-- PROGRESS DOTS -->
+        <div class="progress-area" id="progress-dots"></div>
+
+        <!-- ATTEMPT HEARTS -->
+        <div class="attempt-area" id="attempt-hearts">
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
         </div>
 
-        <div class="attempt-indicator" id="attempt-indicator"></div>
-
+        <!-- PATTERN -->
         <div class="pattern-row" id="pattern-container"></div>
+
+        <!-- CHOICES LABEL -->
+        <div class="choices-label" id="choices-label">👇👇👇</div>
+
+        <!-- CHOICES -->
         <div class="choices-row" id="choices-container"></div>
     </div>
 
+    <!-- FEEDBACK OVERLAY -->
     <div class="overlay" id="feedback-overlay">
-        <h2 id="feedback-title">HEBAT!</h2>
-        <div class="stars-display" id="feedback-stars"></div>
-        <p id="feedback-text">Kamu menemukan polanya!</p>
-        <button id="next-btn" onclick="nextQuestion()">Lanjut! 🚀</button>
+        <div class="feedback-emoji" id="feedback-emoji">🎉</div>
+        <div class="feedback-stars" id="feedback-stars"></div>
+        <button class="feedback-btn" id="next-btn" onclick="nextQuestion()">▶️</button>
     </div>
 
+    <!-- LEVEL COMPLETE OVERLAY -->
     <div class="overlay" id="level-complete-overlay">
-        <h2>LEVEL SELESAI! 🎉</h2>
-        <div class="stars-display" id="level-stars"></div>
-        <div class="stats-grid">
-            <div class="stat-box">
-                <div class="label">Benar 1st Try</div>
-                <div class="value" id="stat-first">0</div>
+        <div class="trophy">🏆</div>
+        <div class="star-rating" id="level-stars"></div>
+        <div class="stats-visual">
+            <div class="stat-circle">
+                <div class="number" id="stat-first">0</div>
+                <div class="label">🥇1st</div>
             </div>
-            <div class="stat-box">
-                <div class="label">Benar 2nd Try</div>
-                <div class="value" id="stat-second">0</div>
+            <div class="stat-circle">
+                <div class="number" id="stat-second">0</div>
+                <div class="label">🥈2nd</div>
             </div>
-            <div class="stat-box">
-                <div class="label">Benar 3rd+ Try</div>
-                <div class="value" id="stat-third">0</div>
+            <div class="stat-circle">
+                <div class="number" id="stat-third">0</div>
+                <div class="label">🥉3rd</div>
             </div>
         </div>
-        <p id="level-summary-text"></p>
-        <button onclick="nextLevel()">Level Berikutnya! 🚀</button>
-        <button onclick="restartLevel()" style="background: var(--white);">Ulangi Level 🔄</button>
+        <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
+        <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
     </div>
 
+    <!-- GAME COMPLETE OVERLAY -->
     <div class="overlay" id="game-complete-overlay">
-        <h2>🎉 SELAMAT! 🎉</h2>
-        <div class="stars-display" id="final-stars">⭐⭐⭐</div>
-        <p>Kamu telah menyelesaikan semua level!</p>
-        <div class="stats-grid" style="margin-top: 16px;">
-            <div class="stat-box">
-                <div class="label">Total Stars</div>
-                <div class="value" id="final-total-stars">0</div>
+        <div class="trophy">👑</div>
+        <div class="star-rating" id="final-stars"></div>
+        <div class="stats-visual">
+            <div class="stat-circle">
+                <div class="number" id="final-total-stars">0</div>
+                <div class="label">⭐Total</div>
             </div>
-            <div class="stat-box">
-                <div class="label">Total Skor</div>
-                <div class="value" id="final-total-score">0</div>
+            <div class="stat-circle">
+                <div class="number" id="final-total-score">0</div>
+                <div class="label">💎Score</div>
             </div>
-            <div class="stat-box">
-                <div class="label">Akurasi</div>
-                <div class="value" id="final-accuracy">0%</div>
+            <div class="stat-circle">
+                <div class="number" id="final-accuracy">0%</div>
+                <div class="label">🎯Rate</div>
             </div>
         </div>
-        <button onclick="restartGame()" style="margin-top: 24px;">Main Lagi! 🔄</button>
+        <button class="feedback-btn" onclick="restartGame()" style="margin-top: 16px;">🔄🎮</button>
     </div>
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  GAME CONFIGURATION
+        //  CONFIG
         // ═══════════════════════════════════════════════════════
-
         const CONFIG = {
             QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST_ATTEMPT: 100,
-            SCORE_SECOND_ATTEMPT: 50,
-            SCORE_THIRD_ATTEMPT: 25,
+            SCORE_FIRST: 100,
+            SCORE_SECOND: 50,
+            SCORE_THIRD: 25,
             MAX_ATTEMPTS: 3
         };
 
         // ═══════════════════════════════════════════════════════
-        //  PATTERN TEMPLATES - Hanya 1 missing slot per soal
+        //  TEMPLATES - 1 missing slot per question
         // ═══════════════════════════════════════════════════════
-
-        const PATTERN_TEMPLATES = [
+        const TEMPLATES = [
             {
-                name: "Level 1",
-                type: "ABAB",
+                name: "1️⃣",
+                type: "🍎🍌",
                 choices: ["🍇", "🍌", "🍎"],
+                mascot: { think: "🤔❓", happy: "😄👍", sad: "😢💔" },
                 questions: [
                     { pattern: ["?", "🍌", "🍎", "🍌", "🍎", "🍌"], answer: "🍎" },
                     { pattern: ["🍎", "?", "🍎", "🍌", "🍎", "🍌"], answer: "🍌" },
@@ -334,9 +480,10 @@
                 ]
             },
             {
-                name: "Level 2",
-                type: "AAB",
+                name: "2️⃣",
+                type: "⭐⭐🌙",
                 choices: ["⭐", "🌙", "☀️"],
+                mascot: { think: "🤔✨", happy: "🤩✨", sad: "😵‍💫" },
                 questions: [
                     { pattern: ["?", "⭐", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
                     { pattern: ["⭐", "?", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
@@ -346,9 +493,10 @@
                 ]
             },
             {
-                name: "Level 3",
-                type: "ABC",
+                name: "3️⃣",
+                type: "🐶🐱🐭",
                 choices: ["🐶", "🐱", "🐭"],
+                mascot: { think: "🤔🐾", happy: "🥳🎉", sad: "🙀" },
                 questions: [
                     { pattern: ["?", "🐱", "🐭", "🐶", "🐱", "🐭"], answer: "🐶" },
                     { pattern: ["🐶", "?", "🐭", "🐶", "🐱", "🐭"], answer: "🐱" },
@@ -360,79 +508,85 @@
         ];
 
         // ═══════════════════════════════════════════════════════
-        //  GAME STATE
+        //  STATE
         // ═══════════════════════════════════════════════════════
-
         let currentLevel = 0;
         let currentQuestion = 0;
         let currentAttempts = 0;
         let isProcessing = false;
-        
-        let levelStats = {
-            firstTry: 0,
-            secondTry: 0,
-            thirdTry: 0,
-            totalScore: 0
-        };
-        
-        let gameStats = {
-            totalStars: 0,
-            totalScore: 0,
-            totalQuestions: 0,
-            totalCorrect: 0,
-            totalAttempts: 0
-        };
-
+        let levelStats = { first: 0, second: 0, third: 0, score: 0 };
+        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
         let currentQuestions = [];
 
         // ═══════════════════════════════════════════════════════
-        //  INIT & RENDER
+        //  INIT
         // ═══════════════════════════════════════════════════════
-
         function initLevel() {
             currentQuestion = 0;
             currentAttempts = 0;
             isProcessing = false;
-            levelStats = { firstTry: 0, secondTry: 0, thirdTry: 0, totalScore: 0 };
+            levelStats = { first: 0, second: 0, third: 0, score: 0 };
             
-            // Generate 5 questions dengan shuffle choices
-            const template = PATTERN_TEMPLATES[currentLevel];
+            const t = TEMPLATES[currentLevel];
             currentQuestions = [];
             
             for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
-                const q = template.questions[i];
-                const shuffledChoices = [...template.choices].sort(() => Math.random() - 0.5);
-                
+                const q = t.questions[i];
                 currentQuestions.push({
                     pattern: [...q.pattern],
                     answer: q.answer,
-                    choices: shuffledChoices,
-                    missingPosition: q.pattern.indexOf("?")
+                    choices: [...t.choices].sort(() => Math.random() - 0.5)
                 });
             }
             
+            renderProgressDots();
             updateScoreBoard();
             renderQuestion();
         }
 
+        function renderProgressDots() {
+            const container = document.getElementById('progress-dots');
+            container.innerHTML = '';
+            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                if (i < currentQuestion) dot.classList.add('done');
+                else if (i === currentQuestion) dot.classList.add('current');
+                container.appendChild(dot);
+            }
+        }
+
+        function renderHearts() {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach((h, i) => {
+                h.className = 'heart';
+                if (i < currentAttempts) h.classList.add('broken');
+            });
+        }
+
+        function resetHearts() {
+            document.querySelectorAll('.heart').forEach(h => h.className = 'heart');
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  RENDER QUESTION
+        // ═══════════════════════════════════════════════════════
         function renderQuestion() {
+            const t = TEMPLATES[currentLevel];
             const q = currentQuestions[currentQuestion];
             
-            document.getElementById('level-display').innerText = PATTERN_TEMPLATES[currentLevel].name;
-            document.getElementById('mascot-text').innerText = 
-                `🐝 "Soal ${currentQuestion + 1}/5 - Pola ${PATTERN_TEMPLATES[currentLevel].type}!"`;
+            document.getElementById('level-display').innerText = t.name;
+            document.getElementById('mascot-emoji').innerText = t.mascot.think.split('')[0];
+            document.getElementById('mascot-bubble').innerText = t.mascot.think;
+            document.getElementById('choices-label').innerText = '👇👇👇';
             
-            const progress = ((currentQuestion + 1) / CONFIG.QUESTIONS_PER_LEVEL) * 100;
-            document.getElementById('progress-fill').style.width = progress + '%';
-            document.getElementById('progress-text').innerText = `${currentQuestion + 1}/${CONFIG.QUESTIONS_PER_LEVEL}`;
-            
-            document.getElementById('attempt-indicator').innerText = '';
+            resetHearts();
+            renderProgressDots();
 
-            // Render Pattern
-            const patternContainer = document.getElementById('pattern-container');
-            patternContainer.innerHTML = '';
-            
-            q.pattern.forEach((item, index) => {
+            // Pattern
+            const pc = document.getElementById('pattern-container');
+            pc.innerHTML = '';
+            q.pattern.forEach(item => {
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
@@ -441,148 +595,127 @@
                     div.className = 'pattern-item';
                     div.innerText = item;
                 }
-                patternContainer.appendChild(div);
+                pc.appendChild(div);
             });
 
-            // Render Choices
-            const choicesContainer = document.getElementById('choices-container');
-            choicesContainer.innerHTML = '';
-            
+            // Choices
+            const cc = document.getElementById('choices-container');
+            cc.innerHTML = '';
             q.choices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
                 btn.innerText = choice;
-                btn.dataset.value = choice;
                 btn.onclick = () => checkAnswer(choice, btn);
-                choicesContainer.appendChild(btn);
+                cc.appendChild(btn);
             });
         }
 
         // ═══════════════════════════════════════════════════════
         //  CHECK ANSWER
         // ═══════════════════════════════════════════════════════
-
-        function checkAnswer(choice, btnElement) {
+        function checkAnswer(choice, btn) {
             if (isProcessing) return;
             
             const q = currentQuestions[currentQuestion];
+            const t = TEMPLATES[currentLevel];
             currentAttempts++;
+            renderHearts();
             
             if (choice === q.answer) {
-                // BENAR!
                 isProcessing = true;
-                btnElement.classList.add('correct');
+                btn.classList.add('correct');
                 
                 let points = 0;
                 let attemptType = '';
                 
                 if (currentAttempts === 1) {
-                    points = CONFIG.SCORE_FIRST_ATTEMPT;
-                    levelStats.firstTry++;
+                    points = CONFIG.SCORE_FIRST;
+                    levelStats.first++;
                     attemptType = 'first';
-                    gameStats.totalCorrect++;
+                    gameStats.correct++;
+                    document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else if (currentAttempts === 2) {
-                    points = CONFIG.SCORE_SECOND_ATTEMPT;
-                    levelStats.secondTry++;
+                    points = CONFIG.SCORE_SECOND;
+                    levelStats.second++;
                     attemptType = 'second';
+                    document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else {
-                    points = CONFIG.SCORE_THIRD_ATTEMPT;
-                    levelStats.thirdTry++;
+                    points = CONFIG.SCORE_THIRD;
+                    levelStats.third++;
                     attemptType = 'third';
+                    document.getElementById('mascot-bubble').innerText = '😅👍';
                 }
                 
-                levelStats.totalScore += points;
-                gameStats.totalScore += points;
-                gameStats.totalQuestions++;
-                gameStats.totalAttempts += currentAttempts;
+                levelStats.score += points;
+                gameStats.score += points;
+                gameStats.questions++;
+                gameStats.attempts += currentAttempts;
                 
                 updateScoreBoard();
                 
-                // Fill missing slot
-                const missingSlot = document.getElementById('missing-slot');
-                if (missingSlot) {
-                    missingSlot.innerText = q.answer;
-                    missingSlot.classList.remove('missing');
-                    missingSlot.classList.add('correct-fill');
+                const slot = document.getElementById('missing-slot');
+                if (slot) {
+                    slot.innerText = q.answer;
+                    slot.classList.remove('missing');
+                    slot.classList.add('correct-fill');
                 }
                 
-                setTimeout(() => showFeedback(true, attemptType, points), 500);
+                setTimeout(() => showFeedback(true, attemptType, points), 600);
                 
             } else {
-                // SALAH!
-                btnElement.classList.add('wrong');
-                btnElement.classList.add('disabled');
+                btn.classList.add('wrong');
+                btn.classList.add('disabled');
                 
-                const remaining = CONFIG.MAX_ATTEMPTS - currentAttempts;
-                let msg = '';
-                
-                if (remaining > 0) {
-                    msg = `❌ Salah! (${currentAttempts}/${CONFIG.MAX_ATTEMPTS} attempt)`;
-                } else {
-                    msg = `❌ Max attempts! Jawaban: ${q.answer}`;
-                }
-                
-                document.getElementById('attempt-indicator').innerText = msg;
-                
-                setTimeout(() => {
-                    if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
-                        // Max attempts - auto reveal
-                        isProcessing = true;
-                        levelStats.thirdTry++;
-                        gameStats.totalQuestions++;
-                        gameStats.totalAttempts += currentAttempts;
-                        
-                        const missingSlot = document.getElementById('missing-slot');
-                        if (missingSlot) {
-                            missingSlot.innerText = q.answer;
-                            missingSlot.classList.remove('missing');
-                            missingSlot.classList.add('wrong-fill');
-                        }
-                        
-                        updateScoreBoard();
-                        setTimeout(() => showFeedback(false, 'failed', 0), 800);
-                    } else {
-                        btnElement.classList.remove('wrong');
+                if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
+                    isProcessing = true;
+                    levelStats.third++;
+                    gameStats.questions++;
+                    gameStats.attempts += currentAttempts;
+                    document.getElementById('mascot-bubble').innerText = t.mascot.sad;
+                    
+                    const slot = document.getElementById('missing-slot');
+                    if (slot) {
+                        slot.innerText = q.answer;
+                        slot.classList.remove('missing');
+                        slot.style.background = 'var(--orange)';
+                        slot.style.border = '3px solid var(--black)';
                     }
-                }, 400);
+                    
+                    updateScoreBoard();
+                    setTimeout(() => showFeedback(false, 'failed', 0), 800);
+                } else {
+                    setTimeout(() => btn.classList.remove('wrong'), 400);
+                }
             }
         }
 
         // ═══════════════════════════════════════════════════════
-        //  FEEDBACK & NAVIGATION
+        //  FEEDBACK
         // ═══════════════════════════════════════════════════════
-
-        function showFeedback(isCorrect, attemptType, points) {
+        function showFeedback(isCorrect, type, points) {
             const overlay = document.getElementById('feedback-overlay');
-            const title = document.getElementById('feedback-title');
-            const text = document.getElementById('feedback-text');
-            const starsDiv = document.getElementById('feedback-stars');
+            const emoji = document.getElementById('feedback-emoji');
+            const stars = document.getElementById('feedback-stars');
             const btn = document.getElementById('next-btn');
             
             if (isCorrect) {
-                if (attemptType === 'first') {
-                    title.innerText = "SANGAT HEBAT! 🌟🌟🌟";
-                    starsDiv.innerText = "⭐⭐⭐";
-                    text.innerText = `First try! +${points} poin! Kamu jenius!`;
-                } else if (attemptType === 'second') {
-                    title.innerText = "BAGUS! ⭐⭐";
-                    starsDiv.innerText = "⭐⭐";
-                    text.innerText = `Benar di attempt ke-2! +${points} poin!`;
+                if (type === 'first') {
+                    emoji.innerText = '🤩';
+                    stars.innerText = '⭐⭐⭐';
+                } else if (type === 'second') {
+                    emoji.innerText = '😄';
+                    stars.innerText = '⭐⭐';
                 } else {
-                    title.innerText = "OK! ⭐";
-                    starsDiv.innerText = "⭐";
-                    text.innerText = `Benar di attempt ke-${currentAttempts}! +${points} poin.`;
+                    emoji.innerText = '👍';
+                    stars.innerText = '⭐';
                 }
-                
-                btn.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? "Soal Berikutnya! 🚀" : "Lihat Hasil! 📊";
+                btn.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
             } else {
-                title.innerText = "JAWABANNYA...";
-                starsDiv.innerText = "💡";
-                text.innerText = `Jawaban yang benar adalah ${currentQuestions[currentQuestion].answer}. Lanjut ya!`;
-                btn.innerText = "Lanjut 🚀";
+                emoji.innerText = '💡';
+                stars.innerText = q.answer;
+                btn.innerText = '▶️';
             }
             
-            btn.onclick = nextQuestion;
             overlay.classList.add('show');
         }
 
@@ -602,29 +735,25 @@
         // ═══════════════════════════════════════════════════════
         //  LEVEL COMPLETE
         // ═══════════════════════════════════════════════════════
-
         function showLevelComplete() {
             const overlay = document.getElementById('level-complete-overlay');
             
             let stars = '';
-            if (levelStats.firstTry >= 4) {
+            if (levelStats.first >= 4) {
                 stars = '⭐⭐⭐';
-                gameStats.totalStars += 3;
-            } else if (levelStats.firstTry >= 2) {
+                gameStats.stars += 3;
+            } else if (levelStats.first >= 2) {
                 stars = '⭐⭐';
-                gameStats.totalStars += 2;
+                gameStats.stars += 2;
             } else {
                 stars = '⭐';
-                gameStats.totalStars += 1;
+                gameStats.stars += 1;
             }
             
             document.getElementById('level-stars').innerText = stars;
-            document.getElementById('stat-first').innerText = levelStats.firstTry;
-            document.getElementById('stat-second').innerText = levelStats.secondTry;
-            document.getElementById('stat-third').innerText = levelStats.thirdTry;
-            
-            const summary = `Skor Level: ${levelStats.totalScore} | First Try: ${levelStats.firstTry}/5`;
-            document.getElementById('level-summary-text').innerText = summary;
+            document.getElementById('stat-first').innerText = levelStats.first;
+            document.getElementById('stat-second').innerText = levelStats.second;
+            document.getElementById('stat-third').innerText = levelStats.third;
             
             updateScoreBoard();
             overlay.classList.add('show');
@@ -632,8 +761,7 @@
 
         function nextLevel() {
             document.getElementById('level-complete-overlay').classList.remove('show');
-            
-            if (currentLevel < PATTERN_TEMPLATES.length - 1) {
+            if (currentLevel < TEMPLATES.length - 1) {
                 currentLevel++;
                 initLevel();
             } else {
@@ -644,30 +772,29 @@
         function restartLevel() {
             document.getElementById('level-complete-overlay').classList.remove('show');
             const stars = document.getElementById('level-stars').innerText.length;
-            gameStats.totalStars -= stars;
+            gameStats.stars -= stars;
             initLevel();
         }
 
         // ═══════════════════════════════════════════════════════
         //  GAME COMPLETE
         // ═══════════════════════════════════════════════════════
-
         function showGameComplete() {
             const overlay = document.getElementById('game-complete-overlay');
+            const maxStars = TEMPLATES.length * 3;
+            const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
             
-            const maxStars = PATTERN_TEMPLATES.length * 3;
-            const starRating = Math.max(1, Math.round((gameStats.totalStars / maxStars) * 3));
             let finalStars = '';
-            for (let i = 0; i < starRating; i++) finalStars += '⭐';
+            for (let i = 0; i < rating; i++) finalStars += '⭐';
             
             document.getElementById('final-stars').innerText = finalStars;
-            document.getElementById('final-total-stars').innerText = `${gameStats.totalStars}/${maxStars}`;
-            document.getElementById('final-total-score').innerText = gameStats.totalScore;
+            document.getElementById('final-total-stars').innerText = gameStats.stars;
+            document.getElementById('final-total-score').innerText = gameStats.score;
             
-            const accuracy = gameStats.totalQuestions > 0 
-                ? Math.round((gameStats.totalCorrect / gameStats.totalQuestions) * 100) 
+            const accuracy = gameStats.questions > 0 
+                ? Math.round((gameStats.correct / gameStats.questions) * 100) 
                 : 0;
-            document.getElementById('final-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('final-accuracy').innerText = accuracy + '%';
             
             overlay.classList.add('show');
         }
@@ -675,31 +802,20 @@
         function restartGame() {
             document.getElementById('game-complete-overlay').classList.remove('show');
             currentLevel = 0;
-            gameStats = {
-                totalStars: 0,
-                totalScore: 0,
-                totalQuestions: 0,
-                totalCorrect: 0,
-                totalAttempts: 0
-            };
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
             initLevel();
         }
 
         // ═══════════════════════════════════════════════════════
         //  UTILS
         // ═══════════════════════════════════════════════════════
-
         function updateScoreBoard() {
-            document.getElementById('stars-count').innerText = gameStats.totalStars;
-            document.getElementById('wrong-count').innerText = 
-                gameStats.totalAttempts - gameStats.totalCorrect;
-            document.getElementById('total-score').innerText = gameStats.totalScore;
+            document.getElementById('stars-count').innerText = gameStats.stars;
+            document.getElementById('wrong-count').innerText = gameStats.attempts - gameStats.correct;
+            document.getElementById('total-score').innerText = gameStats.score;
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  START
-        // ═══════════════════════════════════════════════════════
-
+        // START
         initLevel();
     </script>
 </body>
