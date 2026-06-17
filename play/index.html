@@ -4,312 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
-    <title>B Club - Detektif Cilik</title>
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" href="./assets/icon-192.png">
-    <link rel="apple-touch-icon" href="./assets/icon-192.png">
+    <title>B Club — Game Edukatif</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gR2FtZSIsInNob3J0X25hbWUiOiJCIENsdWIiLCJzdGFydF91cmwiOiIuL2luZGV4Lmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 
     <style>
-        /* ── RESET & ROOT ── */
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         :root {
-            --black: #0D0D0D;
-            --yellow: #FFE600;
-            --coral: #FF4D4D;
-            --white: #FFFFFF;
-            --gray: #F5F5F0;
+            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D;
+            --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
         }
 
         body {
-            background: var(--gray);
-            color: var(--black);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            padding-bottom: 80px;
+            background: var(--gray); color: var(--black);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
+            overflow-x: hidden; touch-action: manipulation;
         }
 
-        /* ── HEADER ── */
         header {
-            background: var(--black);
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--black); padding: 12px 16px;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 4px solid var(--yellow);
         }
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--yellow);
-            font-style: italic;
-            letter-spacing: -1px;
+        .btn-back {
+            background: var(--white); border: 3px solid var(--black);
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; text-decoration: none;
         }
-        .logo span { color: var(--white); }
-        .level-badge {
-            background: var(--coral);
-            color: var(--white);
-            font-size: 12px;
-            font-weight: 800;
-            padding: 6px 12px;
-            border-radius: 20px;
+        .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
+        .page-title {
+            color: var(--yellow); font-size: 20px; font-weight: 900;
+            font-style: italic;
         }
 
-        /* ── HERO SECTION ── */
         .hero {
-            background: var(--black);
-            color: var(--white);
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
+            background: var(--black); padding: 32px 20px;
+            text-align: center; position: relative; overflow: hidden;
         }
-        .mascot {
+        .hero-emoji {
             font-size: 80px;
-            display: block;
-            margin-bottom: 10px;
             animation: bounce 2s infinite;
+            display: block; margin-bottom: 12px;
         }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
-        .hero h1 {
-            font-size: 28px;
-            font-weight: 900;
-            font-style: italic;
-            line-height: 1.1;
+        .hero-title {
+            font-size: 32px; font-weight: 900; color: var(--white);
+            font-style: italic; letter-spacing: -1px;
             margin-bottom: 8px;
         }
-        .hero h1 .y { color: var(--yellow); }
-        .hero p {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.5;
+        .hero-title span { color: var(--yellow); }
+        .hero-sub {
+            font-size: 14px; color: rgba(255,255,255,0.6);
+            max-width: 280px; margin: 0 auto;
         }
 
-        /* ── GAME GRID ── */
-        .games-section {
-            padding: 24px 20px;
+        .games-grid {
+            display: flex; flex-direction: column;
+            gap: 16px; padding: 20px;
             flex: 1;
-        }
-        .section-title {
-            font-size: 18px;
-            font-weight: 900;
-            margin-bottom: 16px;
-            font-style: italic;
-        }
-        .game-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
         }
         .game-card {
             background: var(--white);
-            border: 3px solid var(--black);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            box-shadow: 4px 4px 0 var(--black);
-            transition: transform 0.1s;
+            border: 4px solid var(--black);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 6px 6px 0 var(--black);
+            display: flex; gap: 16px;
+            align-items: center;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.15s;
+            text-decoration: none;
+            color: var(--black);
         }
         .game-card:active {
-            transform: translate(2px, 2px);
+            transform: translate(4px, 4px);
             box-shadow: 2px 2px 0 var(--black);
         }
-        .game-card.locked {
-            opacity: 0.5;
-            filter: grayscale(100%);
-        }
         .game-icon {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 8px;
-        }
-        .game-title {
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-        .level-dots {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ddd;
-            border: 1px solid var(--black);
-        }
-        .dot.active { background: var(--yellow); }
-        .dot.completed { background: var(--coral); }
-
-        /* ── STICKY FOOTER (Parent Link) ── */
-        .sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--black);
-            border-top: 3px solid var(--yellow);
-            padding: 12px 20px;
-            text-align: center;
-            z-index: 100;
-        }
-        .parent-link {
-            color: rgba(255,255,255,0.5);
-            font-size: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .parent-link:hover { color: var(--white); }
-
-        /* ── INSTALL PROMPT (PWA) ─ */
-        #install-banner {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
+            font-size: 56px;
+            width: 80px; height: 80px;
+            display: flex; justify-content: center; align-items: center;
             background: var(--yellow);
-            color: var(--black);
-            padding: 12px 20px;
-            font-weight: 800;
-            font-size: 14px;
-            z-index: 1000;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 16px;
+            border: 3px solid var(--black);
+            flex-shrink: 0;
+        }
+        .game-info { flex: 1; }
+        .game-name {
+            font-size: 22px; font-weight: 900;
+            font-style: italic; margin-bottom: 4px;
+        }
+        .game-desc {
+            font-size: 13px; color: var(--textmuted);
+            line-height: 1.5;
+        }
+        .game-badge {
+            display: inline-block;
+            background: var(--green); color: var(--black);
+            font-size: 10px; font-weight: 800;
+            padding: 4px 10px; border-radius: 20px;
+            margin-top: 8px;
+            border: 2px solid var(--black);
+        }
+
+        .stats-bar {
+            background: var(--yellow);
+            border-top: 3px solid var(--black);
             border-bottom: 3px solid var(--black);
+            display: flex; justify-content: center;
+            gap: 24px; padding: 16px;
         }
-        #install-banner button {
+        .stat-item {
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 28px; font-weight: 900;
+            display: block;
+        }
+        .stat-label {
+            font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        footer {
             background: var(--black);
-            color: var(--yellow);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 12px;
+            padding: 20px;
+            text-align: center;
+            border-top: 3px solid var(--yellow);
         }
+        .ft-logo {
+            font-size: 24px; font-weight: 900;
+            color: var(--yellow); font-style: italic;
+        }
+        .ft-logo span { color: var(--white); }
     </style>
 </head>
 <body>
 
-    <!-- PWA Install Banner -->
-    <div id="install-banner">
-        <span>📲 Install B Club di HP kamu!</span>
-        <button onclick="installPWA()">Install</button>
-    </div>
-
-    <!-- Header -->
     <header>
-        <div class="logo">B<span>Club</span></div>
-        <div class="level-badge">⭐ Level 1</div>
+        <a href="../index.html" class="btn-back">🔙</a>
+        <div class="page-title">B Club Games</div>
+        <div style="width: 40px;"></div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <span class="mascot">🐝</span>
-        <h1>Halo Detektif Cilik!<br><span class="y">Siap Berpetualang?</span></h1>
-        <p>Pilih permainanmu dan kumpulkan semua bintang!</p>
-    </section>
+    <div class="hero">
+        <span class="hero-emoji">🎮</span>
+        <h1 class="hero-title">Pilih <span>Game!</span></h1>
+        <p class="hero-sub">Belajar sambil bermain. Tap gambar untuk mulai!</p>
+    </div>
 
-    <!-- Games Grid -->
-    <section class="games-section">
-        <h2 class="section-title">Pilih Misi Kamu:</h2>
-        <div class="game-grid">
-            
-            <!-- Game 1: Detektif Pola (ACTIVE) -->
-            <a href="./game.html" class="game-card" style="text-decoration:none;color:inherit;">
-                <span class="game-icon">🔍</span>
-                <div class="game-title">Detektif<br>Pola</div>
-                <div class="level-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </a>
-
-            <!-- Game 2: Locked -->
-            <div class="game-card locked">
-                <span class="game-icon">🍳</span>
-                <div class="game-title">Masak<br>Bareng</div>
-                <div class="level-dots">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
-
-            <!-- Game 3: Locked -->
-            <div class="game-card locked">
-                <span class="game-icon">🃏</span>
-                <div class="game-title">Kartu<br>Memori</div>
-                <div class="level-dots">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
-
-            <!-- Game 4: Locked -->
-            <div class="game-card locked">
-                <span class="game-icon">️</span>
-                <div class="game-title">Mesin<br>Ajaib</div>
-                <div class="level-dots">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
-
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-num">2</span>
+            <span class="stat-label">Game</span>
         </div>
-    </section>
+        <div class="stat-item">
+            <span class="stat-num">15</span>
+            <span class="stat-label">Level</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Seru</span>
+        </div>
+    </div>
 
-    <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-        <a href="./parents.html" class="parent-link">🔒 Untuk Ayah/Bunda/Guru →</a>
+    <div class="games-grid">
+        <a href="./detektif.html" class="game-card">
+            <div class="game-icon">🕵️</div>
+            <div class="game-info">
+                <div class="game-name">Detektif Pola</div>
+                <div class="game-desc">Cari pola yang hilang! Latih logika dan pengamatan.</div>
+                <span class="game-badge">🧠 Logika</span>
+            </div>
+        </a>
+
+        <a href="./masak.html" class="game-card">
+            <div class="game-icon">👨‍🍳</div>
+            <div class="game-info">
+                <div class="game-name">Masak Bareng</div>
+                <div class="game-desc">Urutkan langkah memasak! Latih sequencing.</div>
+                <span class="game-badge">🎯 Urutan</span>
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        <div class="ft-logo">B<span>Club</span></div>
     </footer>
 
-    <script>
-        // ── PWA Service Worker Registration ──
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW registered:', reg))
-                    .catch(err => console.log('SW failed:', err));
-            });
-        }
-
-        // ── PWA Install Prompt Logic ─
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('install-banner').style.display = 'flex';
-        });
-
-        function installPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
-                    }
-                    deferredPrompt = null;
-                    document.getElementById('install-banner').style.display = 'none';
-                });
-            }
-        }
-    </script>
 </body>
 </html>
