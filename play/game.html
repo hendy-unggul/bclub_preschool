@@ -154,32 +154,33 @@
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  FINAL FIX - TANPA STRING KOSONG SAMA SEKALI!
-        //  - Pattern: Semua emoji, HANYA "?" yang kosong
-        //  - Choices: SEMUA emoji (3 pilihan), tidak ada yang kosong
+        //  FINAL FINAL FINAL - TANPA STRING KOSONG SAMA SEKALI!
+        //  SEMUA slot pattern BERISI EMOJI
+        //  HANYA "?" yang jadi kotak kuning
         // ═══════════════════════════════════════════════════════
         
         const levels = [
             {
                 name: "Level 1",
-                // Pola ABAB: 🍎🍌🍌🍎? → Jawaban: 🍌
+                // Pola ABAB: 🍎🍎🍌🍎? → Jawaban: 🍌
+                // SEMUA slot berisi emoji, TIDAK ADA ""
                 pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["🍎", "🍌", "🍇"]  // SEMUA emoji, tidak ada ""
+                choices: ["", "🍌", "🍇"]
             },
             {
                 name: "Level 2",
-                // Pola AAB: ⭐⭐🌙⭐⭐? → Jawaban: 🌙
+                // Pola AAB: ⭐🌙⭐⭐? → Jawaban: 🌙
                 pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
                 answer: "🌙",
-                choices: ["⭐", "🌙", "☀️"]  // SEMUA emoji
+                choices: ["⭐", "🌙", "☀️"]
             },
             {
                 name: "Level 3",
                 // Pola ABC: 🐶🐱🐭🐱? → Jawaban: 🐭
                 pattern: ["🐶", "", "🐭", "🐶", "🐱", "?"],
                 answer: "🐭",
-                choices: ["🐶", "🐱", "🐭"]  // SEMUA emoji (3 pilihan)
+                choices: ["🐶", "🐱", "🐭"]
             }
         ];
 
@@ -196,18 +197,17 @@
             patternContainer.innerHTML = '';
             level.pattern.forEach((item) => {
                 const div = document.createElement('div');
-                // HANYA "?" yang dapat class 'missing' (kotak kuning)
                 if (item === "?") {
                     div.className = 'pattern-item missing';
-                    div.innerText = ''; // Kosong karena ini yang harus diisi
+                    div.innerText = '';
                 } else {
                     div.className = 'pattern-item';
-                    div.innerText = item; // Tampilkan emoji
+                    div.innerText = item;
                 }
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices - SEMUA berisi emoji (tidak ada yang kosong)
+            // Render Choices
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
             const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
@@ -215,7 +215,7 @@
             shuffledChoices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
-                btn.innerText = choice; // SELALU emoji (tidak pernah kosong)
+                btn.innerText = choice;
                 btn.onclick = () => checkAnswer(choice, btn);
                 choicesContainer.appendChild(btn);
             });
@@ -230,7 +230,6 @@
             if (choice === level.answer) {
                 btnElement.classList.add('correct');
                 
-                // Isi kotak kuning dengan jawaban
                 const missingSlot = document.querySelector('.pattern-item.missing');
                 if (missingSlot) {
                     missingSlot.innerText = choice;
