@@ -68,12 +68,26 @@
             width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
             font-size: 32px; background: var(--white); border-radius: 12px;
             border: 2px solid var(--black);
+            transition: all 0.3s ease;
         }
         .pattern-item.missing {
             background: var(--yellow); 
             border: 3px dashed var(--black);
             animation: pulse 1.5s infinite;
+            position: relative;
         }
+        /* Tambahkan tanda tanya untuk missing slot yang terlihat */
+        .pattern-item.missing::before {
+            content: '?';
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--black);
+        }
+        .pattern-item.empty-slot {
+            background: var(--gray);
+            border: 2px dashed #ccc;
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 230, 0, 0.7); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 230, 0, 0); }
@@ -87,6 +101,7 @@
             font-size: 36px; background: var(--white); border: 3px solid var(--black);
             border-radius: 16px; box-shadow: 4px 4px 0 var(--black);
             cursor: pointer; transition: all 0.1s;
+            position: relative;
         }
         .choice-btn:active {
             transform: translate(2px, 2px); 
@@ -99,6 +114,14 @@
         .choice-btn.wrong { 
             background: var(--coral); 
             animation: shake 0.4s;
+        }
+        /* Style untuk pilihan kosong yang terlihat */
+        .choice-btn.empty-choice {
+            background: var(--gray);
+        }
+        .choice-btn.empty-choice::before {
+            content: '⬜';
+            font-size: 28px;
         }
 
         @keyframes pop { 50% { transform: scale(1.2); } }
@@ -154,29 +177,31 @@
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  FINAL CODE - SETIAP SLOT BERISI EMOJI
-        //  LEVEL 1: 🍎🍌🍌🍎? (ABAB pattern)
-        //  LEVEL 2: ⭐⭐🌙⭐⭐? (AAB pattern)
-        //  LEVEL 3: 🐶🐱🐭🐶🐱? (ABC pattern)
+        //  FIXED CODE - Semua slot memiliki representasi visual
+        //  Level 1: 🍎🍌🍎🍌🍎? (ABAB pattern) → 🍌
+        //  Level 2: ⭐⭐🌙⭐⭐? (AAB pattern) → 🌙
+        //  Level 3: 🐶🐱🐭🐶🐱? (ABC pattern) → 🐭
         // ═══════════════════════════════════════════════════════
+        
+        const EMPTY = "⬜"; // Konstanta untuk representasi visual kosong
         
         const levels = [
             {
                 name: "Level 1",
-                pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],
+                pattern: ["🍎", "🍌", "🍎", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["", "🍌", "🍇"]
+                choices: ["🍇", "🍌", "🍎"]
             },
             {
                 name: "Level 2",
                 pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
-                answer: "",
-                choices: ["⭐", "", "☀️"]
+                answer: "🌙",
+                choices: ["⭐", "🌙", "☀️"]
             },
             {
                 name: "Level 3",
-                pattern: ["🐶", "🐱", "🐭", "🐶", "", "?"],
-                answer: "",
+                pattern: ["🐶", "🐱", "🐭", "🐶", "🐱", "?"],
+                answer: "🐭",
                 choices: ["🐶", "🐱", "🐭"]
             }
         ];
@@ -196,7 +221,7 @@
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
-                    div.innerText = '';
+                    div.innerText = ''; // Tanda ? ditampilkan via CSS ::before
                 } else {
                     div.className = 'pattern-item';
                     div.innerText = item;
@@ -204,21 +229,32 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices
+            // Render Choices - TIDAK di-shuffle agar konsisten
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
-            const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
             
-            shuffledChoices.forEach(choice => {
+            // FIX: Jangan shuffle, atau jika shuffle, pastikan jawaban tetap terlihat
+            level.choices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
-                btn.innerText = choice;
-                btn.onclick = () => checkAnswer(choice, btn);
+                
+                // FIX: Jika choice adalah EMPTY atau string kosong, tampilkan dengan jelas
+                if (choice === "" || choice === EMPTY) {
+                    btn.classList.add('empty-choice');
+                    btn.innerText = '';
+                    btn.dataset.value = EMPTY; // Simpan nilai asli untuk pengecekan
+                } else {
+                    btn.innerText = choice;
+                    btn.dataset.value = choice;
+                }
+                
+                btn.onclick = () => checkAnswer(btn.dataset.value || choice, btn);
                 choicesContainer.appendChild(btn);
             });
 
             console.log(`✅ Level ${currentLevel + 1}:`, {
                 pattern: level.pattern,
+                answer: level.answer,
                 choices: level.choices
             });
         }
@@ -228,16 +264,20 @@
             isProcessing = true;
 
             const level = levels[currentLevel];
+            // Normalisasi perbandingan
+            const selectedValue = choice === "" ? EMPTY : choice;
+            const correctValue = level.answer === "" ? EMPTY : level.answer;
 
-            if (choice === level.answer) {
+            if (selectedValue === correctValue) {
                 btnElement.classList.add('correct');
                 
                 const missingSlot = document.querySelector('.pattern-item.missing');
                 if (missingSlot) {
-                    missingSlot.innerText = choice;
+                    missingSlot.innerText = level.answer === "" ? EMPTY : level.answer;
                     missingSlot.classList.remove('missing');
                     missingSlot.style.background = 'var(--green)';
                     missingSlot.style.border = '3px solid var(--black)';
+                    missingSlot.style.animation = 'none';
                 }
                 
                 setTimeout(() => showFeedback(true), 500);
