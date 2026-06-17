@@ -12,20 +12,16 @@
         :root {
             --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
             --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
-            --orange: #FF9800; --blue: #2196F3; --purple: #9C27B0;
+            --orange: #FF9800; --blue: #2196F3;
         }
 
         body {
             background: var(--gray); color: var(--black);
             font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
             min-height: 100vh; display: flex; flex-direction: column;
-            overflow: hidden;
-            touch-action: manipulation;
+            overflow: hidden; touch-action: manipulation;
         }
 
-        /* ═══════════════════════════════════════════════════════
-           HEADER - Minimal text, maximum visual
-        ═══════════════════════════════════════════════════════ */
         header {
             background: var(--black); padding: 8px 12px;
             display: flex; justify-content: space-between; align-items: center;
@@ -39,17 +35,12 @@
             cursor: pointer; text-decoration: none;
         }
         .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
-        
         .level-badge {
             background: var(--yellow); border: 3px solid var(--black);
             padding: 6px 16px; border-radius: 20px;
-            font-weight: 900; font-size: 16px;
-            box-shadow: 3px 3px 0 var(--black);
+            font-weight: 900; font-size: 16px; box-shadow: 3px 3px 0 var(--black);
         }
 
-        /* ═══════════════════════════════════════════════════════
-           SCORE BOARD - Icons only, no text labels
-        ═══════════════════════════════════════════════════════ */
         .score-board {
             display: flex; gap: 20px; justify-content: center;
             padding: 10px; background: var(--white);
@@ -60,16 +51,13 @@
             font-size: 24px; font-weight: 900;
         }
         .score-item .icon { font-size: 28px; }
-        .score-item.stars { color: var(--orange); }
+        .score-item.stars { color: #FF9800; }
         .score-item.hearts { color: var(--coral); }
         .score-item.points { color: var(--green); }
 
-        /* ═══════════════════════════════════════════════════════
-           MASCOT - Big, animated, attention-grabbing
-        ═══════════════════════════════════════════════════════ */
         .mascot-area {
             display: flex; justify-content: center; align-items: center;
-            padding: 16px; gap: 12px;
+            padding: 12px; gap: 12px;
         }
         .mascot {
             font-size: 64px;
@@ -84,8 +72,7 @@
             background: var(--white); border: 4px solid var(--black);
             padding: 12px 20px; border-radius: 20px;
             box-shadow: 4px 4px 0 var(--black);
-            position: relative;
-            font-size: 32px;
+            position: relative; font-size: 32px;
         }
         .mascot-bubble::after {
             content: ''; position: absolute; left: -16px; top: 50%;
@@ -96,30 +83,22 @@
         }
         .mascot-bubble::before {
             content: ''; position: absolute; left: -10px; top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-50%); z-index: 1;
             border-width: 10px 14px 10px 0;
             border-style: solid;
             border-color: transparent var(--white) transparent transparent;
-            z-index: 1;
         }
 
-        /* ═══════════════════════════════════════════════════════
-           PROGRESS - Visual dots, not numbers
-        ═══════════════════════════════════════════════════════ */
         .progress-area {
             display: flex; justify-content: center; gap: 8px;
-            padding: 8px;
+            padding: 6px;
         }
         .progress-dot {
             width: 16px; height: 16px; border-radius: 50%;
-            border: 3px solid var(--black);
-            background: var(--white);
+            border: 3px solid var(--black); background: var(--white);
             transition: all 0.3s;
         }
-        .progress-dot.done {
-            background: var(--green);
-            transform: scale(1.2);
-        }
+        .progress-dot.done { background: var(--green); transform: scale(1.2); }
         .progress-dot.current {
             background: var(--yellow);
             animation: pulseDot 1s infinite;
@@ -130,20 +109,12 @@
             50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           ATTEMPT INDICATOR - Hearts, not text
-        ═══════════════════════════════════════════════════════ */
         .attempt-area {
             display: flex; justify-content: center; gap: 8px;
             min-height: 40px; align-items: center;
         }
         .heart {
-            font-size: 32px;
-            transition: all 0.3s;
-        }
-        .heart.lost {
-            filter: grayscale(1) opacity(0.3);
-            transform: scale(0.8);
+            font-size: 32px; transition: all 0.3s;
         }
         .heart.broken {
             animation: heartBreak 0.5s;
@@ -157,10 +128,10 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           PATTERN ROW - Big, colorful, tactile
+           PATTERN ROW
         ═══════════════════════════════════════════════════════ */
         .pattern-row {
-            display: flex; gap: 12px; margin: 16px 0;
+            display: flex; gap: 12px; margin: 12px 0;
             background: var(--white); padding: 16px; border-radius: 20px;
             border: 4px solid var(--black); box-shadow: 6px 6px 0 var(--black);
             flex-wrap: wrap; justify-content: center;
@@ -170,8 +141,8 @@
             display: flex; justify-content: center; align-items: center;
             font-size: 40px; background: var(--white);
             border-radius: 16px; border: 3px solid var(--black);
-            transition: all 0.3s ease;
             box-shadow: 2px 2px 0 var(--black);
+            transition: all 0.3s ease;
         }
         .pattern-item.missing {
             background: var(--yellow);
@@ -205,21 +176,53 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           CHOICES - Big touch targets, visual feedback
+           CHOICES AREA - Visual cue yang tidak misleading
         ═══════════════════════════════════════════════════════ */
-        .choices-label {
-            text-align: center;
+        .choices-container {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 12px;
+        }
+        
+        /* Visual cue: Bouncing arrow ABOVE choices, not pointing at specific one */
+        .choices-cue {
+            font-size: 36px;
+            animation: cueBounce 1s infinite;
+            margin-bottom: 4px;
+        }
+        @keyframes cueBounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 0.7; }
+        }
+        
+        /* OR: Sparkle effect around choices area */
+        .choices-sparkle {
+            position: relative;
+            padding: 8px 24px;
+            border-radius: 20px;
+            border: 3px dashed var(--blue);
+            background: rgba(33, 150, 243, 0.1);
+        }
+        .choices-sparkle::before {
+            content: '✨';
+            position: absolute;
+            top: -16px; left: -8px;
             font-size: 24px;
-            margin-bottom: 8px;
-            animation: pointDown 1.5s infinite;
+            animation: sparkle 1.5s infinite;
         }
-        @keyframes pointDown {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
+        .choices-sparkle::after {
+            content: '✨';
+            position: absolute;
+            bottom: -16px; right: -8px;
+            font-size: 24px;
+            animation: sparkle 1.5s infinite 0.7s;
         }
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0); }
+            50% { transform: scale(1.3) rotate(15deg); }
+        }
+
         .choices-row {
             display: flex; gap: 16px; justify-content: center;
-            margin-bottom: 16px;
         }
         .choice-btn {
             width: 80px; height: 80px;
@@ -244,8 +247,7 @@
             box-shadow: 5px 5px 0 #800000;
         }
         .choice-btn.disabled {
-            opacity: 0.4;
-            pointer-events: none;
+            opacity: 0.4; pointer-events: none;
             transform: scale(0.9);
         }
         @keyframes bigPop {
@@ -262,7 +264,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           OVERLAYS - Visual celebration, minimal text
+           OVERLAYS
         ═══════════════════════════════════════════════════════ */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -273,7 +275,6 @@
         }
         .overlay.show { display: flex; }
 
-        /* Feedback overlay */
         .feedback-emoji {
             font-size: 80px;
             animation: celebrate 1s infinite;
@@ -283,10 +284,7 @@
             0%, 100% { transform: scale(1) rotate(-5deg); }
             50% { transform: scale(1.2) rotate(5deg); }
         }
-        .feedback-stars {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
+        .feedback-stars { font-size: 48px; margin-bottom: 16px; }
         .feedback-btn {
             background: var(--yellow); color: var(--black);
             border: 4px solid var(--black); border-radius: 16px;
@@ -295,11 +293,9 @@
             cursor: pointer; margin-top: 16px;
         }
         .feedback-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: none;
+            transform: translate(4px, 4px); box-shadow: none;
         }
 
-        /* Level complete */
         .trophy {
             font-size: 100px;
             animation: trophyBounce 1s infinite;
@@ -309,39 +305,19 @@
             0%, 100% { transform: translateY(0) rotate(-5deg); }
             50% { transform: translateY(-15px) rotate(5deg); }
         }
-        .star-rating {
-            font-size: 64px;
-            margin: 16px 0;
-        }
+        .star-rating { font-size: 64px; margin: 16px 0; }
         .stats-visual {
-            display: flex; gap: 20px;
-            margin: 16px 0;
+            display: flex; gap: 20px; margin: 16px 0;
         }
         .stat-circle {
-            width: 80px; height: 80px;
-            border-radius: 50%;
+            width: 80px; height: 80px; border-radius: 50%;
             border: 4px solid var(--yellow);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             background: var(--black);
         }
-        .stat-circle .number {
-            font-size: 32px; font-weight: 900; color: var(--yellow);
-        }
-        .stat-circle .label {
-            font-size: 10px; color: #aaa; font-weight: 700;
-        }
-
-        /* Game complete */
-        .confetti {
-            position: absolute;
-            font-size: 24px;
-            animation: confettiFall 3s linear infinite;
-        }
-        @keyframes confettiFall {
-            0% { transform: translateY(-100vh) rotate(0); }
-            100% { transform: translateY(100vh) rotate(720deg); }
-        }
+        .stat-circle .number { font-size: 32px; font-weight: 900; color: var(--yellow); }
+        .stat-circle .label { font-size: 10px; color: #aaa; font-weight: 700; }
 
         @media (max-width: 360px) {
             .pattern-item { width: 50px; height: 50px; font-size: 32px; }
@@ -357,119 +333,82 @@
         <div class="level-badge" id="level-display">1️⃣</div>
     </header>
 
-    <!-- SCORE: Icons only -->
     <div class="score-board">
         <div class="score-item stars">
-            <span class="icon">⭐</span>
-            <span id="stars-count">0</span>
+            <span class="icon">⭐</span><span id="stars-count">0</span>
         </div>
         <div class="score-item hearts">
-            <span class="icon">❤️</span>
-            <span id="wrong-count">0</span>
+            <span class="icon">❤️</span><span id="wrong-count">0</span>
         </div>
         <div class="score-item points">
-            <span class="icon">💎</span>
-            <span id="total-score">0</span>
+            <span class="icon">💎</span><span id="total-score">0</span>
         </div>
     </div>
 
     <div class="game-container">
-        <!-- MASCOT -->
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">🐝</div>
             <div class="mascot-bubble" id="mascot-bubble">🤔❓</div>
         </div>
 
-        <!-- PROGRESS DOTS -->
         <div class="progress-area" id="progress-dots"></div>
-
-        <!-- ATTEMPT HEARTS -->
         <div class="attempt-area" id="attempt-hearts">
-            <span class="heart">❤️</span>
-            <span class="heart">❤️</span>
-            <span class="heart">❤️</span>
+            <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span>
         </div>
 
-        <!-- PATTERN -->
         <div class="pattern-row" id="pattern-container"></div>
 
-        <!-- CHOICES LABEL -->
-        <div class="choices-label" id="choices-label">👇👇👇</div>
-
-        <!-- CHOICES -->
-        <div class="choices-row" id="choices-container"></div>
+        <!-- CHOICES: Visual cue yang tidak misleading -->
+        <div class="choices-container">
+            <!-- Opsi 1: Bouncing arrow di atas area (tidak pointing spesifik) -->
+            <div class="choices-cue" id="choices-cue">⬇️</div>
+            
+            <!-- Opsi 2: Sparkle border around choices (alternatif, bisa aktifkan via JS) -->
+            <!-- <div class="choices-sparkle" id="choices-sparkle" style="display:none;"></div> -->
+            
+            <div class="choices-row" id="choices-container"></div>
+        </div>
     </div>
 
-    <!-- FEEDBACK OVERLAY -->
     <div class="overlay" id="feedback-overlay">
         <div class="feedback-emoji" id="feedback-emoji">🎉</div>
         <div class="feedback-stars" id="feedback-stars"></div>
         <button class="feedback-btn" id="next-btn" onclick="nextQuestion()">▶️</button>
     </div>
 
-    <!-- LEVEL COMPLETE OVERLAY -->
     <div class="overlay" id="level-complete-overlay">
         <div class="trophy">🏆</div>
         <div class="star-rating" id="level-stars"></div>
         <div class="stats-visual">
-            <div class="stat-circle">
-                <div class="number" id="stat-first">0</div>
-                <div class="label">🥇1st</div>
-            </div>
-            <div class="stat-circle">
-                <div class="number" id="stat-second">0</div>
-                <div class="label">🥈2nd</div>
-            </div>
-            <div class="stat-circle">
-                <div class="number" id="stat-third">0</div>
-                <div class="label">🥉3rd</div>
-            </div>
+            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇1st</div></div>
+            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈2nd</div></div>
+            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3rd</div></div>
         </div>
         <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
         <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
     </div>
 
-    <!-- GAME COMPLETE OVERLAY -->
     <div class="overlay" id="game-complete-overlay">
         <div class="trophy">👑</div>
         <div class="star-rating" id="final-stars"></div>
         <div class="stats-visual">
-            <div class="stat-circle">
-                <div class="number" id="final-total-stars">0</div>
-                <div class="label">⭐Total</div>
-            </div>
-            <div class="stat-circle">
-                <div class="number" id="final-total-score">0</div>
-                <div class="label">💎Score</div>
-            </div>
-            <div class="stat-circle">
-                <div class="number" id="final-accuracy">0%</div>
-                <div class="label">🎯Rate</div>
-            </div>
+            <div class="stat-circle"><div class="number" id="final-total-stars">0</div><div class="label">⭐Total</div></div>
+            <div class="stat-circle"><div class="number" id="final-total-score">0</div><div class="label">💎Score</div></div>
+            <div class="stat-circle"><div class="number" id="final-accuracy">0%</div><div class="label">🎯Rate</div></div>
         </div>
         <button class="feedback-btn" onclick="restartGame()" style="margin-top: 16px;">🔄🎮</button>
     </div>
 
     <script>
-        // ═══════════════════════════════════════════════════════
-        //  CONFIG
-        // ═══════════════════════════════════════════════════════
         const CONFIG = {
             QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST: 100,
-            SCORE_SECOND: 50,
-            SCORE_THIRD: 25,
+            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25,
             MAX_ATTEMPTS: 3
         };
 
-        // ═══════════════════════════════════════════════════════
-        //  TEMPLATES - 1 missing slot per question
-        // ═══════════════════════════════════════════════════════
         const TEMPLATES = [
             {
-                name: "1️⃣",
-                type: "🍎🍌",
-                choices: ["🍇", "🍌", "🍎"],
+                name: "1️⃣", type: "🍎🍌", choices: ["🍇", "🍌", "🍎"],
                 mascot: { think: "🤔❓", happy: "😄👍", sad: "😢💔" },
                 questions: [
                     { pattern: ["?", "🍌", "🍎", "🍌", "🍎", "🍌"], answer: "🍎" },
@@ -480,9 +419,7 @@
                 ]
             },
             {
-                name: "2️⃣",
-                type: "⭐⭐🌙",
-                choices: ["⭐", "🌙", "☀️"],
+                name: "2️⃣", type: "⭐⭐🌙", choices: ["⭐", "🌙", "☀️"],
                 mascot: { think: "🤔✨", happy: "🤩✨", sad: "😵‍💫" },
                 questions: [
                     { pattern: ["?", "⭐", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
@@ -493,9 +430,7 @@
                 ]
             },
             {
-                name: "3️⃣",
-                type: "🐶🐱🐭",
-                choices: ["🐶", "🐱", "🐭"],
+                name: "3️⃣", type: "🐶🐱🐭", choices: ["🐶", "🐱", "🐭"],
                 mascot: { think: "🤔🐾", happy: "🥳🎉", sad: "🙀" },
                 questions: [
                     { pattern: ["?", "🐱", "🐭", "🐶", "🐱", "🐭"], answer: "🐶" },
@@ -507,60 +442,41 @@
             }
         ];
 
-        // ═══════════════════════════════════════════════════════
-        //  STATE
-        // ═══════════════════════════════════════════════════════
-        let currentLevel = 0;
-        let currentQuestion = 0;
-        let currentAttempts = 0;
-        let isProcessing = false;
+        let currentLevel = 0, currentQuestion = 0, currentAttempts = 0, isProcessing = false;
         let levelStats = { first: 0, second: 0, third: 0, score: 0 };
         let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, attempts: 0 };
         let currentQuestions = [];
 
-        // ═══════════════════════════════════════════════════════
-        //  INIT
-        // ═══════════════════════════════════════════════════════
         function initLevel() {
-            currentQuestion = 0;
-            currentAttempts = 0;
-            isProcessing = false;
+            currentQuestion = 0; currentAttempts = 0; isProcessing = false;
             levelStats = { first: 0, second: 0, third: 0, score: 0 };
-            
             const t = TEMPLATES[currentLevel];
             currentQuestions = [];
-            
             for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
                 const q = t.questions[i];
                 currentQuestions.push({
-                    pattern: [...q.pattern],
-                    answer: q.answer,
+                    pattern: [...q.pattern], answer: q.answer,
                     choices: [...t.choices].sort(() => Math.random() - 0.5)
                 });
             }
-            
-            renderProgressDots();
-            updateScoreBoard();
-            renderQuestion();
+            renderProgressDots(); updateScoreBoard(); renderQuestion();
         }
 
         function renderProgressDots() {
-            const container = document.getElementById('progress-dots');
-            container.innerHTML = '';
+            const c = document.getElementById('progress-dots');
+            c.innerHTML = '';
             for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'progress-dot';
-                if (i < currentQuestion) dot.classList.add('done');
-                else if (i === currentQuestion) dot.classList.add('current');
-                container.appendChild(dot);
+                const d = document.createElement('div');
+                d.className = 'progress-dot';
+                if (i < currentQuestion) d.classList.add('done');
+                else if (i === currentQuestion) d.classList.add('current');
+                c.appendChild(d);
             }
         }
 
         function renderHearts() {
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach((h, i) => {
-                h.className = 'heart';
-                if (i < currentAttempts) h.classList.add('broken');
+            document.querySelectorAll('.heart').forEach((h, i) => {
+                h.className = 'heart' + (i < currentAttempts ? ' broken' : '');
             });
         }
 
@@ -568,119 +484,69 @@
             document.querySelectorAll('.heart').forEach(h => h.className = 'heart');
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  RENDER QUESTION
-        // ═══════════════════════════════════════════════════════
         function renderQuestion() {
             const t = TEMPLATES[currentLevel];
             const q = currentQuestions[currentQuestion];
-            
             document.getElementById('level-display').innerText = t.name;
             document.getElementById('mascot-emoji').innerText = t.mascot.think.split('')[0];
             document.getElementById('mascot-bubble').innerText = t.mascot.think;
-            document.getElementById('choices-label').innerText = '👇👇👇';
-            
-            resetHearts();
-            renderProgressDots();
+            resetHearts(); renderProgressDots();
 
-            // Pattern
             const pc = document.getElementById('pattern-container');
             pc.innerHTML = '';
             q.pattern.forEach(item => {
-                const div = document.createElement('div');
+                const d = document.createElement('div');
                 if (item === "?") {
-                    div.className = 'pattern-item missing';
-                    div.id = 'missing-slot';
+                    d.className = 'pattern-item missing'; d.id = 'missing-slot';
                 } else {
-                    div.className = 'pattern-item';
-                    div.innerText = item;
+                    d.className = 'pattern-item'; d.innerText = item;
                 }
-                pc.appendChild(div);
+                pc.appendChild(d);
             });
 
-            // Choices
             const cc = document.getElementById('choices-container');
             cc.innerHTML = '';
             q.choices.forEach(choice => {
-                const btn = document.createElement('div');
-                btn.className = 'choice-btn';
-                btn.innerText = choice;
-                btn.onclick = () => checkAnswer(choice, btn);
-                cc.appendChild(btn);
+                const b = document.createElement('div');
+                b.className = 'choice-btn'; b.innerText = choice;
+                b.onclick = () => checkAnswer(choice, b);
+                cc.appendChild(b);
             });
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  CHECK ANSWER
-        // ═══════════════════════════════════════════════════════
         function checkAnswer(choice, btn) {
             if (isProcessing) return;
-            
             const q = currentQuestions[currentQuestion];
             const t = TEMPLATES[currentLevel];
-            currentAttempts++;
-            renderHearts();
-            
+            currentAttempts++; renderHearts();
+
             if (choice === q.answer) {
-                isProcessing = true;
-                btn.classList.add('correct');
-                
-                let points = 0;
-                let attemptType = '';
-                
+                isProcessing = true; btn.classList.add('correct');
+                let points = 0, type = '';
                 if (currentAttempts === 1) {
-                    points = CONFIG.SCORE_FIRST;
-                    levelStats.first++;
-                    attemptType = 'first';
-                    gameStats.correct++;
-                    document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+                    points = CONFIG.SCORE_FIRST; levelStats.first++; type = 'first';
+                    gameStats.correct++; document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else if (currentAttempts === 2) {
-                    points = CONFIG.SCORE_SECOND;
-                    levelStats.second++;
-                    attemptType = 'second';
+                    points = CONFIG.SCORE_SECOND; levelStats.second++; type = 'second';
                     document.getElementById('mascot-bubble').innerText = t.mascot.happy;
                 } else {
-                    points = CONFIG.SCORE_THIRD;
-                    levelStats.third++;
-                    attemptType = 'third';
+                    points = CONFIG.SCORE_THIRD; levelStats.third++; type = 'third';
                     document.getElementById('mascot-bubble').innerText = '😅👍';
                 }
-                
-                levelStats.score += points;
-                gameStats.score += points;
-                gameStats.questions++;
-                gameStats.attempts += currentAttempts;
-                
+                levelStats.score += points; gameStats.score += points;
+                gameStats.questions++; gameStats.attempts += currentAttempts;
                 updateScoreBoard();
-                
-                const slot = document.getElementById('missing-slot');
-                if (slot) {
-                    slot.innerText = q.answer;
-                    slot.classList.remove('missing');
-                    slot.classList.add('correct-fill');
-                }
-                
-                setTimeout(() => showFeedback(true, attemptType, points), 600);
-                
+                const s = document.getElementById('missing-slot');
+                if (s) { s.innerText = q.answer; s.classList.remove('missing'); s.classList.add('correct-fill'); }
+                setTimeout(() => showFeedback(true, type, points), 600);
             } else {
-                btn.classList.add('wrong');
-                btn.classList.add('disabled');
-                
+                btn.classList.add('wrong'); btn.classList.add('disabled');
                 if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
-                    isProcessing = true;
-                    levelStats.third++;
-                    gameStats.questions++;
-                    gameStats.attempts += currentAttempts;
+                    isProcessing = true; levelStats.third++;
+                    gameStats.questions++; gameStats.attempts += currentAttempts;
                     document.getElementById('mascot-bubble').innerText = t.mascot.sad;
-                    
-                    const slot = document.getElementById('missing-slot');
-                    if (slot) {
-                        slot.innerText = q.answer;
-                        slot.classList.remove('missing');
-                        slot.style.background = 'var(--orange)';
-                        slot.style.border = '3px solid var(--black)';
-                    }
-                    
+                    const s = document.getElementById('missing-slot');
+                    if (s) { s.innerText = q.answer; s.classList.remove('missing'); s.style.background = 'var(--orange)'; s.style.border = '3px solid var(--black)'; }
                     updateScoreBoard();
                     setTimeout(() => showFeedback(false, 'failed', 0), 800);
                 } else {
@@ -689,114 +555,67 @@
             }
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  FEEDBACK
-        // ═══════════════════════════════════════════════════════
         function showFeedback(isCorrect, type, points) {
-            const overlay = document.getElementById('feedback-overlay');
-            const emoji = document.getElementById('feedback-emoji');
-            const stars = document.getElementById('feedback-stars');
-            const btn = document.getElementById('next-btn');
-            
+            const o = document.getElementById('feedback-overlay');
+            const e = document.getElementById('feedback-emoji');
+            const s = document.getElementById('feedback-stars');
+            const b = document.getElementById('next-btn');
             if (isCorrect) {
-                if (type === 'first') {
-                    emoji.innerText = '🤩';
-                    stars.innerText = '⭐⭐⭐';
-                } else if (type === 'second') {
-                    emoji.innerText = '😄';
-                    stars.innerText = '⭐⭐';
-                } else {
-                    emoji.innerText = '👍';
-                    stars.innerText = '⭐';
-                }
-                btn.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
+                if (type === 'first') { e.innerText = '🤩'; s.innerText = '⭐⭐⭐'; }
+                else if (type === 'second') { e.innerText = '😄'; s.innerText = '⭐⭐'; }
+                else { e.innerText = '👍'; s.innerText = '⭐'; }
+                b.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
             } else {
-                emoji.innerText = '💡';
-                stars.innerText = q.answer;
-                btn.innerText = '▶️';
+                e.innerText = '💡'; s.innerText = currentQuestions[currentQuestion].answer;
+                b.innerText = '▶️';
             }
-            
-            overlay.classList.add('show');
+            o.classList.add('show');
         }
 
         function nextQuestion() {
             document.getElementById('feedback-overlay').classList.remove('show');
-            isProcessing = false;
-            currentAttempts = 0;
-            
+            isProcessing = false; currentAttempts = 0;
             if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
-                currentQuestion++;
-                renderQuestion();
-            } else {
-                showLevelComplete();
-            }
+                currentQuestion++; renderQuestion();
+            } else { showLevelComplete(); }
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  LEVEL COMPLETE
-        // ═══════════════════════════════════════════════════════
         function showLevelComplete() {
-            const overlay = document.getElementById('level-complete-overlay');
-            
+            const o = document.getElementById('level-complete-overlay');
             let stars = '';
-            if (levelStats.first >= 4) {
-                stars = '⭐⭐⭐';
-                gameStats.stars += 3;
-            } else if (levelStats.first >= 2) {
-                stars = '⭐⭐';
-                gameStats.stars += 2;
-            } else {
-                stars = '⭐';
-                gameStats.stars += 1;
-            }
-            
+            if (levelStats.first >= 4) { stars = '⭐⭐⭐'; gameStats.stars += 3; }
+            else if (levelStats.first >= 2) { stars = '⭐⭐'; gameStats.stars += 2; }
+            else { stars = '⭐'; gameStats.stars += 1; }
             document.getElementById('level-stars').innerText = stars;
             document.getElementById('stat-first').innerText = levelStats.first;
             document.getElementById('stat-second').innerText = levelStats.second;
             document.getElementById('stat-third').innerText = levelStats.third;
-            
-            updateScoreBoard();
-            overlay.classList.add('show');
+            updateScoreBoard(); o.classList.add('show');
         }
 
         function nextLevel() {
             document.getElementById('level-complete-overlay').classList.remove('show');
-            if (currentLevel < TEMPLATES.length - 1) {
-                currentLevel++;
-                initLevel();
-            } else {
-                showGameComplete();
-            }
+            if (currentLevel < TEMPLATES.length - 1) { currentLevel++; initLevel(); }
+            else { showGameComplete(); }
         }
 
         function restartLevel() {
             document.getElementById('level-complete-overlay').classList.remove('show');
-            const stars = document.getElementById('level-stars').innerText.length;
-            gameStats.stars -= stars;
+            gameStats.stars -= document.getElementById('level-stars').innerText.length;
             initLevel();
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  GAME COMPLETE
-        // ═══════════════════════════════════════════════════════
         function showGameComplete() {
-            const overlay = document.getElementById('game-complete-overlay');
+            const o = document.getElementById('game-complete-overlay');
             const maxStars = TEMPLATES.length * 3;
             const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
-            
-            let finalStars = '';
-            for (let i = 0; i < rating; i++) finalStars += '⭐';
-            
-            document.getElementById('final-stars').innerText = finalStars;
+            let fs = ''; for (let i = 0; i < rating; i++) fs += '⭐';
+            document.getElementById('final-stars').innerText = fs;
             document.getElementById('final-total-stars').innerText = gameStats.stars;
             document.getElementById('final-total-score').innerText = gameStats.score;
-            
-            const accuracy = gameStats.questions > 0 
-                ? Math.round((gameStats.correct / gameStats.questions) * 100) 
-                : 0;
-            document.getElementById('final-accuracy').innerText = accuracy + '%';
-            
-            overlay.classList.add('show');
+            const acc = gameStats.questions > 0 ? Math.round((gameStats.correct / gameStats.questions) * 100) : 0;
+            document.getElementById('final-accuracy').innerText = acc + '%';
+            o.classList.add('show');
         }
 
         function restartGame() {
@@ -806,16 +625,12 @@
             initLevel();
         }
 
-        // ═══════════════════════════════════════════════════════
-        //  UTILS
-        // ═══════════════════════════════════════════════════════
         function updateScoreBoard() {
             document.getElementById('stars-count').innerText = gameStats.stars;
             document.getElementById('wrong-count').innerText = gameStats.attempts - gameStats.correct;
             document.getElementById('total-score').innerText = gameStats.score;
         }
 
-        // START
         initLevel();
     </script>
 </body>
