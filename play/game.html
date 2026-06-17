@@ -149,38 +149,35 @@
     <div class="overlay" id="feedback-overlay">
         <h2 id="feedback-title">HEBAT!</h2>
         <p id="feedback-text">Kamu menemukan polanya!</p>
-        <button id="next-btn" onclick="nextQuestion()">Lanjut! </button>
+        <button id="next-btn" onclick="nextQuestion()">Lanjut! 🚀</button>
     </div>
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  FINAL CODE - SEMUA SLOT BERISI EMOJI
-        //  TIDAK ADA STRING KOSONG "" DI MANAPUN
-        //  Pattern: 6 slot, 5 emoji + 1 "?"
-        //  Choices: 3 emoji (TIDAK ADA YANG KOSONG)
+        //  FINAL CODE - SETIAP SLOT BERISI EMOJI
+        //  LEVEL 1: 🍎🍌🍌🍎? (ABAB pattern)
+        //  LEVEL 2: ⭐⭐🌙⭐⭐? (AAB pattern)
+        //  LEVEL 3: 🐶🐱🐭🐶🐱? (ABC pattern)
         // ═══════════════════════════════════════════════════════
         
         const levels = [
             {
                 name: "Level 1",
-                // Pola ABABAB: 🍌🍎🍌?
-                pattern: ["🍎", "🍌", "🍎", "", "🍎", "?"],
+                pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["🍎", "🍌", ""]
+                choices: ["", "🍌", "🍇"]
             },
             {
                 name: "Level 2",
-                // Pola AABAAB: ⭐⭐🌙⭐⭐?
                 pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
-                answer: "🌙",
-                choices: ["⭐", "🌙", "☀️"]
+                answer: "",
+                choices: ["⭐", "", "☀️"]
             },
             {
                 name: "Level 3",
-                // Pola ABCABC: 🐶🐱🐭🐶🐱?
-                pattern: ["🐶", "", "🐭", "🐶", "🐱", "?"],
-                answer: "🐭",
-                choices: ["", "🐱", "🐭"]
+                pattern: ["🐶", "🐱", "🐭", "🐶", "", "?"],
+                answer: "",
+                choices: ["🐶", "🐱", "🐭"]
             }
         ];
 
@@ -191,15 +188,6 @@
             const level = levels[currentLevel];
             document.getElementById('level-display').innerText = level.name;
             document.getElementById('mascot-text').innerText = `🐝 "Level ${currentLevel + 1}! Apa yang hilang?"`;
-
-            // VALIDASI: Cek tidak ada string kosong
-            const hasEmptyPattern = level.pattern.some(item => item === "");
-            const hasEmptyChoice = level.choices.some(item => item === "");
-            if (hasEmptyPattern || hasEmptyChoice) {
-                console.error('❌ ERROR: Ada string kosong di data level!');
-                console.error('Pattern:', level.pattern);
-                console.error('Choices:', level.choices);
-            }
 
             // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
@@ -216,7 +204,7 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices - SEMUA berisi emoji
+            // Render Choices
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
             const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
@@ -229,11 +217,9 @@
                 choicesContainer.appendChild(btn);
             });
 
-            // Debug log
-            console.log(`✅ Level ${currentLevel + 1} rendered:`, {
+            console.log(`✅ Level ${currentLevel + 1}:`, {
                 pattern: level.pattern,
-                choices: level.choices,
-                choicesCount: level.choices.length
+                choices: level.choices
             });
         }
 
@@ -271,9 +257,9 @@
             const btn = document.getElementById('next-btn');
 
             if (isCorrect) {
-                title.innerText = "HEBAT! ";
+                title.innerText = "HEBAT! 🌟";
                 text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! ";
+                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
                 btn.onclick = nextQuestion;
             }
             overlay.classList.add('show');
