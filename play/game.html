@@ -12,6 +12,7 @@
         :root {
             --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
             --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
+            --orange: #FF9800; --blue: #2196F3;
         }
 
         body {
@@ -40,13 +41,30 @@
             border: 2px solid var(--black);
         }
 
+        /* SCORE BOARD */
+        .score-board {
+            display: flex; gap: 12px; justify-content: center;
+            padding: 8px 16px; background: var(--white);
+            border-bottom: 2px solid var(--black);
+        }
+        .score-item {
+            display: flex; flex-direction: column; align-items: center;
+            font-size: 12px; font-weight: 700;
+        }
+        .score-item .value {
+            font-size: 18px; font-weight: 900;
+        }
+        .score-item.stars .value { color: var(--yellow); text-shadow: 1px 1px 0 var(--black); }
+        .score-item.attempts .value { color: var(--coral); }
+        .score-item.total .value { color: var(--green); }
+
         .game-container {
             flex: 1; display: flex; flex-direction: column;
             padding: 20px; justify-content: center; align-items: center;
         }
         .mascot-speech {
             background: var(--white); border: 3px solid var(--black);
-            padding: 16px; border-radius: 16px; margin-bottom: 24px;
+            padding: 16px; border-radius: 16px; margin-bottom: 16px;
             text-align: center; font-weight: 800; font-size: 16px;
             box-shadow: 4px 4px 0 var(--black); position: relative;
             max-width: 300px;
@@ -57,8 +75,27 @@
             border-style: solid; border-color: var(--black) transparent transparent transparent;
         }
 
+        /* PROGRESS BAR */
+        .progress-container {
+            width: 100%; max-width: 300px; margin-bottom: 16px;
+        }
+        .progress-label {
+            font-size: 12px; font-weight: 700; margin-bottom: 4px;
+            display: flex; justify-content: space-between;
+        }
+        .progress-bar {
+            width: 100%; height: 12px; background: var(--white);
+            border: 2px solid var(--black); border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--yellow);
+            transition: width 0.3s ease;
+            border-right: 2px solid var(--black);
+        }
+
         .pattern-row {
-            display: flex; gap: 8px; margin-bottom: 40px;
+            display: flex; gap: 8px; margin-bottom: 32px;
             background: var(--white); padding: 12px; border-radius: 16px;
             border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--black);
             flex-wrap: wrap;
@@ -74,18 +111,17 @@
             background: var(--yellow); 
             border: 3px dashed var(--black);
             animation: pulse 1.5s infinite;
-            position: relative;
         }
-        /* Tambahkan tanda tanya untuk missing slot yang terlihat */
         .pattern-item.missing::before {
             content: '?';
             font-size: 24px;
             font-weight: 900;
             color: var(--black);
         }
-        .pattern-item.empty-slot {
-            background: var(--gray);
-            border: 2px dashed #ccc;
+        .pattern-item.correct-fill {
+            background: var(--green) !important;
+            border: 3px solid var(--black) !important;
+            animation: pop 0.3s;
         }
 
         @keyframes pulse {
@@ -95,6 +131,7 @@
 
         .choices-row {
             display: flex; gap: 12px; justify-content: center;
+            margin-bottom: 16px;
         }
         .choice-btn {
             width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
@@ -115,13 +152,16 @@
             background: var(--coral); 
             animation: shake 0.4s;
         }
-        /* Style untuk pilihan kosong yang terlihat */
-        .choice-btn.empty-choice {
-            background: var(--gray);
+        .choice-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
-        .choice-btn.empty-choice::before {
-            content: '⬜';
-            font-size: 28px;
+
+        .attempt-indicator {
+            font-size: 14px; font-weight: 700;
+            color: var(--coral);
+            min-height: 20px;
+            margin-bottom: 8px;
         }
 
         @keyframes pop { 50% { transform: scale(1.2); } }
@@ -139,13 +179,28 @@
         }
         .overlay.show { display: flex; }
         .overlay h2 { font-size: 32px; font-weight: 900; font-style: italic; color: var(--yellow); margin-bottom: 16px; }
-        .overlay p { font-size: 18px; margin-bottom: 32px; line-height: 1.5; }
+        .overlay p { font-size: 18px; margin-bottom: 16px; line-height: 1.5; }
+        .overlay .stars-display {
+            font-size: 48px; margin-bottom: 24px;
+        }
         .overlay button {
             background: var(--yellow); color: var(--black); border: none;
             padding: 16px 32px; border-radius: 12px; font-weight: 900; font-size: 18px;
             box-shadow: 4px 4px 0 var(--white); cursor: pointer;
+            margin: 4px;
         }
         .overlay button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--white); }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 24px; width: 100%; max-width: 300px;
+        }
+        .stat-box {
+            background: var(--black); border: 2px solid var(--yellow);
+            border-radius: 12px; padding: 12px;
+        }
+        .stat-box .label { font-size: 11px; color: #aaa; font-weight: 700; }
+        .stat-box .value { font-size: 24px; font-weight: 900; color: var(--yellow); }
 
         @media (max-width: 360px) {
             .pattern-item { width: 45px; height: 45px; font-size: 28px; }
@@ -160,68 +215,233 @@
         <div class="level-indicator" id="level-display">Level 1</div>
     </header>
 
+    <!-- SCORE BOARD -->
+    <div class="score-board">
+        <div class="score-item stars">
+            <span>⭐ Stars</span>
+            <span class="value" id="stars-count">0</span>
+        </div>
+        <div class="score-item attempts">
+            <span>❌ Salah</span>
+            <span class="value" id="wrong-count">0</span>
+        </div>
+        <div class="score-item total">
+            <span>🏆 Skor</span>
+            <span class="value" id="total-score">0</span>
+        </div>
+    </div>
+
     <div class="game-container">
         <div class="mascot-speech" id="mascot-text">
-            🐝 "Halo Detektif! Apa yang hilang dari pola ini?"
+            🐝 "Halo Detektif! Temukan polanya!"
         </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Progress Level</span>
+                <span id="progress-text">1/5</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+            </div>
+        </div>
+
+        <div class="attempt-indicator" id="attempt-indicator"></div>
 
         <div class="pattern-row" id="pattern-container"></div>
         <div class="choices-row" id="choices-container"></div>
     </div>
 
+    <!-- FEEDBACK OVERLAY -->
     <div class="overlay" id="feedback-overlay">
         <h2 id="feedback-title">HEBAT!</h2>
+        <div class="stars-display" id="feedback-stars"></div>
         <p id="feedback-text">Kamu menemukan polanya!</p>
         <button id="next-btn" onclick="nextQuestion()">Lanjut! 🚀</button>
     </div>
 
+    <!-- LEVEL COMPLETE OVERLAY -->
+    <div class="overlay" id="level-complete-overlay">
+        <h2>LEVEL SELESAI! 🎉</h2>
+        <div class="stars-display" id="level-stars"></div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="label">Benar 1st Try</div>
+                <div class="value" id="stat-first">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Benar 2nd Try</div>
+                <div class="value" id="stat-second">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Benar 3rd+ Try</div>
+                <div class="value" id="stat-third">0</div>
+            </div>
+        </div>
+        <p id="level-summary-text"></p>
+        <button onclick="nextLevel()">Level Berikutnya! 🚀</button>
+        <button onclick="restartLevel()" style="background: var(--white);">Ulangi Level 🔄</button>
+    </div>
+
+    <!-- GAME COMPLETE OVERLAY -->
+    <div class="overlay" id="game-complete-overlay">
+        <h2>🎉 SELAMAT! 🎉</h2>
+        <div class="stars-display" id="final-stars">⭐⭐⭐</div>
+        <p>Kamu telah menyelesaikan semua level!</p>
+        <div class="stats-grid" style="margin-top: 16px;">
+            <div class="stat-box">
+                <div class="label">Total Stars</div>
+                <div class="value" id="final-total-stars">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Total Skor</div>
+                <div class="value" id="final-total-score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Akurasi</div>
+                <div class="value" id="final-accuracy">0%</div>
+            </div>
+        </div>
+        <button onclick="restartGame()" style="margin-top: 24px;">Main Lagi! 🔄</button>
+    </div>
+
     <script>
         // ═══════════════════════════════════════════════════════
-        //  FIXED CODE - Semua slot memiliki representasi visual
-        //  Level 1: 🍎🍌🍎🍌🍎? (ABAB pattern) → 🍌
-        //  Level 2: ⭐⭐🌙⭐⭐? (AAB pattern) → 🌙
-        //  Level 3: 🐶🐱🐭🐶🐱? (ABC pattern) → 🐭
+        //  GAME CONFIGURATION
+        //  - 3 Levels, masing-masing 5 pertanyaan (shuffle)
+        //  - Scoring: 1st attempt = 100pts, 2nd = 50pts, 3rd+ = 25pts
+        //  - Stars: 5x first try = ⭐⭐⭐, 3-4 = ⭐⭐, <3 = ⭐
         // ═══════════════════════════════════════════════════════
-        
-        const EMPTY = "⬜"; // Konstanta untuk representasi visual kosong
-        
-        const levels = [
+
+        const CONFIG = {
+            QUESTIONS_PER_LEVEL: 5,
+            SCORE_FIRST_ATTEMPT: 100,
+            SCORE_SECOND_ATTEMPT: 50,
+            SCORE_THIRD_ATTEMPT: 25,
+            MAX_ATTEMPTS: 3
+        };
+
+        // Pattern templates untuk generate pertanyaan
+        const PATTERN_TEMPLATES = [
             {
                 name: "Level 1",
-                pattern: ["🍎", "🍌", "🍎", "🍌", "🍎", "?"],
+                type: "ABAB",
+                // Pola dasar: 🍎🍌🍎🍌🍎? → jawaban 🍌
+                basePattern: ["🍎", "🍌", "🍎", "🍌", "🍎", "?"],
                 answer: "🍌",
-                choices: ["🍇", "🍌", "🍎"]
+                choices: ["🍇", "🍌", "🍎"],
+                // Variasi posisi missing untuk 5 pertanyaan berbeda
+                missingPositions: [5, 1, 3, 0, 4], // index yang di-replace dengan "?"
+                // Untuk setiap posisi, answer yang sesuai
+                answers: ["🍌", "🍎", "🍌", "🍎", "🍌"]
             },
             {
                 name: "Level 2",
-                pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
-                answer: "🌙",
-                choices: ["⭐", "🌙", "☀️"]
+                type: "AAB",
+                // Pola dasar: ⭐⭐🌙⭐⭐🌙 → variasi missing
+                basePattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "🌙"],
+                choices: ["⭐", "🌙", "☀️"],
+                missingPositions: [5, 2, 4, 1, 3],
+                answers: ["🌙", "🌙", "⭐", "⭐", "⭐"]
             },
             {
                 name: "Level 3",
-                pattern: ["🐶", "🐱", "🐭", "🐶", "🐱", "?"],
-                answer: "🐭",
-                choices: ["🐶", "🐱", "🐭"]
+                type: "ABC",
+                // Pola dasar: 🐶🐱🐭🐶🐱🐭
+                basePattern: ["🐶", "🐱", "🐭", "🐶", "🐱", "🐭"],
+                choices: ["🐶", "🐱", "🐭"],
+                missingPositions: [5, 2, 4, 0, 3],
+                answers: ["🐭", "🐭", "🐱", "🐶", "🐱"]
             }
         ];
 
+        // State game
         let currentLevel = 0;
+        let currentQuestion = 0;
+        let currentAttempts = 0;
         let isProcessing = false;
+        
+        // Level stats
+        let levelStats = {
+            firstTry: 0,
+            secondTry: 0,
+            thirdTry: 0,
+            totalScore: 0
+        };
+        
+        // Game-wide stats
+        let gameStats = {
+            totalStars: 0,
+            totalScore: 0,
+            totalQuestions: 0,
+            totalCorrect: 0,
+            totalAttempts: 0
+        };
 
-        function renderLevel() {
-            const level = levels[currentLevel];
-            document.getElementById('level-display').innerText = level.name;
-            document.getElementById('mascot-text').innerText = `🐝 "Level ${currentLevel + 1}! Apa yang hilang?"`;
+        // Generate 5 pertanyaan untuk level saat ini
+        function generateQuestions(levelIndex) {
+            const template = PATTERN_TEMPLATES[levelIndex];
+            const questions = [];
+            
+            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
+                const pos = template.missingPositions[i];
+                const ans = template.answers[i];
+                
+                // Buat pattern dengan missing di posisi yang ditentukan
+                const pattern = [...template.basePattern];
+                pattern[pos] = "?";
+                
+                // Shuffle choices
+                const shuffledChoices = [...template.choices].sort(() => Math.random() - 0.5);
+                
+                questions.push({
+                    pattern: pattern,
+                    answer: ans,
+                    choices: shuffledChoices,
+                    missingPosition: pos
+                });
+            }
+            
+            return questions;
+        }
 
+        // Current level questions
+        let currentQuestions = [];
+
+        function initLevel() {
+            currentQuestion = 0;
+            currentAttempts = 0;
+            levelStats = { firstTry: 0, secondTry: 0, thirdTry: 0, totalScore: 0 };
+            currentQuestions = generateQuestions(currentLevel);
+            updateScoreBoard();
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = currentQuestions[currentQuestion];
+            
+            // Update UI
+            document.getElementById('level-display').innerText = PATTERN_TEMPLATES[currentLevel].name;
+            document.getElementById('mascot-text').innerText = 
+                `🐝 "Soal ${currentQuestion + 1}/5 - Pola ${PATTERN_TEMPLATES[currentLevel].type}!"`;
+            
+            // Progress bar
+            const progress = ((currentQuestion + 1) / CONFIG.QUESTIONS_PER_LEVEL) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').innerText = `${currentQuestion + 1}/${CONFIG.QUESTIONS_PER_LEVEL}`;
+            
+            // Attempt indicator
+            document.getElementById('attempt-indicator').innerText = '';
+            
             // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
             patternContainer.innerHTML = '';
-            level.pattern.forEach((item) => {
+            q.pattern.forEach((item) => {
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
-                    div.innerText = ''; // Tanda ? ditampilkan via CSS ::before
+                    div.innerText = '';
                 } else {
                     div.className = 'pattern-item';
                     div.innerText = item;
@@ -229,97 +449,249 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices - TIDAK di-shuffle agar konsisten
+            // Render Choices
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
             
-            // FIX: Jangan shuffle, atau jika shuffle, pastikan jawaban tetap terlihat
-            level.choices.forEach(choice => {
+            q.choices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
-                
-                // FIX: Jika choice adalah EMPTY atau string kosong, tampilkan dengan jelas
-                if (choice === "" || choice === EMPTY) {
-                    btn.classList.add('empty-choice');
-                    btn.innerText = '';
-                    btn.dataset.value = EMPTY; // Simpan nilai asli untuk pengecekan
-                } else {
-                    btn.innerText = choice;
-                    btn.dataset.value = choice;
-                }
-                
-                btn.onclick = () => checkAnswer(btn.dataset.value || choice, btn);
+                btn.innerText = choice;
+                btn.dataset.value = choice;
+                btn.onclick = () => checkAnswer(choice, btn);
                 choicesContainer.appendChild(btn);
-            });
-
-            console.log(`✅ Level ${currentLevel + 1}:`, {
-                pattern: level.pattern,
-                answer: level.answer,
-                choices: level.choices
             });
         }
 
         function checkAnswer(choice, btnElement) {
             if (isProcessing) return;
-            isProcessing = true;
-
-            const level = levels[currentLevel];
-            // Normalisasi perbandingan
-            const selectedValue = choice === "" ? EMPTY : choice;
-            const correctValue = level.answer === "" ? EMPTY : level.answer;
-
-            if (selectedValue === correctValue) {
+            
+            const q = currentQuestions[currentQuestion];
+            currentAttempts++;
+            
+            if (choice === q.answer) {
+                // BENAR!
+                isProcessing = true;
                 btnElement.classList.add('correct');
                 
-                const missingSlot = document.querySelector('.pattern-item.missing');
-                if (missingSlot) {
-                    missingSlot.innerText = level.answer === "" ? EMPTY : level.answer;
-                    missingSlot.classList.remove('missing');
-                    missingSlot.style.background = 'var(--green)';
-                    missingSlot.style.border = '3px solid var(--black)';
-                    missingSlot.style.animation = 'none';
+                // Hitung skor berdasarkan attempt
+                let points = 0;
+                let attemptType = '';
+                
+                if (currentAttempts === 1) {
+                    points = CONFIG.SCORE_FIRST_ATTEMPT;
+                    levelStats.firstTry++;
+                    attemptType = 'first';
+                    gameStats.totalCorrect++;
+                } else if (currentAttempts === 2) {
+                    points = CONFIG.SCORE_SECOND_ATTEMPT;
+                    levelStats.secondTry++;
+                    attemptType = 'second';
+                } else {
+                    points = CONFIG.SCORE_THIRD_ATTEMPT;
+                    levelStats.thirdTry++;
+                    attemptType = 'third';
                 }
                 
-                setTimeout(() => showFeedback(true), 500);
+                levelStats.totalScore += points;
+                gameStats.totalScore += points;
+                gameStats.totalQuestions++;
+                gameStats.totalAttempts += currentAttempts;
+                
+                // Update score board
+                updateScoreBoard();
+                
+                // Isi missing slot
+                const missingSlot = document.querySelector('.pattern-item.missing');
+                if (missingSlot) {
+                    missingSlot.innerText = q.answer;
+                    missingSlot.classList.remove('missing');
+                    missingSlot.classList.add('correct-fill');
+                }
+                
+                // Tampilkan feedback
+                setTimeout(() => showFeedback(true, attemptType, points), 500);
+                
             } else {
+                // SALAH!
                 btnElement.classList.add('wrong');
+                btnElement.classList.add('disabled');
+                
+                // Tampilkan attempt indicator
+                const remaining = CONFIG.MAX_ATTEMPTS - currentAttempts;
+                let msg = `❌ Salah! (${currentAttempts}/${CONFIG.MAX_ATTEMPTS} attempt)`;
+                if (remaining <= 0) {
+                    msg = `❌ Salah! Jawaban: ${q.answer}`;
+                }
+                document.getElementById('attempt-indicator').innerText = msg;
+                
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
-                    isProcessing = false;
+                    if (currentAttempts >= CONFIG.MAX_ATTEMPTS) {
+                        // Max attempts reached, show correct answer
+                        isProcessing = true;
+                        levelStats.thirdTry++;
+                        gameStats.totalQuestions++;
+                        gameStats.totalAttempts += currentAttempts;
+                        
+                        // Auto-fill correct answer
+                        const missingSlot = document.querySelector('.pattern-item.missing');
+                        if (missingSlot) {
+                            missingSlot.innerText = q.answer;
+                            missingSlot.classList.remove('missing');
+                            missingSlot.style.background = 'var(--orange)';
+                            missingSlot.style.border = '3px solid var(--black)';
+                        }
+                        
+                        updateScoreBoard();
+                        setTimeout(() => showFeedback(false, 'failed', 0), 800);
+                    } else {
+                        isProcessing = false;
+                    }
                 }, 400);
             }
         }
 
-        function showFeedback(isCorrect) {
+        function showFeedback(isCorrect, attemptType, points) {
             const overlay = document.getElementById('feedback-overlay');
             const title = document.getElementById('feedback-title');
             const text = document.getElementById('feedback-text');
+            const starsDiv = document.getElementById('feedback-stars');
             const btn = document.getElementById('next-btn');
-
+            
             if (isCorrect) {
-                title.innerText = "HEBAT! 🌟";
-                text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
+                if (attemptType === 'first') {
+                    title.innerText = "SANGAT HEBAT! 🌟🌟🌟";
+                    starsDiv.innerText = "⭐⭐⭐";
+                    text.innerText = `First try! +${points} poin! Kamu jenius!`;
+                } else if (attemptType === 'second') {
+                    title.innerText = "BAGUS! ⭐⭐";
+                    starsDiv.innerText = "⭐⭐";
+                    text.innerText = `Benar di attempt ke-2! +${points} poin!`;
+                } else {
+                    title.innerText = "OK! ⭐";
+                    starsDiv.innerText = "⭐";
+                    text.innerText = `Benar di attempt ke-${currentAttempts}! +${points} poin.`;
+                }
+                
+                btn.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? "Soal Berikutnya! 🚀" : "Lihat Hasil! 📊";
+                btn.onclick = nextQuestion;
+            } else {
+                title.innerText = "JAWABANNYA...";
+                starsDiv.innerText = "💡";
+                text.innerText = `Jawaban yang benar adalah ${currentQuestions[currentQuestion].answer}. Lanjut ya!`;
+                btn.innerText = "Lanjut 🚀";
                 btn.onclick = nextQuestion;
             }
+            
             overlay.classList.add('show');
         }
 
         function nextQuestion() {
             document.getElementById('feedback-overlay').classList.remove('show');
             isProcessing = false;
-
-            if (currentLevel < levels.length - 1) {
-                currentLevel++;
-                renderLevel();
+            currentAttempts = 0;
+            
+            if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
+                currentQuestion++;
+                renderQuestion();
             } else {
-                alert("🎉 SELAMAT! Kamu telah menyelesaikan semua level Detektif Pola!\n\nKamu mendapat 3 bintang! ⭐⭐⭐");
-                currentLevel = 0;
-                renderLevel();
+                // Level complete!
+                showLevelComplete();
             }
         }
 
-        renderLevel();
+        function showLevelComplete() {
+            const overlay = document.getElementById('level-complete-overlay');
+            
+            // Calculate stars for this level
+            let stars = '';
+            if (levelStats.firstTry >= 4) {
+                stars = '⭐⭐⭐';
+                gameStats.totalStars += 3;
+            } else if (levelStats.firstTry >= 2) {
+                stars = '⭐⭐';
+                gameStats.totalStars += 2;
+            } else {
+                stars = '⭐';
+                gameStats.totalStars += 1;
+            }
+            
+            document.getElementById('level-stars').innerText = stars;
+            document.getElementById('stat-first').innerText = levelStats.firstTry;
+            document.getElementById('stat-second').innerText = levelStats.secondTry;
+            document.getElementById('stat-third').innerText = levelStats.thirdTry;
+            
+            const summary = `Skor Level: ${levelStats.totalScore} | First Try: ${levelStats.firstTry}/5`;
+            document.getElementById('level-summary-text').innerText = summary;
+            
+            updateScoreBoard();
+            overlay.classList.add('show');
+        }
+
+        function nextLevel() {
+            document.getElementById('level-complete-overlay').classList.remove('show');
+            
+            if (currentLevel < PATTERN_TEMPLATES.length - 1) {
+                currentLevel++;
+                initLevel();
+            } else {
+                showGameComplete();
+            }
+        }
+
+        function restartLevel() {
+            document.getElementById('level-complete-overlay').classList.remove('show');
+            // Kurangi stars yang sudah ditambahkan untuk level ini
+            const stars = document.getElementById('level-stars').innerText.length;
+            gameStats.totalStars -= stars;
+            initLevel();
+        }
+
+        function showGameComplete() {
+            const overlay = document.getElementById('game-complete-overlay');
+            
+            // Calculate final stars
+            const maxStars = PATTERN_TEMPLATES.length * 3;
+            const starRating = Math.round((gameStats.totalStars / maxStars) * 3);
+            let finalStars = '';
+            for (let i = 0; i < starRating; i++) finalStars += '⭐';
+            if (finalStars === '') finalStars = '⭐';
+            
+            document.getElementById('final-stars').innerText = finalStars;
+            document.getElementById('final-total-stars').innerText = `${gameStats.totalStars}/${maxStars}`;
+            document.getElementById('final-total-score').innerText = gameStats.totalScore;
+            
+            const accuracy = gameStats.totalQuestions > 0 
+                ? Math.round((gameStats.totalCorrect / gameStats.totalQuestions) * 100) 
+                : 0;
+            document.getElementById('final-accuracy').innerText = `${accuracy}%`;
+            
+            overlay.classList.add('show');
+        }
+
+        function restartGame() {
+            document.getElementById('game-complete-overlay').classList.remove('show');
+            currentLevel = 0;
+            gameStats = {
+                totalStars: 0,
+                totalScore: 0,
+                totalQuestions: 0,
+                totalCorrect: 0,
+                totalAttempts: 0
+            };
+            initLevel();
+        }
+
+        function updateScoreBoard() {
+            document.getElementById('stars-count').innerText = gameStats.totalStars;
+            document.getElementById('wrong-count').innerText = 
+                gameStats.totalAttempts - gameStats.totalCorrect;
+            document.getElementById('total-score').innerText = gameStats.totalScore;
+        }
+
+        // Init
+        initLevel();
     </script>
 </body>
 </html>
