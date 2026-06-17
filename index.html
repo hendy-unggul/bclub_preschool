@@ -1,11 +1,3 @@
-<!--
-==================================================
-  FILE    : index.html
-  PATH    : bclub-tigaraksa/index.html
-  DESC    : Halaman utama B Club Elite Kindergarten
-  UPLOAD  : Upload ke ROOT repo (bukan di dalam folder)
-==================================================
--->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -45,25 +37,30 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:10px 20px;
+  padding:14px 20px;
   border-bottom:3px solid var(--yellow);
 }
+.nav-left{display:flex;align-items:center;gap:12px}
 .nav-logo{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.nav-logo svg{height:44px;width:auto}
-.nav-logo-text{
-  font-size:22px;
+  font-size:26px;
   font-weight:900;
   color:var(--yellow);
   letter-spacing:-1px;
   font-style:italic;
-  line-height:1;
+  text-decoration:none;
 }
-.nav-logo-text span{color:var(--white);display:block;font-size:9px;font-weight:700;letter-spacing:3px;font-style:normal;opacity:.7}
 .nav-logo span{color:var(--white)}
+.nav-cta{
+  background:var(--coral);
+  color:var(--white);
+  font-weight:800;
+  font-size:12px;
+  padding:8px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  letter-spacing:.5px;
+  border:2px solid var(--white);
+}
 .nav-wa{
   background:var(--yellow);
   color:var(--black);
@@ -330,6 +327,98 @@ body{
   font-weight:800;
 }
 
+/* ── DIGITAL PLAYGROUND CTA ── */
+.digital-cta{
+  background:var(--coral);
+  padding:60px 20px;
+  text-align:center;
+  border-top:4px solid var(--black);
+  border-bottom:4px solid var(--black);
+  position:relative;
+  overflow:hidden;
+}
+.digital-cta::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(13,13,13,0.05) 10px,
+    rgba(13,13,13,0.05) 20px
+  );
+  animation:slide 20s linear infinite;
+}
+@keyframes slide{
+  0%{transform:translate(0,0)}
+  100%{transform:translate(50px,50px)}
+}
+.digital-content{
+  position:relative;
+  z-index:2;
+  max-width:600px;
+  margin:0 auto;
+}
+.digital-icon{
+  font-size:64px;
+  margin-bottom:16px;
+  display:block;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.digital-title{
+  font-size:clamp(32px,10vw,48px);
+  font-weight:900;
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:-2px;
+  font-style:italic;
+  margin-bottom:12px;
+}
+.digital-title .black{color:var(--black)}
+.digital-sub{
+  font-size:15px;
+  color:rgba(255,255,255,.9);
+  line-height:1.7;
+  margin-bottom:32px;
+}
+.digital-sub strong{color:var(--yellow)}
+.digital-btn{
+  display:inline-block;
+  background:var(--yellow);
+  color:var(--black);
+  font-size:20px;
+  font-weight:900;
+  padding:20px 40px;
+  border-radius:12px;
+  text-decoration:none;
+  box-shadow:6px 6px 0 var(--black);
+  border:3px solid var(--black);
+  margin-bottom:16px;
+  transition:transform 0.1s;
+}
+.digital-btn:active{
+  transform:translate(3px,3px);
+  box-shadow:3px 3px 0 var(--black);
+}
+.digital-note{
+  font-size:13px;
+  color:rgba(255,255,255,.8);
+  margin-top:20px;
+}
+.digital-note a{
+  color:var(--white);
+  text-decoration:underline;
+  font-weight:700;
+}
+
 /* ── TESTIMONIALS ── */
 .testi{background:var(--white)}
 .testi-list{display:flex;flex-direction:column;gap:16px}
@@ -490,153 +579,17 @@ footer{
 }
 .sticky-bar .sb-wa{background:var(--yellow);color:var(--black)}
 .sticky-bar .sb-call{background:#1a1a1a;color:var(--white);border-right:1px solid #333}
-
-/* ── PLAY SECTION ── */
-.play-section{
-  background:var(--black);
-  padding:48px 20px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.play-section::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background-image:radial-gradient(circle,rgba(255,230,0,0.12) 2px,transparent 2px);
-  background-size:22px 22px;
-  pointer-events:none;
-}
-.play-eyebrow{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--yellow);
-  margin-bottom:8px;
-}
-.play-title{
-  font-size:clamp(36px,10vw,52px);
-  font-weight:900;
-  line-height:.95;
-  letter-spacing:-2px;
-  color:var(--white);
-  font-style:italic;
-  margin-bottom:6px;
-}
-.play-title .py{color:var(--yellow)}
-.play-sub{
-  font-size:13px;
-  color:rgba(255,255,255,.6);
-  line-height:1.6;
-  max-width:300px;
-  margin:12px auto 28px;
-}
-.play-cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:28px;
-  position:relative;
-  z-index:2;
-}
-.play-card{
-  background:#141414;
-  border:2px solid #222;
-  border-radius:8px;
-  padding:20px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.play-card.soon::after{
-  content:'SEGERA';
-  position:absolute;
-  top:8px;right:8px;
-  background:#333;
-  color:rgba(255,255,255,.5);
-  font-size:8px;
-  font-weight:800;
-  padding:2px 6px;
-  border-radius:3px;
-  letter-spacing:1px;
-}
-.play-card-icon{font-size:36px;margin-bottom:8px;display:block}
-.play-card-name{
-  font-size:13px;
-  font-weight:800;
-  color:var(--white);
-  margin-bottom:4px;
-  letter-spacing:.5px;
-}
-.play-card-desc{font-size:11px;color:rgba(255,255,255,.45);line-height:1.5}
-.play-card.active{border-color:var(--yellow)}
-.play-card.active .play-card-name{color:var(--yellow)}
-.btn-play{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  background:var(--yellow);
-  color:var(--black);
-  font-weight:900;
-  font-size:16px;
-  padding:18px 20px;
-  border-radius:8px;
-  text-decoration:none;
-  letter-spacing:.5px;
-  font-style:italic;
-  position:relative;
-  z-index:2;
-  animation:bounce-cta 2s ease-in-out infinite;
-}
-@keyframes bounce-cta{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-4px)}
-}
-.play-note{
-  font-size:11px;
-  color:rgba(255,255,255,.3);
-  margin-top:12px;
-  letter-spacing:1px;
-  position:relative;
-  z-index:2;
-}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-logo">
-    <svg viewBox="0 0 80 96" xmlns="http://www.w3.org/2000/svg" aria-label="B Club Bee Logo">
-      <ellipse cx="22" cy="34" rx="16" ry="9" fill="#C8EEFA" stroke="#FFE600" stroke-width="1.2" opacity="0.9" transform="rotate(-28 22 34)"/>
-      <ellipse cx="58" cy="34" rx="16" ry="9" fill="#C8EEFA" stroke="#FFE600" stroke-width="1.2" opacity="0.9" transform="rotate(28 58 34)"/>
-      <ellipse cx="40" cy="70" rx="17" ry="21" fill="#FFE600" stroke="#fff" stroke-width="1.5"/>
-      <rect x="24" y="64" width="32" height="6" rx="1" fill="#0D0D0D" opacity="0.85"/>
-      <rect x="24" y="74" width="32" height="6" rx="1" fill="#0D0D0D" opacity="0.8"/>
-      <ellipse cx="40" cy="70" rx="17" ry="21" fill="none" stroke="#fff" stroke-width="1.5"/>
-      <path d="M34 90 L40 95 L46 90" fill="#FFE600" stroke="#fff" stroke-width="1"/>
-      <circle cx="40" cy="33" r="20" fill="#FFE600" stroke="#fff" stroke-width="1.5"/>
-      <ellipse cx="29" cy="30" rx="9" ry="11" fill="white" stroke="#0D0D0D" stroke-width="1.2"/>
-      <ellipse cx="30" cy="32" rx="5.5" ry="7" fill="#0D0D0D"/>
-      <circle cx="33" cy="28" r="2.5" fill="white"/>
-      <ellipse cx="51" cy="30" rx="9" ry="11" fill="white" stroke="#0D0D0D" stroke-width="1.2"/>
-      <ellipse cx="52" cy="32" rx="5.5" ry="7" fill="#0D0D0D"/>
-      <circle cx="55" cy="28" r="2.5" fill="white"/>
-      <path d="M31 14 Q28 8 24 5" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="23" cy="4" r="3" fill="#FF4D4D"/>
-      <path d="M49 14 Q52 8 56 5" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="57" cy="4" r="3" fill="#FF4D4D"/>
-      <path d="M30 44 Q40 52 50 44" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="22" cy="42" rx="6" ry="3.5" fill="#FF4D4D" opacity="0.45"/>
-      <ellipse cx="58" cy="42" rx="6" ry="3.5" fill="#FF4D4D" opacity="0.45"/>
-      <path d="M24 54 Q22 60 20 66" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M56 54 Q58 60 60 66" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <div class="nav-logo-text">B Club<span>KINDERGARTEN</span></div>
+  <div class="nav-left">
+    <a href="#" class="nav-logo">B<span>Club</span></a>
+    <a href="/bclub_preschool/play/" class="nav-cta">🎮 Main Game</a>
   </div>
-  <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp Kami</a>
+  <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp</a>
 </nav>
 
 <!-- HERO -->
@@ -654,25 +607,7 @@ footer{
     <a class="btn-outline" href="#programs">📚 Lihat Program</a>
   </div>
 
-  <div class="big-b" aria-hidden="true">
-    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:auto;opacity:0.18;position:absolute;right:-20px;bottom:-10px;">
-      <ellipse cx="70" cy="88" rx="52" ry="30" fill="#FFE600" transform="rotate(-25 70 88)"/>
-      <ellipse cx="150" cy="88" rx="52" ry="30" fill="#FFE600" transform="rotate(25 150 88)"/>
-      <ellipse cx="110" cy="178" rx="58" ry="70" fill="#FFE600"/>
-      <rect x="54" y="160" width="112" height="22" rx="2" fill="#0D0D0D"/>
-      <rect x="54" y="192" width="112" height="22" rx="2" fill="#0D0D0D"/>
-      <circle cx="110" cy="88" r="48" fill="#FFE600"/>
-      <circle cx="92" cy="78" r="14" fill="white"/>
-      <circle cx="94" cy="80" r="7" fill="#0D0D0D"/>
-      <circle cx="128" cy="78" r="14" fill="white"/>
-      <circle cx="130" cy="80" r="7" fill="#0D0D0D"/>
-      <path d="M92 102 Q110 116 128 102" fill="none" stroke="#0D0D0D" stroke-width="4" stroke-linecap="round"/>
-      <line x1="100" y1="42" x2="82" y2="14" stroke="#0D0D0D" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="79" cy="10" r="8" fill="#FF4D4D"/>
-      <line x1="120" y1="42" x2="138" y2="14" stroke="#0D0D0D" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="141" cy="10" r="8" fill="#FF4D4D"/>
-    </svg>
-  </div>
+  <div class="big-b" aria-hidden="true">B</div>
 </section>
 
 <!-- MARQUEE -->
@@ -789,6 +724,29 @@ footer{
   </div>
 </section>
 
+<!-- DIGITAL PLAYGROUND CTA -->
+<section class="digital-cta">
+  <div class="digital-content">
+    <span class="digital-icon">🎮</span>
+    <h2 class="digital-title">
+      Kelas Digital<br>
+      <span class="black">B Club</span>
+    </h2>
+    <p class="digital-sub">
+      Akses <strong>12 Game Edukatif</strong> berbasis riset World Economic Forum & OECD. 
+      Latih logika, pola pikir, dan problem solving anak. 
+      <strong>Cukup Rp 99.000/semester!</strong>
+    </p>
+    <a href="/bclub_preschool/play/" class="digital-btn">
+      🚀 MAIN SEKARANG!
+    </a>
+    <p class="digital-note">
+      💡 Untuk Orang Tua & Guru: 
+      <a href="/bclub_preschool/play/parents.html">Lihat Metode & Riset Ilmiah →</a>
+    </p>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 <section class="section testi">
   <div class="eyebrow">Suara Orang Tua</div>
@@ -831,42 +789,6 @@ footer{
       </div>
     </div>
   </div>
-</section>
-
-
-<!-- YUK BERMAIN / PLAY SECTION -->
-<section class="play-section" id="play">
-  <div class="play-eyebrow">Games Edukasi</div>
-  <h2 class="play-title"><span class="py">Yuk</span><br>Bermain!<br><span style="font-size:0.6em;color:rgba(255,255,255,0.5);font-style:normal;">Let's Play</span></h2>
-  <p class="play-sub">Game edukasi seru dirancang khusus untuk anak usia 3–6 tahun. Belajar sambil bermain, kapan saja dan di mana saja.</p>
-
-  <div class="play-cards">
-    <div class="play-card active">
-      <span class="play-card-icon">🔤</span>
-      <div class="play-card-name">Kenalan Huruf</div>
-      <div class="play-card-desc">A–Z dengan suara & gambar yang menyenangkan</div>
-    </div>
-    <div class="play-card active">
-      <span class="play-card-icon">🔢</span>
-      <div class="play-card-name">Ayo Berhitung</div>
-      <div class="play-card-desc">Angka 1–20 lewat drag & drop yang intuitif</div>
-    </div>
-    <div class="play-card soon">
-      <span class="play-card-icon">🎨</span>
-      <div class="play-card-name">Warna-Warni</div>
-      <div class="play-card-desc">Mewarnai digital & mengenal nama warna</div>
-    </div>
-    <div class="play-card soon">
-      <span class="play-card-icon">🧩</span>
-      <div class="play-card-name">Puzzle Pintar</div>
-      <div class="play-card-desc">Susun gambar, latih logika dan fokus</div>
-    </div>
-  </div>
-
-  <a class="btn-play" href="./play/index.html">
-    <span>🎮</span> Mulai Bermain Sekarang!
-  </a>
-  <p class="play-note">GRATIS · Tanpa download · Langsung main di HP</p>
 </section>
 
 <!-- ACTION / DAFTAR -->
@@ -927,34 +849,7 @@ footer{
 
 <!-- FOOTER -->
 <footer>
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;">
-    <svg viewBox="0 0 80 96" xmlns="http://www.w3.org/2000/svg" style="height:60px;width:auto;">
-      <ellipse cx="22" cy="34" rx="16" ry="9" fill="#C8EEFA" stroke="#FFE600" stroke-width="1.2" opacity="0.9" transform="rotate(-28 22 34)"/>
-      <ellipse cx="58" cy="34" rx="16" ry="9" fill="#C8EEFA" stroke="#FFE600" stroke-width="1.2" opacity="0.9" transform="rotate(28 58 34)"/>
-      <ellipse cx="40" cy="70" rx="17" ry="21" fill="#FFE600" stroke="#fff" stroke-width="1.5"/>
-      <rect x="24" y="64" width="32" height="6" rx="1" fill="#0D0D0D" opacity="0.85"/>
-      <rect x="24" y="74" width="32" height="6" rx="1" fill="#0D0D0D" opacity="0.8"/>
-      <ellipse cx="40" cy="70" rx="17" ry="21" fill="none" stroke="#fff" stroke-width="1.5"/>
-      <path d="M34 90 L40 95 L46 90" fill="#FFE600" stroke="#fff" stroke-width="1"/>
-      <circle cx="40" cy="33" r="20" fill="#FFE600" stroke="#fff" stroke-width="1.5"/>
-      <ellipse cx="29" cy="30" rx="9" ry="11" fill="white" stroke="#0D0D0D" stroke-width="1.2"/>
-      <ellipse cx="30" cy="32" rx="5.5" ry="7" fill="#0D0D0D"/>
-      <circle cx="33" cy="28" r="2.5" fill="white"/>
-      <ellipse cx="51" cy="30" rx="9" ry="11" fill="white" stroke="#0D0D0D" stroke-width="1.2"/>
-      <ellipse cx="52" cy="32" rx="5.5" ry="7" fill="#0D0D0D"/>
-      <circle cx="55" cy="28" r="2.5" fill="white"/>
-      <path d="M31 14 Q28 8 24 5" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="23" cy="4" r="3" fill="#FF4D4D"/>
-      <path d="M49 14 Q52 8 56 5" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="57" cy="4" r="3" fill="#FF4D4D"/>
-      <path d="M30 44 Q40 52 50 44" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="22" cy="42" rx="6" ry="3.5" fill="#FF4D4D" opacity="0.45"/>
-      <ellipse cx="58" cy="42" rx="6" ry="3.5" fill="#FF4D4D" opacity="0.45"/>
-      <path d="M24 54 Q22 60 20 66" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M56 54 Q58 60 60 66" fill="none" stroke="#0D0D0D" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <div class="ft-logo">B<span>Club</span></div>
-  </div>
+  <div class="ft-logo">B<span>Club</span></div>
   <p class="ft-tagline">Elite Kindergarten di Tigaraksa. Setiap anak lahir jenius — tugas kita adalah menjaga apinya tetap menyala.</p>
   <div class="ft-socials">
     <a href="https://instagram.com/bclub_tigaraksa" target="_blank">📸 Instagram</a>
