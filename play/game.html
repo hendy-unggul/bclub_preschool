@@ -8,7 +8,6 @@
     <link rel="manifest" href="./manifest.json">
 
     <style>
-        /* ── RESET & ROOT ── */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         :root {
             --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
@@ -22,7 +21,6 @@
             overflow: hidden;
         }
 
-        /* ── HEADER ── */
         header {
             background: var(--black); padding: 12px 16px;
             display: flex; justify-content: space-between; align-items: center;
@@ -40,7 +38,6 @@
             border: 2px solid var(--black);
         }
 
-        /* ── GAME AREA ── */
         .game-container {
             flex: 1; display: flex; flex-direction: column;
             padding: 20px; justify-content: center; align-items: center;
@@ -77,7 +74,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* ── CHOICES ── */
         .choices-row {
             display: flex; gap: 16px; justify-content: center;
         }
@@ -100,7 +96,6 @@
             75% { transform: translateX(5px); }
         }
 
-        /* ── FEEDBACK OVERLAY ── */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(13,13,13,0.9); display: none;
@@ -131,16 +126,10 @@
             🐝 "Halo Detektif! Apa yang hilang dari pola ini?"
         </div>
 
-        <div class="pattern-row" id="pattern-container">
-            <!-- Pattern items injected by JS -->
-        </div>
-
-        <div class="choices-row" id="choices-container">
-            <!-- Choices injected by JS -->
-        </div>
+        <div class="pattern-row" id="pattern-container"></div>
+        <div class="choices-row" id="choices-container"></div>
     </div>
 
-    <!-- Feedback Overlay -->
     <div class="overlay" id="feedback-overlay">
         <h2 id="feedback-title">HEBAT!</h2>
         <p id="feedback-text">Kamu menemukan polanya!</p>
@@ -148,38 +137,36 @@
     </div>
 
     <script>
-        // ── GAME DATA (3 Levels - FIXED!) ──
+        // ─ GAME DATA (3 Levels - FIXED!) ─
         const levels = [
             {
-                name: "Level 1 (Mudah)",
-                pattern: ["🍎", "", "🍎", "🍌", "🍎", "?"],  // ABABAB - missing last
+                name: "Level 1",
+                pattern: ["🍎", "🍌", "", "🍌", "🍎", "?"],
                 answer: "🍌",
                 choices: ["🍎", "", "🍇"]
             },
             {
-                name: "Level 2 (Sedang)",
-                pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],  // AABAAB - missing last
+                name: "Level 2",
+                pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"],
                 answer: "🌙",
                 choices: ["⭐", "🌙", "☀️"]
             },
             {
-                name: "Level 3 (Sulit)",
-                pattern: ["🐶", "🐱", "", "🐶", "🐱", "?"],  // ABCABC - missing last
+                name: "Level 3",
+                pattern: ["🐶", "🐱", "🐭", "", "🐱", "?"],
                 answer: "🐭",
-                choices: ["🐶", "🐱", "🐭"]
+                choices: ["", "🐱", "🐭"]
             }
         ];
 
         let currentLevel = 0;
         let isProcessing = false;
 
-        // ── RENDER GAME ──
         function renderLevel() {
             const level = levels[currentLevel];
             document.getElementById('level-display').innerText = level.name;
             document.getElementById('mascot-text').innerText = `🐝 "Level ${currentLevel + 1}! Apa yang hilang?"`;
 
-            // Render Pattern
             const patternContainer = document.getElementById('pattern-container');
             patternContainer.innerHTML = '';
             level.pattern.forEach(item => {
@@ -189,10 +176,8 @@
                 patternContainer.appendChild(div);
             });
 
-            // Render Choices
             const choicesContainer = document.getElementById('choices-container');
             choicesContainer.innerHTML = '';
-            // Shuffle choices
             const shuffledChoices = [...level.choices].sort(() => Math.random() - 0.5);
             
             shuffledChoices.forEach(choice => {
@@ -204,7 +189,6 @@
             });
         }
 
-        // ── CHECK ANSWER ──
         function checkAnswer(choice, btnElement) {
             if (isProcessing) return;
             isProcessing = true;
@@ -213,25 +197,22 @@
 
             if (choice === level.answer) {
                 btnElement.classList.add('correct');
-                // Fill the missing slot visually
                 const missingSlot = document.querySelector('.pattern-item.missing');
                 if (missingSlot) {
                     missingSlot.innerText = choice;
                     missingSlot.classList.remove('missing');
                     missingSlot.style.background = 'var(--green)';
                 }
-                
                 setTimeout(() => showFeedback(true), 500);
             } else {
                 btnElement.classList.add('wrong');
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
-                    isProcessing = false; // Allow retry
+                    isProcessing = false;
                 }, 400);
             }
         }
 
-        // ── FEEDBACK & PROGRESSION ──
         function showFeedback(isCorrect) {
             const overlay = document.getElementById('feedback-overlay');
             const title = document.getElementById('feedback-title');
@@ -241,7 +222,7 @@
             if (isCorrect) {
                 title.innerText = "HEBAT! 🌟";
                 text.innerText = "Kamu Detektif Pola yang hebat!";
-                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! 🚀" : "Selesai! 🏆";
+                btn.innerText = currentLevel < levels.length - 1 ? "Level Berikutnya! " : "Selesai! 🏆";
                 btn.onclick = nextQuestion;
             }
             overlay.classList.add('show');
@@ -255,14 +236,12 @@
                 currentLevel++;
                 renderLevel();
             } else {
-                // Game Completed
                 alert(" SELAMAT! Kamu telah menyelesaikan semua level Detektif Pola!\n\nKamu mendapat 3 bintang! ⭐⭐⭐");
-                currentLevel = 0; // Reset for demo
+                currentLevel = 0;
                 renderLevel();
             }
         }
 
-        // ── INIT ─
         renderLevel();
     </script>
 </body>
