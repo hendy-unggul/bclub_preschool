@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
+    <!-- Cache buster -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>B Club — Game Edukatif</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gR2FtZSIsInNob3J0X25hbWUiOiJCIENsdWIiLCJzdGFydF91cmwiOiIuL2luZGV4Lmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 
@@ -100,7 +104,7 @@
             font-style: italic; margin-bottom: 4px;
         }
         .game-desc {
-            font-size: 13px; color: var(--textmuted);
+            font-size: 13px; color: rgba(13,13,13,0.5);
             line-height: 1.5;
         }
         .game-badge {
@@ -160,11 +164,11 @@
 
     <div class="stats-bar">
         <div class="stat-item">
-            <span class="stat-num">2</span>
+            <span class="stat-num">3</span>
             <span class="stat-label">Game</span>
         </div>
         <div class="stat-item">
-            <span class="stat-num">15</span>
+            <span class="stat-num">24</span>
             <span class="stat-label">Level</span>
         </div>
         <div class="stat-item">
@@ -174,6 +178,7 @@
     </div>
 
     <div class="games-grid">
+        <!-- DETEKTIF POLA -->
         <a href="./detektif.html" class="game-card">
             <div class="game-icon">🕵️</div>
             <div class="game-info">
@@ -183,12 +188,23 @@
             </div>
         </a>
 
+        <!-- MASAK BARENG -->
         <a href="./masak.html" class="game-card">
             <div class="game-icon">👨‍🍳</div>
             <div class="game-info">
                 <div class="game-name">Masak Bareng</div>
                 <div class="game-desc">Urutkan langkah memasak! Latih sequencing.</div>
                 <span class="game-badge">🎯 Urutan</span>
+            </div>
+        </a>
+
+        <!-- KARTU MEMORI - BARU -->
+        <a href="./memori.html" class="game-card">
+            <div class="game-icon">🦉</div>
+            <div class="game-info">
+                <div class="game-name">Kartu Memori</div>
+                <div class="game-desc">Cocokkan pasangan kartu! Latih konsentrasi dan ingatan.</div>
+                <span class="game-badge">🧠 Ingatan</span>
             </div>
         </a>
     </div>
