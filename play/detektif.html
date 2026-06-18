@@ -44,6 +44,126 @@
             font-weight: 900; font-size: 16px; box-shadow: 3px 3px 0 var(--black);
         }
 
+        /* ═══════════════════════════════════════════════════════
+           LEVEL SELECT SCREEN
+        ═══════════════════════════════════════════════════════ */
+        .level-select {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .weekly-target {
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            border-radius: 16px;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 16px;
+            margin-bottom: 20px;
+            box-shadow: 4px 4px 0 var(--black);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .phase-section {
+            margin-bottom: 24px;
+        }
+        .phase-section h3 {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: rgba(13,13,13,0.5);
+        }
+        .level-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .level-btn {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 16px;
+            box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+        }
+        .level-btn.locked {
+            background: var(--gray);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .level-btn.current-week {
+            border: 4px solid var(--coral);
+            animation: targetPulse 2s infinite;
+        }
+        .level-btn:active:not(.locked) {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+        }
+        .level-num {
+            font-size: 24px;
+            font-weight: 900;
+        }
+        .level-stars {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .week-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 20px;
+            background: var(--coral);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--black);
+        }
+        .overall-progress {
+            margin-top: 20px;
+            text-align: center;
+            padding: 16px;
+            background: var(--white);
+            border-radius: 16px;
+            border: 3px solid var(--black);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background: var(--gray);
+            border: 2px solid var(--black);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--green);
+            transition: width 0.5s;
+        }
+        @keyframes targetPulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--coral); }
+            50% { box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           GAME PLAY SCREEN
+        ═══════════════════════════════════════════════════════ */
         .score-board {
             display: flex; gap: 20px; justify-content: center;
             padding: 10px; background: var(--white);
@@ -215,7 +335,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           CREATE PATTERN MODE - Drag & Drop
+           CREATE PATTERN MODE
         ═══════════════════════════════════════════════════════ */
         .create-area {
             display: flex; flex-direction: column;
@@ -233,12 +353,6 @@
             background: var(--white); border-radius: 20px;
             border: 4px dashed var(--black);
             width: 100%; max-width: 400px;
-        }
-        .pattern-builder .pattern-item {
-            cursor: grab;
-        }
-        .pattern-builder .pattern-item:active {
-            cursor: grabbing;
         }
         .pattern-palette {
             display: flex; gap: 12px; flex-wrap: wrap;
@@ -259,6 +373,38 @@
         .palette-item.selected {
             background: var(--green);
             transform: scale(1.1);
+        }
+        .builder-slot {
+            width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--white);
+            border-radius: 16px; border: 3px solid var(--black);
+            cursor: pointer; transition: all 0.15s;
+            box-shadow: 2px 2px 0 var(--black);
+        }
+        .builder-slot.empty {
+            background: var(--yellow);
+            border: 3px dashed var(--black);
+        }
+        .builder-slot.empty::before {
+            content: '❓';
+            font-size: 28px;
+        }
+        .builder-slot.selected {
+            border: 4px solid var(--blue);
+            transform: scale(1.1);
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);
+        }
+        .builder-slot.filled {
+            background: var(--white);
+        }
+        .builder-slot.correct {
+            background: var(--green) !important;
+            animation: correctPop 0.5s;
+        }
+        .builder-slot.wrong {
+            background: var(--coral) !important;
+            animation: bigShake 0.5s;
         }
 
         .overlay {
@@ -290,29 +436,6 @@
             transform: translate(4px, 4px); box-shadow: none;
         }
 
-        .trophy {
-            font-size: 100px;
-            animation: trophyBounce 1s infinite;
-            margin-bottom: 16px;
-        }
-        @keyframes trophyBounce {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-        .star-rating { font-size: 64px; margin: 16px 0; }
-        .stats-visual {
-            display: flex; gap: 20px; margin: 16px 0;
-        }
-        .stat-circle {
-            width: 80px; height: 80px; border-radius: 50%;
-            border: 4px solid var(--yellow);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background: var(--black);
-        }
-        .stat-circle .number { font-size: 32px; font-weight: 900; color: var(--yellow); }
-        .stat-circle .label { font-size: 10px; color: #aaa; font-weight: 700; }
-
         .certificate {
             background: var(--white); border: 4px solid var(--black);
             border-radius: 20px; padding: 32px;
@@ -330,34 +453,63 @@
             font-size: 16px; color: rgba(13,13,13,0.7);
             margin-bottom: 16px;
         }
+        .star-rating {
+            font-size: 40px;
+            margin: 12px 0;
+        }
 
         @media (max-width: 360px) {
             .pattern-item { width: 50px; height: 50px; font-size: 32px; }
             .choice-btn { width: 70px; height: 70px; font-size: 40px; }
             .mascot { font-size: 48px; }
+            .level-num { font-size: 20px; }
+            .builder-slot, .palette-item { width: 50px; height: 50px; font-size: 32px; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
     <header>
         <a href="./index.html" class="btn-back">🔙</a>
-        <div class="level-badge" id="level-display">1️⃣</div>
+        <div class="level-badge" id="level-display">🎯</div>
     </header>
 
-    <div class="score-board">
-        <div class="score-item stars">
-            <span class="icon">⭐</span><span id="stars-count">0</span>
+    <!-- LEVEL SELECT SCREEN -->
+    <div id="level-select-screen" class="level-select">
+        <div class="mascot-area">
+            <div class="mascot">🐵</div>
+            <div class="mascot-bubble">Pilih level! 🎯</div>
         </div>
-        <div class="score-item hearts">
-            <span class="icon">❌</span><span id="wrong-count">0</span>
+
+        <div class="weekly-target" id="weekly-target">
+            🗓️ Minggu 1: Level 1-4
         </div>
-        <div class="score-item points">
-            <span class="icon">💎</span><span id="total-score">0</span>
+
+        <div id="level-grid"></div>
+
+        <div class="overall-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <span id="progress-text">0/16 level selesai</span>
         </div>
     </div>
 
-    <div class="game-container" id="game-container">
+    <!-- GAME PLAY SCREEN -->
+    <div id="game-play-screen" style="display: none;">
+        <div class="score-board">
+            <div class="score-item stars">
+                <span class="icon">⭐</span><span id="stars-count">0</span>
+            </div>
+            <div class="score-item hearts">
+                <span class="icon">❌</span><span id="wrong-count">0</span>
+            </div>
+            <div class="score-item points">
+                <span class="icon">💎</span><span id="total-score">0</span>
+            </div>
+        </div>
+
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">🐝</div>
             <div class="mascot-bubble" id="mascot-bubble">🤔❓</div>
@@ -378,14 +530,15 @@
         </div>
     </div>
 
-    <!-- CREATE PATTERN MODE (hidden by default) -->
+    <!-- CREATE PATTERN MODE -->
     <div class="create-area" id="create-area" style="display: none;">
         <div class="create-instruction" id="create-instruction">Buat pola: 🍎🍌🍎🍌</div>
         <div class="pattern-builder" id="pattern-builder"></div>
         <div class="pattern-palette" id="pattern-palette"></div>
-        <button class="feedback-btn" onclick="checkCreatedPattern()">✅ Cek Pola</button>
+        <button class="feedback-btn" id="check-btn" onclick="checkCreatedPattern()">✅ Cek Pola</button>
     </div>
 
+    <!-- OVERLAYS -->
     <div class="overlay" id="feedback-overlay">
         <div class="feedback-emoji" id="feedback-emoji">🎉</div>
         <div class="feedback-stars" id="feedback-stars"></div>
@@ -433,34 +586,168 @@
         ];
 
         let currentLevel = 0;
+        let currentQuestion = 0;
         let wrongCount = 0;
         let isProcessing = false;
         let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+        let selectedSlot = null;
+        let selectedPaletteItem = null;
+        let builtPattern = [];
 
-        // Load progress from localStorage
+        // ═══════════════════════════════════════════════════════
+        //  PROGRESS SYSTEM (localStorage)
+        // ═══════════════════════════════════════════════════════
         function loadProgress() {
-            const saved = localStorage.getItem('detektif_progress');
-            if (saved) {
-                const progress = parseInt(saved);
-                if (progress > 0 && progress < LEVELS.length) {
-                    currentLevel = progress;
-                }
+            try {
+                const saved = localStorage.getItem('detektif_levels');
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
             }
         }
 
-        function saveProgress() {
-            localStorage.setItem('detektif_progress', currentLevel);
+        function saveLevelProgress(levelIdx, stars) {
+            const progress = loadProgress();
+            progress[levelIdx] = Math.max(progress[levelIdx] || 0, stars);
+            localStorage.setItem('detektif_levels', JSON.stringify(progress));
+        }
+
+        function getLevelProgress() {
+            return loadProgress();
+        }
+
+        function getCompletedLevels() {
+            return Object.keys(loadProgress()).length;
+        }
+
+        function getProgressPercent() {
+            return (getCompletedLevels() / 16) * 100;
+        }
+
+        function isLevelUnlocked(levelIdx) {
+            if (levelIdx === 0) return true;
+            const progress = loadProgress();
+            return progress[levelIdx - 1] > 0;
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  WEEKLY TARGET SYSTEM
+        // ═══════════════════════════════════════════════════════
+        function getCurrentWeek() {
+            const startDate = new Date('2025-01-01');
+            const now = new Date();
+            const diffWeeks = Math.floor((now - startDate) / (7 * 24 * 60 * 60 * 1000));
+            return Math.max(1, Math.min(16, diffWeeks + 1));
+        }
+
+        function isInCurrentWeek(levelIdx) {
+            const week = getCurrentWeek();
+            const weekStart = (week - 1) * 4;
+            const weekEnd = weekStart + 3;
+            return levelIdx >= weekStart && levelIdx <= weekEnd;
+        }
+
+        function getWeeklyTargetHTML() {
+            const week = getCurrentWeek();
+            const startLevel = (week - 1) * 4 + 1;
+            const endLevel = Math.min(16, week * 4);
+            return `🗓️ Minggu ${week}: Level ${startLevel}-${endLevel}`;
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  LEVEL SELECT SCREEN
+        // ═══════════════════════════════════════════════════════
+        function showLevelSelect() {
+            document.getElementById('level-select-screen').style.display = 'block';
+            document.getElementById('game-play-screen').style.display = 'none';
+            document.getElementById('create-area').style.display = 'none';
+
+            document.getElementById('weekly-target').innerText = getWeeklyTargetHTML();
+            document.getElementById('progress-fill').style.width = getProgressPercent() + '%';
+            document.getElementById('progress-text').innerText = `${getCompletedLevels()}/16 level selesai`;
+
+            renderLevelGrid();
+        }
+
+        function renderLevelGrid() {
+            const grid = document.getElementById('level-grid');
+            const progress = getLevelProgress();
+
+            const phases = [
+                { name: "Fase 1: AB Pattern", levels: [0,1,2,3] },
+                { name: "Fase 2: ABC/AAB", levels: [4,5,6,7] },
+                { name: "Fase 3: Mix & Create", levels: [8,9,10,11] },
+                { name: "Fase 4: Mastery", levels: [12,13,14,15] }
+            ];
+
+            grid.innerHTML = '';
+
+            phases.forEach(phase => {
+                const phaseDiv = document.createElement('div');
+                phaseDiv.className = 'phase-section';
+                phaseDiv.innerHTML = `<h3>${phase.name}</h3>`;
+
+                const row = document.createElement('div');
+                row.className = 'level-row';
+
+                phase.levels.forEach(levelIdx => {
+                    const stars = progress[levelIdx] || 0;
+                    const isUnlocked = isLevelUnlocked(levelIdx);
+                    const isCurrentWeek = isInCurrentWeek(levelIdx);
+
+                    const btn = document.createElement('div');
+                    btn.className = `level-btn ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrentWeek ? 'current-week' : ''}`;
+                    btn.innerHTML = `
+                        <span class="level-num">${levelIdx + 1}</span>
+                        <span class="level-stars">${'⭐'.repeat(stars)}${'⚫'.repeat(3-stars)}</span>
+                        ${isCurrentWeek ? '<span class="week-badge">🎯</span>' : ''}
+                    `;
+
+                    if (isUnlocked) {
+                        btn.onclick = () => startLevel(levelIdx);
+                    }
+
+                    row.appendChild(btn);
+                });
+
+                phaseDiv.appendChild(row);
+                grid.appendChild(phaseDiv);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  GAME PLAY
+        // ═══════════════════════════════════════════════════════
+        function startLevel(levelIdx) {
+            currentLevel = levelIdx;
+            currentQuestion = 0;
+            wrongCount = 0;
+            isProcessing = false;
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+
+            document.getElementById('level-select-screen').style.display = 'none';
+            document.getElementById('game-play-screen').style.display = 'block';
+            document.getElementById('create-area').style.display = 'none';
+
+            updateScoreBoard();
+            initLevel();
+        }
+
+        function updateScoreBoard() {
+            document.getElementById('stars-count').innerText = gameStats.stars;
+            document.getElementById('wrong-count').innerText = wrongCount;
+            document.getElementById('total-score').innerText = gameStats.score;
         }
 
         function initLevel() {
-            wrongCount = 0; isProcessing = false;
             const level = LEVELS[currentLevel];
-            
+
             document.getElementById('level-display').innerText = `${currentLevel + 1}️⃣`;
             document.getElementById('mascot-emoji').innerText = '🐝';
             document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
-            
+
             renderWrongDots();
+            renderProgressDots();
 
             if (level.type === "fill") {
                 showFillMode(level);
@@ -471,9 +758,31 @@
             }
         }
 
+        function renderProgressDots() {
+            const c = document.getElementById('progress-dots');
+            c.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const d = document.createElement('div');
+                d.className = 'progress-dot';
+                if (i < currentQuestion) d.classList.add('done');
+                else if (i === currentQuestion) d.classList.add('current');
+                c.appendChild(d);
+            }
+        }
+
+        function renderWrongDots() {
+            document.querySelectorAll('.wrong-dot').forEach((d, i) => {
+                d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  FILL MODE
+        // ═══════════════════════════════════════════════════════
         function showFillMode(level) {
-            document.getElementById('game-container').style.display = 'flex';
+            document.getElementById('game-play-screen').style.display = 'block';
             document.getElementById('create-area').style.display = 'none';
+            document.getElementById('choices-container').style.display = 'flex';
 
             const pc = document.getElementById('pattern-container');
             pc.innerHTML = '';
@@ -500,20 +809,68 @@
             });
         }
 
+        function checkFillAnswer(choice, btn, level) {
+            if (isProcessing) return;
+
+            if (choice === level.answer) {
+                isProcessing = true;
+                btn.classList.add('correct');
+
+                const slot = document.getElementById('missing-slot');
+                if (slot) {
+                    slot.innerText = choice;
+                    slot.classList.remove('missing');
+                    slot.classList.add('correct-fill');
+                }
+
+                gameStats.correct++;
+                gameStats.score += 10;
+                updateScoreBoard();
+
+                setTimeout(() => finishQuestion(true), 600);
+            } else {
+                wrongCount++;
+                gameStats.wrongTotal++;
+                btn.classList.add('wrong');
+                renderWrongDots();
+                updateScoreBoard();
+
+                // Mascot reaction
+                document.getElementById('mascot-emoji').innerText = '😿';
+                document.getElementById('mascot-bubble').innerText = 'Coba lagi! 💪';
+
+                setTimeout(() => {
+                    btn.classList.remove('wrong');
+                    document.getElementById('mascot-emoji').innerText = '🐝';
+                    document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+                }, 400);
+
+                if (wrongCount >= 3) {
+                    setTimeout(() => finishQuestion(false), 500);
+                }
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  CREATE PATTERN MODE
+        // ═══════════════════════════════════════════════════════
         function showCreateMode(level) {
-            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'flex';
-            
+
             document.getElementById('create-instruction').innerText = `Buat: ${level.unit}...`;
 
             const builder = document.getElementById('pattern-builder');
             builder.innerHTML = '';
+            builtPattern = new Array(level.target.length).fill(null);
+            selectedSlot = null;
+            selectedPaletteItem = null;
+
             for (let i = 0; i < level.target.length; i++) {
                 const slot = document.createElement('div');
-                slot.className = 'pattern-item';
+                slot.className = 'builder-slot empty';
                 slot.dataset.index = i;
-                slot.innerText = '❓';
-                slot.onclick = () => selectSlot(slot, level);
+                slot.onclick = () => selectBuilderSlot(slot);
                 builder.appendChild(slot);
             }
 
@@ -528,134 +885,242 @@
             });
         }
 
-        let selectedSlot = null;
-        let selectedItem = null;
-        let builtPattern = [];
-
-        function selectSlot(slot, level) {
-            document.querySelectorAll('.pattern-item').forEach(s => s.classList.remove('selected'));
+        function selectBuilderSlot(slot) {
+            document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.remove('selected'));
             slot.classList.add('selected');
             selectedSlot = slot;
-            
-            if (selectedItem) {
-                slot.innerText = selectedItem;
-                builtPattern[parseInt(slot.dataset.index)] = selectedItem;
-                selectedItem = null;
-                document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+
+            if (selectedPaletteItem) {
+                fillSlot(slot, selectedPaletteItem);
             }
         }
 
         function selectPaletteItem(item, btn) {
             document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
             btn.classList.add('selected');
-            selectedItem = item;
-            
+            selectedPaletteItem = item;
+
             if (selectedSlot) {
-                selectedSlot.innerText = item;
-                builtPattern[parseInt(selectedSlot.dataset.index)] = item;
-                selectedSlot = null;
-                selectedItem = null;
-                document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+                fillSlot(selectedSlot, item);
             }
+        }
+
+        function fillSlot(slot, item) {
+            slot.innerText = item;
+            slot.classList.remove('empty');
+            slot.classList.add('filled');
+            builtPattern[parseInt(slot.dataset.index)] = item;
+
+            selectedSlot = null;
+            selectedPaletteItem = null;
+            document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+            document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.remove('selected'));
         }
 
         function checkCreatedPattern() {
             const level = LEVELS[currentLevel];
             const isCorrect = level.target.every((item, idx) => builtPattern[idx] === item);
-            
+
             if (isCorrect) {
-                finishLevel(true);
+                // Mark all slots as correct
+                document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot, idx) => {
+                    slot.classList.add('correct');
+                });
+
+                gameStats.correct++;
+                gameStats.score += 10;
+                updateScoreBoard();
+
+                setTimeout(() => finishQuestion(true), 800);
             } else {
                 wrongCount++;
                 gameStats.wrongTotal++;
-                renderWrongDots();
-                document.getElementById('mascot-bubble').innerText = 'Coba lagi! 😢';
-                // Reset
-                builtPattern = [];
-                document.querySelectorAll('.pattern-item').forEach(s => s.innerText = '❓');
-            }
-        }
+                updateScoreBoard();
 
-        function checkFillAnswer(choice, btn, level) {
-            if (isProcessing) return;
-            
-            if (choice === level.answer) {
-                isProcessing = true;
-                btn.classList.add('correct');
-                
-                const slot = document.getElementById('missing-slot');
-                if (slot) {
-                    slot.innerText = choice;
-                    slot.classList.remove('missing');
-                    slot.classList.add('correct-fill');
+                // Mark wrong slots
+                document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot, idx) => {
+                    if (builtPattern[idx] !== level.target[idx]) {
+                        slot.classList.add('wrong');
+                        setTimeout(() => slot.classList.remove('wrong'), 600);
+                    }
+                });
+
+                document.getElementById('mascot-emoji').innerText = '😿';
+                document.getElementById('mascot-bubble').innerText = 'Belum tepat! Coba lagi! 💪';
+
+                setTimeout(() => {
+                    document.getElementById('mascot-emoji').innerText = '🐝';
+                    document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+                }, 800);
+
+                if (wrongCount >= 3) {
+                    setTimeout(() => finishQuestion(false), 800);
                 }
-                
-                setTimeout(() => finishLevel(true), 600);
-            } else {
-                wrongCount++;
-                gameStats.wrongTotal++;
-                btn.classList.add('wrong');
-                renderWrongDots();
-                
-                setTimeout(() => btn.classList.remove('wrong'), 400);
             }
         }
 
-        function finishLevel(isCorrect) {
-            if (!isCorrect) return;
-            
-            let points = 0;
-            if (wrongCount === 0) points = 100;
-            else if (wrongCount <= 2) points = 50;
-            else points = 25;
-            
-            gameStats.score += points;
-            gameStats.questions++;
-            gameStats.correct++;
-            
-            saveProgress();
-            
-            if (currentLevel < LEVELS.length - 1) {
-                currentLevel++;
-                showFeedback();
+        // ═══════════════════════════════════════════════════════
+        //  FEEDBACK & PROGRESSION
+        // ═══════════════════════════════════════════════════════
+        function finishQuestion(success) {
+            if (success) {
+                gameStats.questions++;
+                currentQuestion++;
+
+                // Calculate stars for this question
+                let qStars = 3;
+                if (wrongCount > 0) qStars = 2;
+                if (wrongCount > 1) qStars = 1;
+                gameStats.stars += qStars;
+
+                updateScoreBoard();
+
+                if (currentQuestion >= 5) {
+                    // Level complete
+                    showLevelComplete();
+                } else {
+                    showQuestionFeedback(true, qStars);
+                }
             } else {
-                showCertificate();
+                // Failed level (3 wrong answers)
+                showQuestionFeedback(false, 0);
             }
         }
 
-        function showFeedback() {
-            document.getElementById('feedback-overlay').classList.add('show');
+        function showQuestionFeedback(success, stars) {
+            const overlay = document.getElementById('feedback-overlay');
+            const emoji = document.getElementById('feedback-emoji');
+            const starsDiv = document.getElementById('feedback-stars');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (success) {
+                const emojis = ['🎉', '🌟', '🎊', '🥳', '🎈'];
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                starsDiv.innerText = '⭐'.repeat(stars);
+                nextBtn.innerText = '▶️ Lanjut';
+                nextBtn.onclick = nextQuestion;
+            } else {
+                emoji.innerText = '😢';
+                starsDiv.innerText = 'Coba lagi ya! 💪';
+                nextBtn.innerText = '🔄 Ulang Level';
+                nextBtn.onclick = () => startLevel(currentLevel);
+            }
+
+            overlay.classList.add('show');
         }
 
         function nextQuestion() {
             document.getElementById('feedback-overlay').classList.remove('show');
+
+            const level = LEVELS[currentLevel];
+            if (level.type === "fill" || level.type === "create") {
+                // Generate next question with same pattern type but different position
+                generateNextQuestion();
+            }
+
             initLevel();
         }
 
+        function generateNextQuestion() {
+            const level = LEVELS[currentLevel];
+
+            if (level.type === "fill") {
+                // Randomize missing position
+                const pattern = [...level.pattern];
+                const missingIdx = Math.floor(Math.random() * pattern.length);
+
+                // Ensure we don't put ? at the same position twice in a row
+                const newPattern = pattern.map((item, idx) => {
+                    if (idx === missingIdx) return "?";
+                    return item === "?" ? level.answer : item;
+                });
+
+                // Update level pattern for next question
+                level.pattern = newPattern;
+
+                // Randomize choices order
+                level.choices = shuffleArray([...level.choices]);
+            }
+            // Create mode doesn't need regeneration - user builds from scratch each time
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function showLevelComplete() {
+            const overlay = document.getElementById('feedback-overlay');
+            const emoji = document.getElementById('feedback-emoji');
+            const starsDiv = document.getElementById('feedback-stars');
+            const nextBtn = document.getElementById('next-btn');
+
+            // Calculate total stars for level (max 15, min 5)
+            const totalStars = Math.min(3, Math.max(1, Math.floor(gameStats.stars / 5)));
+
+            // Save progress
+            saveLevelProgress(currentLevel, totalStars);
+
+            emoji.innerText = '🏆';
+            starsDiv.innerText = `Level ${currentLevel + 1} Selesai!\n⭐`.repeat(totalStars);
+
+            if (currentLevel >= 15) {
+                nextBtn.innerText = '🎓 Sertifikat';
+                nextBtn.onclick = showCertificate;
+            } else {
+                nextBtn.innerText = '▶️ Level Selanjutnya';
+                nextBtn.onclick = () => {
+                    overlay.classList.remove('show');
+                    startLevel(currentLevel + 1);
+                };
+            }
+
+            overlay.classList.add('show');
+        }
+
+        // ═══════════════════════════════════════════════════════
+        //  CERTIFICATE
+        // ═══════════════════════════════════════════════════════
         function showCertificate() {
-            const stars = Math.min(3, Math.floor(gameStats.correct / 5));
-            document.getElementById('cert-stars').innerText = '⭐'.repeat(stars);
-            document.getElementById('cert-text').innerText = `Skor: ${gameStats.score} | Benar: ${gameStats.correct}/${gameStats.questions}`;
+            document.getElementById('feedback-overlay').classList.remove('show');
+            document.getElementById('game-play-screen').style.display = 'none';
+            document.getElementById('create-area').style.display = 'none';
+            document.getElementById('level-select-screen').style.display = 'none';
+
+            const progress = getLevelProgress();
+            let totalStars = 0;
+            Object.values(progress).forEach(s => totalStars += s);
+
+            document.getElementById('cert-stars').innerText = `Total: ${totalStars} ⭐`;
+            document.getElementById('cert-text').innerText = 
+                `Kamu telah menyelesaikan ${getCompletedLevels()}/16 level dengan ${totalStars} bintang!`;
+
             document.getElementById('certificate-overlay').classList.add('show');
         }
 
         function restartGame() {
-            currentLevel = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
-            localStorage.removeItem('detektif_progress');
             document.getElementById('certificate-overlay').classList.remove('show');
-            initLevel();
+
+            // Reset all progress
+            localStorage.removeItem('detektif_levels');
+
+            currentLevel = 0;
+            currentQuestion = 0;
+            wrongCount = 0;
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+
+            showLevelSelect();
         }
 
-        function renderWrongDots() {
-            document.querySelectorAll('.wrong-dot').forEach((d, i) => {
-                d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
-            });
-        }
-
-        // Init
-        loadProgress();
-        initLevel();
+        // ═══════════════════════════════════════════════════════
+        //  INIT
+        // ═══════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            showLevelSelect();
+        });
     </script>
 </body>
 </html>
