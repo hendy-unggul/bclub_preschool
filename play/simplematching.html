@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#FFE600">
+    <title>Cari Sama - B Club</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gQ2FyaSBTYW1hIiwic2hvcnRfbmFtZSI6IkIgQ2x1YiIsInN0YXJ0X3VybCI6Ii4vbWVtb3JpLmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+        :root {
+            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
+            --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
+            --blue: #2196F3; --purple: #9C27B0; --orange: #FF9800;
+        }
+
+        body {
+            background: var(--gray); color: var(--black);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
+            overflow: hidden; touch-action: manipulation;
+        }
+
+        header {
+            background: var(--black); padding: 8px 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--yellow);
+        }
+        .btn-back {
+            background: var(--white); border: 3px solid var(--black);
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-back:active { transform: translate(3px, 3px); box-shadow: none; }
+        .level-badge {
+            background: var(--yellow); border: 3px solid var(--black);
+            padding: 6px 16px; border-radius: 20px;
+            font-weight: 900; font-size: 16px; box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .score-board {
+            display: flex; gap: 20px; justify-content: center;
+            padding: 10px; background: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+        .score-item {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 24px; font-weight: 900;
+        }
+        .score-item .icon { font-size: 28px; }
+        .score-item.stars { color: #FF9800; }
+        .score-item.hearts { color: var(--coral); }
+        .score-item.points { color: var(--green); }
+
+        .mascot-area {
+            display: flex; justify-content: center; align-items: center;
+            padding: 12px; gap: 12px;
+        }
+        .mascot {
+            font-size: 64px;
+            animation: mascotBounce 2s infinite;
+            filter: drop-shadow(3px 3px 0 var(--black));
+        }
+        @keyframes mascotBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .mascot-bubble {
+            background: var(--white); border: 4px solid var(--black);
+            padding: 12px 20px; border-radius: 20px;
+            box-shadow: 4px 4px 0 var(--black);
+            position: relative; font-size: 24px;
+            max-width: 200px; text-align: center;
+        }
+
+        .instruction {
+            text-align: center;
+            padding: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .target-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--white);
+            margin: 12px 16px;
+            border-radius: 20px;
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0 var(--black);
+            min-height: 100px;
+        }
+        .target-slot {
+            width: 80px; height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            background: var(--yellow);
+            border-radius: 16px;
+            border: 4px dashed var(--black);
+            animation: targetPulse 1.5s infinite;
+        }
+        @keyframes targetPulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--yellow); }
+            50% { box-shadow: 0 0 0 12px rgba(255, 230, 0, 0); }
+        }
+
+        .choices-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+        }
+        .choice-btn {
+            width: 80px; height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            background: var(--white);
+            border: 4px solid var(--black);
+            border-radius: 16px;
+            box-shadow: 5px 5px 0 var(--black);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .choice-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 1px 1px 0 var(--black);
+        }
+        .choice-btn.correct {
+            background: var(--green);
+            animation: pop 0.4s;
+        }
+        .choice-btn.wrong {
+            background: var(--coral);
+            animation: shake 0.4s;
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13,13,13,0.92);
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000; padding: 20px;
+        }
+        .overlay.show { display: flex; }
+        .feedback-emoji {
+            font-size: 80px;
+            animation: celebrate 1s infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+        }
+        .feedback-btn {
+            background: var(--yellow); color: var(--black);
+            border: 4px solid var(--black); border-radius: 16px;
+            padding: 16px 32px; font-size: 32px;
+            font-weight: 900; box-shadow: 4px 4px 0 var(--white);
+            cursor: pointer; margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="./index.html" class="btn-back">🔙</a>
+        <div class="level-badge" id="level-display">1️⃣</div>
+    </header>
+
+    <div class="score-board">
+        <div class="score-item stars">
+            <span class="icon">⭐</span><span id="stars-count">0</span>
+        </div>
+        <div class="score-item hearts">
+            <span class="icon">❌</span><span id="wrong-count">0</span>
+        </div>
+        <div class="score-item points">
+            <span class="icon">💎</span><span id="total-score">0</span>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="mascot-area">
+            <div class="mascot" id="mascot-emoji">🐵</div>
+            <div class="mascot-bubble" id="mascot-bubble">Cari yang sama! 🤔</div>
+        </div>
+
+        <div class="instruction" id="instruction">👇 Cari 🍎!</div>
+
+        <div class="target-area" id="target-area">
+            <div class="target-slot" id="target-slot">❓</div>
+        </div>
+
+        <div class="choices-area" id="choices-area"></div>
+    </div>
+
+    <div class="overlay" id="feedback-overlay">
+        <div class="feedback-emoji" id="feedback-emoji">🎉</div>
+        <button class="feedback-btn" onclick="nextQuestion()">▶️</button>
+    </div>
+
+    <script>
+        const CONFIG = {
+            QUESTIONS_PER_LEVEL: 5,
+            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25
+        };
+
+        const TEMPLATES = [
+            {
+                name: "1️⃣",
+                emoji: "🍎",
+                distractors: ["🍌", "🍇", "🍊"],
+                mascot: { think: "Cari 🍎!", happy: "Benar! 🎉", sad: "Coba lagi! 😢" }
+            },
+            {
+                name: "2️⃣",
+                emoji: "🐶",
+                distractors: ["🐱", "🐭", "🐰"],
+                mascot: { think: "Cari 🐶!", happy: "Hebat! 🤩", sad: "Oops! 😵" }
+            },
+            {
+                name: "3️⃣",
+                emoji: "⭐",
+                distractors: ["🌙", "☀️", "🌈"],
+                mascot: { think: "Cari ⭐!", happy: "Sempurna! 🥳", sad: "Hampir! 🙀" }
+            }
+        ];
+
+        let currentLevel = 0, currentQuestion = 0, wrongCount = 0, isProcessing = false;
+        let levelStats = { first: 0, second: 0, third: 0, score: 0 };
+        let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+
+        function initLevel() {
+            currentQuestion = 0; wrongCount = 0; isProcessing = false;
+            levelStats = { first: 0, second: 0, third: 0, score: 0 };
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const t = TEMPLATES[currentLevel];
+            document.getElementById('level-display').innerText = t.name;
+            document.getElementById('mascot-emoji').innerText = '🐵';
+            document.getElementById('mascot-bubble').innerText = t.mascot.think;
+            document.getElementById('instruction').innerText = `👇 Cari ${t.emoji}!`;
+            document.getElementById('target-slot').innerText = t.emoji;
+
+            const choices = [t.emoji, ...t.distractors].sort(() => Math.random() - 0.5);
+            
+            const area = document.getElementById('choices-area');
+            area.innerHTML = '';
+            
+            choices.forEach(choice => {
+                const btn = document.createElement('div');
+                btn.className = 'choice-btn';
+                btn.innerText = choice;
+                btn.onclick = () => checkAnswer(choice, btn, t);
+                area.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(choice, btn, t) {
+            if (isProcessing) return;
+            
+            if (choice === t.emoji) {
+                // BENAR
+                isProcessing = true;
+                btn.classList.add('correct');
+                document.getElementById('mascot-bubble').innerText = t.mascot.happy;
+                
+                let points = 0, type = '';
+                if (wrongCount === 0) {
+                    points = CONFIG.SCORE_FIRST; levelStats.first++; type = 'first';
+                } else if (wrongCount <= 2) {
+                    points = CONFIG.SCORE_SECOND; levelStats.second++; type = 'second';
+                } else {
+                    points = CONFIG.SCORE_THIRD; levelStats.third++; type = 'third';
+                }
+                
+                levelStats.score += points;
+                gameStats.score += points;
+                gameStats.questions++;
+                gameStats.correct++;
+                
+                setTimeout(() => showFeedback(true), 600);
+            } else {
+                // SALAH - Jangan disable, cuma shake
+                wrongCount++;
+                gameStats.wrongTotal++;
+                btn.classList.add('wrong');
+                document.getElementById('mascot-bubble').innerText = t.mascot.sad;
+                
+                setTimeout(() => btn.classList.remove('wrong'), 400);
+            }
+        }
+
+        function showFeedback(isCorrect) {
+            document.getElementById('feedback-overlay').classList.add('show');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-overlay').classList.remove('show');
+            isProcessing = false; wrongCount = 0;
+            
+            if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                finishLevel();
+            }
+        }
+
+        function finishLevel() {
+            let stars = '';
+            if (levelStats.first >= 4) { stars = '⭐⭐⭐'; gameStats.stars += 3; }
+            else if (levelStats.first >= 2) { stars = '⭐⭐'; gameStats.stars += 2; }
+            else { stars = '⭐'; gameStats.stars += 1; }
+            
+            alert(`Level Selesai! ${stars}\nSkor: ${levelStats.score}`);
+            
+            if (currentLevel < TEMPLATES.length - 1) {
+                currentLevel++;
+                initLevel();
+            } else {
+                alert(`🎉 Game Selesai!\nTotal: ${gameStats.score} poin`);
+                restartGame();
+            }
+        }
+
+        function restartGame() {
+            currentLevel = 0;
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+            initLevel();
+        }
+
+        initLevel();
+    </script>
+</body>
+</html>
