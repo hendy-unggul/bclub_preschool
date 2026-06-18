@@ -326,7 +326,6 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        /* LOCKED STATE - prevents ALL clicks via CSS */
         .choices-row.locked {
             pointer-events: none !important;
             opacity: 0.6;
@@ -645,6 +644,7 @@
                 const progress = loadProgress();
                 progress[levelIdx] = Math.max(progress[levelIdx] || 0, stars);
                 localStorage.setItem('detektif_levels', JSON.stringify(progress));
+                console.log('Saved progress:', progress);
             } catch (e) {
                 console.warn('Failed to save progress:', e);
             }
@@ -1237,8 +1237,10 @@
             const starsDiv = document.getElementById('feedback-stars');
             const nextBtn = document.getElementById('next-btn');
 
+            // Calculate total stars for level (max 3)
             const totalStars = Math.min(3, Math.max(1, Math.floor(gameStats.stars / 5)));
 
+            // Save progress
             saveLevelProgress(currentLevel, totalStars);
 
             emoji.innerText = '🏆';
@@ -1249,7 +1251,8 @@
                 nextBtn.onclick = showCertificate;
             } else {
                 nextBtn.innerText = '▶️ Level Selanjutnya';
-                nextBtn.onclick = () => {
+                nextBtn.onclick = function() {
+                    console.log('=== CLICKED: Next Level ===');
                     overlay.classList.remove('show');
                     startLevel(currentLevel + 1);
                 };
@@ -1304,7 +1307,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🐝 Detektif Pola v4.0 - CSS Container Lock loaded!');
+            console.log('🐝 Detektif Pola v5.0 - Progression Fix loaded!');
             showLevelSelect();
         });
     </script>
