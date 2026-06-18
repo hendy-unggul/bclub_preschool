@@ -326,10 +326,13 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        /* LOCKED STATE - prevents ALL clicks */
+        /* LOCKED STATE - prevents ALL clicks via CSS */
         .choices-row.locked {
-            pointer-events: none;
-            opacity: 0.7;
+            pointer-events: none !important;
+            opacity: 0.6;
+        }
+        .choices-row.locked .choice-btn {
+            cursor: not-allowed;
         }
         @keyframes bigPop {
             0% { transform: scale(1); }
@@ -365,16 +368,16 @@
             width: 100%; max-width: 400px;
         }
         .pattern-builder.locked {
-            pointer-events: none;
-            opacity: 0.7;
+            pointer-events: none !important;
+            opacity: 0.6;
         }
         .pattern-palette {
             display: flex; gap: 12px; flex-wrap: wrap;
             justify-content: center;
         }
         .pattern-palette.locked {
-            pointer-events: none;
-            opacity: 0.7;
+            pointer-events: none !important;
+            opacity: 0.6;
         }
         .palette-item {
             width: 60px; height: 60px;
@@ -623,8 +626,6 @@
         let selectedPaletteItem = null;
         let builtPattern = [];
         let currentLevelData = null;
-        let lockTimestamp = 0;  // For debounce
-        const LOCK_DURATION = 600; // ms
 
         // ═══════════════════════════════════════════════════════
         //  PROGRESS SYSTEM (localStorage)
@@ -761,7 +762,6 @@
             wrongCount = 0;
             wrongTotal = 0;
             isProcessing = false;
-            lockTimestamp = 0;
             gameStats = { stars: 0, score: 0, questions: 0, correct: 0 };
             selectedSlot = null;
             selectedPaletteItem = null;
@@ -795,15 +795,19 @@
 
             // CRITICAL: Reset all locks
             isProcessing = false;
-            lockTimestamp = 0;
             wrongCount = 0;
             selectedSlot = null;
             selectedPaletteItem = null;
 
-            // Remove all locked classes
-            document.getElementById('choices-row')?.classList.remove('locked');
-            document.getElementById('pattern-builder')?.classList.remove('locked');
-            document.getElementById('pattern-palette')?.classList.remove('locked');
+            // Remove all locked classes from containers
+            const choicesRow = document.getElementById('choices-row');
+            if (choicesRow) choicesRow.classList.remove('locked');
+
+            const builder = document.getElementById('pattern-builder');
+            if (builder) builder.classList.remove('locked');
+
+            const palette = document.getElementById('pattern-palette');
+            if (palette) palette.classList.remove('locked');
 
             document.getElementById('level-display').innerText = `${currentLevel + 1}️⃣`;
             document.getElementById('mascot-emoji').innerText = '🐝';
@@ -882,11 +886,16 @@
         }
 
         function checkFillAnswer(choice, btn) {
-            const now = Date.now();
+            // GUARD #1: Check if container is already locked (CSS class)
+            const choicesRow = document.getElementById('choices-row');
+            if (choicesRow && choicesRow.classList.contains('locked')) {
+                console.log('BLOCKED: choices-row has locked class');
+                return;
+            }
 
-            // Timestamp-based debounce (more reliable than boolean flag)
-            if (now - lockTimestamp < LOCK_DURATION) {
-                console.log('BLOCKED by timestamp lock');
+            // GUARD #2: Check isProcessing flag
+            if (isProcessing) {
+                console.log('BLOCKED: isProcessing is true');
                 return;
             }
 
@@ -894,12 +903,12 @@
 
             if (choice === currentLevelData.answer) {
                 // CORRECT ANSWER
-                lockTimestamp = now;
                 isProcessing = true;
-                btn.classList.add('correct');
 
-                // Lock entire choices row via CSS (most reliable)
-                document.getElementById('choices-row').classList.add('locked');
+                // LOCK IMMEDIATELY via CSS class on container
+                choicesRow.classList.add('locked');
+
+                btn.classList.add('correct');
 
                 const slot = document.getElementById('missing-slot');
                 if (slot) {
@@ -915,16 +924,16 @@
                 setTimeout(() => finishQuestion(true), 600);
             } else {
                 // WRONG ANSWER
-                lockTimestamp = now;
                 isProcessing = true;
                 wrongCount++;
                 wrongTotal++;
+
+                // LOCK IMMEDIATELY via CSS class on container
+                choicesRow.classList.add('locked');
+
                 btn.classList.add('wrong');
                 renderWrongDots();
                 updateScoreBoard();
-
-                // Lock entire row
-                document.getElementById('choices-row').classList.add('locked');
 
                 // Mascot reaction
                 document.getElementById('mascot-emoji').innerText = '😿';
@@ -935,10 +944,10 @@
                     document.getElementById('mascot-emoji').innerText = '🐝';
                     document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
 
-                    // Unlock
-                    document.getElementById('choices-row').classList.remove('locked');
+                    // UNLOCK via CSS class removal
+                    choicesRow.classList.remove('locked');
                     isProcessing = false;
-                    lockTimestamp = 0;
+
                     console.log('Unlocked after wrong answer, wrongCount:', wrongCount);
                 }, 400);
 
@@ -1001,8 +1010,9 @@
         }
 
         function selectBuilderSlot(slot) {
-            const now = Date.now();
-            if (now - lockTimestamp < LOCK_DURATION) return;
+            // GUARD: Check if builder is locked
+            const builder = document.getElementById('pattern-builder');
+            if (builder && builder.classList.contains('locked')) return;
             if (isProcessing) return;
 
             console.log('Select slot:', slot.dataset.index);
@@ -1017,8 +1027,9 @@
         }
 
         function selectPaletteItem(item, btn) {
-            const now = Date.now();
-            if (now - lockTimestamp < LOCK_DURATION) return;
+            // GUARD: Check if palette is locked
+            const palette = document.getElementById('pattern-palette');
+            if (palette && palette.classList.contains('locked')) return;
             if (isProcessing) return;
 
             console.log('Select palette item:', item);
@@ -1045,13 +1056,13 @@
         }
 
         function checkCreatedPattern() {
-            const now = Date.now();
-            if (now - lockTimestamp < LOCK_DURATION) {
-                console.log('BLOCKED by timestamp lock');
-                return;
-            }
-            if (isProcessing) {
-                console.log('BLOCKED: isProcessing');
+            // GUARD: Check if containers are locked
+            const builder = document.getElementById('pattern-builder');
+            const palette = document.getElementById('pattern-palette');
+            if ((builder && builder.classList.contains('locked')) || 
+                (palette && palette.classList.contains('locked')) ||
+                isProcessing) {
+                console.log('BLOCKED: create mode locked');
                 return;
             }
 
@@ -1060,12 +1071,11 @@
             const isCorrect = currentLevelData.target.every((item, idx) => builtPattern[idx] === item);
 
             if (isCorrect) {
-                lockTimestamp = now;
                 isProcessing = true;
 
-                // Lock all interactions
-                document.getElementById('pattern-builder').classList.add('locked');
-                document.getElementById('pattern-palette').classList.add('locked');
+                // Lock all containers
+                builder.classList.add('locked');
+                palette.classList.add('locked');
                 document.getElementById('check-btn').disabled = true;
                 document.getElementById('check-btn').style.opacity = '0.5';
 
@@ -1080,15 +1090,14 @@
 
                 setTimeout(() => finishQuestion(true), 800);
             } else {
-                lockTimestamp = now;
                 isProcessing = true;
                 wrongCount++;
                 wrongTotal++;
                 updateScoreBoard();
 
                 // Lock during animation
-                document.getElementById('pattern-builder').classList.add('locked');
-                document.getElementById('pattern-palette').classList.add('locked');
+                builder.classList.add('locked');
+                palette.classList.add('locked');
                 document.getElementById('check-btn').disabled = true;
 
                 // Mark wrong slots
@@ -1107,15 +1116,14 @@
                     });
 
                     // Unlock
-                    document.getElementById('pattern-builder').classList.remove('locked');
-                    document.getElementById('pattern-palette').classList.remove('locked');
+                    builder.classList.remove('locked');
+                    palette.classList.remove('locked');
                     document.getElementById('check-btn').disabled = false;
 
                     document.getElementById('mascot-emoji').innerText = '🐝';
                     document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
 
                     isProcessing = false;
-                    lockTimestamp = 0;
                     console.log('Unlocked after wrong create check');
                 }, 800);
 
@@ -1296,7 +1304,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🐝 Detektif Pola v3.0 - Timestamp Lock loaded!');
+            console.log('🐝 Detektif Pola v4.0 - CSS Container Lock loaded!');
             showLevelSelect();
         });
     </script>
