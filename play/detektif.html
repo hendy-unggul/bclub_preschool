@@ -326,7 +326,6 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        /* LOCKED STATE - prevents ALL clicks via CSS */
         .choices-row.locked {
             pointer-events: none !important;
             opacity: 0.6;
@@ -627,7 +626,7 @@
         let builtPattern = [];
         let currentLevelData = null;
         let lastClickTime = 0;
-        const CLICK_DEBOUNCE = 500; // ms
+        const CLICK_DEBOUNCE = 1000; // ms — increased for mobile
 
         // ═══════════════════════════════════════════════════════
         //  PROGRESS SYSTEM (localStorage)
@@ -1333,7 +1332,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🐝 Detektif Pola v6.0 - Debounce Fix loaded!');
+            console.log('🐝 Detektif Pola v8.0 - Final Fix loaded!');
             showLevelSelect();
         });
     </script>
