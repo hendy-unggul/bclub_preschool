@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Detektif Pola - B Club</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQiBDbHViIC0gRGV0ZWt0aWYgUG9sYSIsInNob3J0X25hbWUiOiJCIENsdWIiLCJzdGFydF91cmwiOiIuL2RldGVrdGlmLmh0bWwiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjVGNUYwIiwidGhlbWVfY29sb3IiOiIjRkZFNjAwIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 
@@ -12,7 +15,7 @@
         :root {
             --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
             --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
-            --orange: #FF9800; --blue: #2196F3;
+            --orange: #FF9800; --blue: #2196F3; --purple: #9C27B0;
         }
 
         body {
@@ -72,21 +75,8 @@
             background: var(--white); border: 4px solid var(--black);
             padding: 12px 20px; border-radius: 20px;
             box-shadow: 4px 4px 0 var(--black);
-            position: relative; font-size: 32px;
-        }
-        .mascot-bubble::after {
-            content: ''; position: absolute; left: -16px; top: 50%;
-            transform: translateY(-50%);
-            border-width: 12px 16px 12px 0;
-            border-style: solid;
-            border-color: transparent var(--black) transparent transparent;
-        }
-        .mascot-bubble::before {
-            content: ''; position: absolute; left: -10px; top: 50%;
-            transform: translateY(-50%); z-index: 1;
-            border-width: 10px 14px 10px 0;
-            border-style: solid;
-            border-color: transparent var(--white) transparent transparent;
+            position: relative; font-size: 24px;
+            max-width: 200px; text-align: center;
         }
 
         .progress-area {
@@ -211,10 +201,6 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
-        .choice-btn.disabled {
-            opacity: 0.3; pointer-events: none;
-            transform: scale(0.9);
-        }
         @keyframes bigPop {
             0% { transform: scale(1); }
             50% { transform: scale(1.25); }
@@ -228,6 +214,53 @@
             80% { transform: translateX(8px) rotate(3deg); }
         }
 
+        /* ═══════════════════════════════════════════════════════
+           CREATE PATTERN MODE - Drag & Drop
+        ═══════════════════════════════════════════════════════ */
+        .create-area {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
+            padding: 20px;
+        }
+        .create-instruction {
+            font-size: 24px; font-weight: 900;
+            text-align: center;
+        }
+        .pattern-builder {
+            display: flex; gap: 12px; flex-wrap: wrap;
+            justify-content: center;
+            min-height: 80px; padding: 16px;
+            background: var(--white); border-radius: 20px;
+            border: 4px dashed var(--black);
+            width: 100%; max-width: 400px;
+        }
+        .pattern-builder .pattern-item {
+            cursor: grab;
+        }
+        .pattern-builder .pattern-item:active {
+            cursor: grabbing;
+        }
+        .pattern-palette {
+            display: flex; gap: 12px; flex-wrap: wrap;
+            justify-content: center;
+        }
+        .palette-item {
+            width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--yellow);
+            border-radius: 16px; border: 3px solid var(--black);
+            cursor: pointer; transition: all 0.15s;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+        .palette-item:active {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+        }
+        .palette-item.selected {
+            background: var(--green);
+            transform: scale(1.1);
+        }
+
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(13,13,13,0.92);
@@ -236,7 +269,6 @@
             z-index: 1000; padding: 20px;
         }
         .overlay.show { display: flex; }
-
         .feedback-emoji {
             font-size: 80px;
             animation: celebrate 1s infinite;
@@ -281,6 +313,24 @@
         .stat-circle .number { font-size: 32px; font-weight: 900; color: var(--yellow); }
         .stat-circle .label { font-size: 10px; color: #aaa; font-weight: 700; }
 
+        .certificate {
+            background: var(--white); border: 4px solid var(--black);
+            border-radius: 20px; padding: 32px;
+            text-align: center; max-width: 400px;
+            box-shadow: 8px 8px 0 var(--black);
+        }
+        .certificate h2 {
+            font-size: 28px; font-weight: 900;
+            font-style: italic; margin-bottom: 16px;
+        }
+        .certificate .badge {
+            font-size: 80px; margin: 16px 0;
+        }
+        .certificate p {
+            font-size: 16px; color: rgba(13,13,13,0.7);
+            margin-bottom: 16px;
+        }
+
         @media (max-width: 360px) {
             .pattern-item { width: 50px; height: 50px; font-size: 32px; }
             .choice-btn { width: 70px; height: 70px; font-size: 40px; }
@@ -307,7 +357,7 @@
         </div>
     </div>
 
-    <div class="game-container">
+    <div class="game-container" id="game-container">
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">🐝</div>
             <div class="mascot-bubble" id="mascot-bubble">🤔❓</div>
@@ -322,10 +372,18 @@
 
         <div class="pattern-row" id="pattern-container"></div>
 
-        <div class="choices-container">
+        <div class="choices-container" id="choices-container">
             <div class="choices-cue">⬇️</div>
-            <div class="choices-row" id="choices-container"></div>
+            <div class="choices-row" id="choices-row"></div>
         </div>
+    </div>
+
+    <!-- CREATE PATTERN MODE (hidden by default) -->
+    <div class="create-area" id="create-area" style="display: none;">
+        <div class="create-instruction" id="create-instruction">Buat pola: 🍎🍌🍎🍌</div>
+        <div class="pattern-builder" id="pattern-builder"></div>
+        <div class="pattern-palette" id="pattern-palette"></div>
+        <button class="feedback-btn" onclick="checkCreatedPattern()">✅ Cek Pola</button>
     </div>
 
     <div class="overlay" id="feedback-overlay">
@@ -334,103 +392,259 @@
         <button class="feedback-btn" id="next-btn" onclick="nextQuestion()">▶️</button>
     </div>
 
-    <div class="overlay" id="level-complete-overlay">
-        <div class="trophy">🏆</div>
-        <div class="star-rating" id="level-stars"></div>
-        <div class="stats-visual">
-            <div class="stat-circle"><div class="number" id="stat-first">0</div><div class="label">🥇0❌</div></div>
-            <div class="stat-circle"><div class="number" id="stat-second">0</div><div class="label">🥈1-2❌</div></div>
-            <div class="stat-circle"><div class="number" id="stat-third">0</div><div class="label">🥉3+❌</div></div>
+    <div class="overlay" id="certificate-overlay">
+        <div class="certificate">
+            <h2>🏆 SERTIFIKAT</h2>
+            <div class="badge" id="cert-badge">🕵️</div>
+            <p id="cert-text">Selamat! Kamu telah menyelesaikan semua level Detektif Pola!</p>
+            <div class="star-rating" id="cert-stars"></div>
+            <button class="feedback-btn" onclick="restartGame()">🔄 Main Lagi</button>
         </div>
-        <button class="feedback-btn" onclick="nextLevel()">▶️▶️</button>
-        <button class="feedback-btn" onclick="restartLevel()" style="background: var(--white); margin-top: 8px;">🔄</button>
-    </div>
-
-    <div class="overlay" id="game-complete-overlay">
-        <div class="trophy">👑</div>
-        <div class="star-rating" id="final-stars"></div>
-        <div class="stats-visual">
-            <div class="stat-circle"><div class="number" id="final-total-stars">0</div><div class="label">⭐Total</div></div>
-            <div class="stat-circle"><div class="number" id="final-total-score">0</div><div class="label">💎Score</div></div>
-            <div class="stat-circle"><div class="number" id="final-accuracy">0%</div><div class="label">🎯Rate</div></div>
-        </div>
-        <button class="feedback-btn" onclick="restartGame()" style="margin-top: 16px;">🔄🎮</button>
     </div>
 
     <script>
-        const CONFIG = {
-            QUESTIONS_PER_LEVEL: 5,
-            SCORE_FIRST: 100, SCORE_SECOND: 50, SCORE_THIRD: 25
-        };
+        // ═══════════════════════════════════════════════════════
+        //  16 LEVELS - Progressive Unlock
+        // ═══════════════════════════════════════════════════════
+        const LEVELS = [
+            // FASE 1: AB Pattern (Levels 1-4)
+            { type: "fill", pattern: ["🍎","🍌","🍎","🍌","🍎","?"], answer: "🍌", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Lihat pasangan yang berulang!" },
+            { type: "fill", pattern: ["🍎","🍌","🍎","?","🍎","🍌"], answer: "🍌", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Apa setelah 🍎?" },
+            { type: "fill", pattern: ["🍎","🍌","?","🍌","🍎","🍌"], answer: "🍎", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Lihat awalnya!" },
+            { type: "fill", pattern: ["?","🍌","🍎","🍌","🍎","🍌"], answer: "🍎", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Pola dimulai dengan?" },
 
-        const TEMPLATES = [
-            {
-                name: "1️⃣", type: "🍎🍌", choices: ["🍇", "🍌", "🍎"],
-                mascot: { think: "🤔❓", happy: "😄👍", sad: "😢💔" },
-                questions: [
-                    { pattern: ["?", "🍌", "🍎", "🍌", "🍎", "🍌"], answer: "🍎" },
-                    { pattern: ["🍎", "?", "🍎", "🍌", "🍎", "🍌"], answer: "🍌" },
-                    { pattern: ["🍎", "🍌", "?", "🍌", "🍎", "🍌"], answer: "🍎" },
-                    { pattern: ["🍎", "🍌", "🍎", "?", "🍎", "🍌"], answer: "🍌" },
-                    { pattern: ["🍎", "🍌", "🍎", "🍌", "?", "🍌"], answer: "🍎" }
-                ]
-            },
-            {
-                name: "2️⃣", type: "⭐⭐🌙", choices: ["⭐", "🌙", "☀️"],
-                mascot: { think: "🤔✨", happy: "🤩✨", sad: "😵‍💫" },
-                questions: [
-                    { pattern: ["?", "⭐", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
-                    { pattern: ["⭐", "?", "🌙", "⭐", "⭐", "🌙"], answer: "⭐" },
-                    { pattern: ["⭐", "⭐", "?", "⭐", "⭐", "🌙"], answer: "🌙" },
-                    { pattern: ["⭐", "⭐", "🌙", "?", "⭐", "🌙"], answer: "⭐" },
-                    { pattern: ["⭐", "⭐", "🌙", "⭐", "?", "🌙"], answer: "⭐" }
-                ]
-            },
-            {
-                name: "3️⃣", type: "🐶🐱🐭", choices: ["🐶", "🐱", "🐭"],
-                mascot: { think: "🤔🐾", happy: "🥳🎉", sad: "🙀" },
-                questions: [
-                    { pattern: ["?", "🐱", "🐭", "🐶", "🐱", "🐭"], answer: "🐶" },
-                    { pattern: ["🐶", "?", "🐭", "🐶", "🐱", "🐭"], answer: "🐱" },
-                    { pattern: ["🐶", "🐱", "?", "🐶", "🐱", "🐭"], answer: "🐭" },
-                    { pattern: ["🐶", "🐱", "🐭", "?", "🐱", "🐭"], answer: "🐶" },
-                    { pattern: ["🐶", "🐱", "🐭", "🐶", "?", "🐭"], answer: "🐱" }
-                ]
-            }
+            // FASE 2: ABC & AAB (Levels 5-8)
+            { type: "fill", pattern: ["🐶","🐱","🐭","🐶","🐱","?"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "🐶🐱🐭", hint: "3 hewan yang berulang!" },
+            { type: "fill", pattern: ["🐶","🐱","?","🐶","🐱","🐭"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "🐶🐱🐭", hint: "Hewan ke-3?" },
+            { type: "fill", pattern: ["⭐","⭐","🌙","⭐","?","🌙"], answer: "⭐", choices: ["⭐","🌙","☀️"], unit: "⭐⭐🌙", hint: "Dua bintang, satu bulan!" },
+            { type: "fill", pattern: ["⭐","?","🌙","⭐","⭐","🌙"], answer: "⭐", choices: ["⭐","🌙","☀️"], unit: "⭐⭐🌙", hint: "Bintang berpasangan!" },
+
+            // FASE 3: Mixed & Create (Levels 9-12)
+            { type: "fill", pattern: ["🍎","🍌","🍎","?","🍎","🍌"], answer: "🍌", choices: ["🍎","🍌","🐶"], unit: "?", hint: "AB atau ABC?" },
+            { type: "fill", pattern: ["🐶","🐱","🐭","?","🐶","🐱"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "?", hint: "Cari unit yang berulang!" },
+            { type: "create", target: ["🍎","🍌","🍎","🍌"], palette: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Buat pola apel-pisang!" },
+            { type: "create", target: ["🐶","🐱","🐭","🐶","🐱","🐭"], palette: ["🐶","🐱","🐭","⭐"], unit: "🐶🐱🐭", hint: "Buat pola 3 hewan!" },
+
+            // FASE 4: Unit Recognition & Mastery (Levels 13-16)
+            { type: "fill", pattern: ["🔴","🟡","🔵","🔴","?","🔵"], answer: "🟡", choices: ["🔴","🟡","🔵"], unit: "🔴🟡🔵", hint: "Warna ke-2?" },
+            { type: "fill", pattern: ["🟢","🟢","🟡","?","🟢","🟡"], answer: "🟢", choices: ["🟢","🟡","🔵"], unit: "🟢🟢🟡", hint: "Dua hijau, satu kuning!" },
+            { type: "create", target: ["⭐","⭐","🌙","⭐","⭐","🌙"], palette: ["⭐","🌙","☀️","🍎"], unit: "⭐⭐🌙", hint: "Dua bintang, satu bulan!" },
+            { type: "certificate", unit: "all", hint: "Selamat! 🎉" }
         ];
 
-        let currentLevel = 0, currentQuestion = 0, currentStepIndex = 0, isProcessing = false;
+        let currentLevel = 0;
         let wrongCount = 0;
-        let levelStats = { first: 0, second: 0, third: 0, score: 0 };
+        let isProcessing = false;
         let gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
-        let currentQuestions = [];
 
-        function initLevel() {
-            currentQuestion = 0; currentStepIndex = 0; isProcessing = false;
-            wrongCount = 0;
-            levelStats = { first: 0, second: 0, third: 0, score: 0 };
-            const t = TEMPLATES[currentLevel];
-            currentQuestions = [];
-            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
-                const q = t.questions[i];
-                currentQuestions.push({
-                    pattern: [...q.pattern], answer: q.answer,
-                    choices: [...t.choices].sort(() => Math.random() - 0.5)
-                });
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('detektif_progress');
+            if (saved) {
+                const progress = parseInt(saved);
+                if (progress > 0 && progress < LEVELS.length) {
+                    currentLevel = progress;
+                }
             }
-            renderProgressDots(); updateScoreBoard(); renderWrongDots(); renderQuestion();
         }
 
-        function renderProgressDots() {
-            const c = document.getElementById('progress-dots');
-            c.innerHTML = '';
-            for (let i = 0; i < CONFIG.QUESTIONS_PER_LEVEL; i++) {
-                const d = document.createElement('div');
-                d.className = 'progress-dot';
-                if (i < currentQuestion) d.classList.add('done');
-                else if (i === currentQuestion) d.classList.add('current');
-                c.appendChild(d);
+        function saveProgress() {
+            localStorage.setItem('detektif_progress', currentLevel);
+        }
+
+        function initLevel() {
+            wrongCount = 0; isProcessing = false;
+            const level = LEVELS[currentLevel];
+            
+            document.getElementById('level-display').innerText = `${currentLevel + 1}️⃣`;
+            document.getElementById('mascot-emoji').innerText = '🐝';
+            document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+            
+            renderWrongDots();
+
+            if (level.type === "fill") {
+                showFillMode(level);
+            } else if (level.type === "create") {
+                showCreateMode(level);
+            } else if (level.type === "certificate") {
+                showCertificate();
             }
+        }
+
+        function showFillMode(level) {
+            document.getElementById('game-container').style.display = 'flex';
+            document.getElementById('create-area').style.display = 'none';
+
+            const pc = document.getElementById('pattern-container');
+            pc.innerHTML = '';
+            level.pattern.forEach((item, idx) => {
+                const div = document.createElement('div');
+                if (item === "?") {
+                    div.className = 'pattern-item missing';
+                    div.id = 'missing-slot';
+                } else {
+                    div.className = 'pattern-item';
+                    div.innerText = item;
+                }
+                pc.appendChild(div);
+            });
+
+            const cc = document.getElementById('choices-row');
+            cc.innerHTML = '';
+            level.choices.forEach(choice => {
+                const btn = document.createElement('div');
+                btn.className = 'choice-btn';
+                btn.innerText = choice;
+                btn.onclick = () => checkFillAnswer(choice, btn, level);
+                cc.appendChild(btn);
+            });
+        }
+
+        function showCreateMode(level) {
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('create-area').style.display = 'flex';
+            
+            document.getElementById('create-instruction').innerText = `Buat: ${level.unit}...`;
+
+            const builder = document.getElementById('pattern-builder');
+            builder.innerHTML = '';
+            for (let i = 0; i < level.target.length; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'pattern-item';
+                slot.dataset.index = i;
+                slot.innerText = '❓';
+                slot.onclick = () => selectSlot(slot, level);
+                builder.appendChild(slot);
+            }
+
+            const palette = document.getElementById('pattern-palette');
+            palette.innerHTML = '';
+            level.palette.forEach(item => {
+                const btn = document.createElement('div');
+                btn.className = 'palette-item';
+                btn.innerText = item;
+                btn.onclick = () => selectPaletteItem(item, btn);
+                palette.appendChild(btn);
+            });
+        }
+
+        let selectedSlot = null;
+        let selectedItem = null;
+        let builtPattern = [];
+
+        function selectSlot(slot, level) {
+            document.querySelectorAll('.pattern-item').forEach(s => s.classList.remove('selected'));
+            slot.classList.add('selected');
+            selectedSlot = slot;
+            
+            if (selectedItem) {
+                slot.innerText = selectedItem;
+                builtPattern[parseInt(slot.dataset.index)] = selectedItem;
+                selectedItem = null;
+                document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+            }
+        }
+
+        function selectPaletteItem(item, btn) {
+            document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedItem = item;
+            
+            if (selectedSlot) {
+                selectedSlot.innerText = item;
+                builtPattern[parseInt(selectedSlot.dataset.index)] = item;
+                selectedSlot = null;
+                selectedItem = null;
+                document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
+            }
+        }
+
+        function checkCreatedPattern() {
+            const level = LEVELS[currentLevel];
+            const isCorrect = level.target.every((item, idx) => builtPattern[idx] === item);
+            
+            if (isCorrect) {
+                finishLevel(true);
+            } else {
+                wrongCount++;
+                gameStats.wrongTotal++;
+                renderWrongDots();
+                document.getElementById('mascot-bubble').innerText = 'Coba lagi! 😢';
+                // Reset
+                builtPattern = [];
+                document.querySelectorAll('.pattern-item').forEach(s => s.innerText = '❓');
+            }
+        }
+
+        function checkFillAnswer(choice, btn, level) {
+            if (isProcessing) return;
+            
+            if (choice === level.answer) {
+                isProcessing = true;
+                btn.classList.add('correct');
+                
+                const slot = document.getElementById('missing-slot');
+                if (slot) {
+                    slot.innerText = choice;
+                    slot.classList.remove('missing');
+                    slot.classList.add('correct-fill');
+                }
+                
+                setTimeout(() => finishLevel(true), 600);
+            } else {
+                wrongCount++;
+                gameStats.wrongTotal++;
+                btn.classList.add('wrong');
+                renderWrongDots();
+                
+                setTimeout(() => btn.classList.remove('wrong'), 400);
+            }
+        }
+
+        function finishLevel(isCorrect) {
+            if (!isCorrect) return;
+            
+            let points = 0;
+            if (wrongCount === 0) points = 100;
+            else if (wrongCount <= 2) points = 50;
+            else points = 25;
+            
+            gameStats.score += points;
+            gameStats.questions++;
+            gameStats.correct++;
+            
+            saveProgress();
+            
+            if (currentLevel < LEVELS.length - 1) {
+                currentLevel++;
+                showFeedback();
+            } else {
+                showCertificate();
+            }
+        }
+
+        function showFeedback() {
+            document.getElementById('feedback-overlay').classList.add('show');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-overlay').classList.remove('show');
+            initLevel();
+        }
+
+        function showCertificate() {
+            const stars = Math.min(3, Math.floor(gameStats.correct / 5));
+            document.getElementById('cert-stars').innerText = '⭐'.repeat(stars);
+            document.getElementById('cert-text').innerText = `Skor: ${gameStats.score} | Benar: ${gameStats.correct}/${gameStats.questions}`;
+            document.getElementById('certificate-overlay').classList.add('show');
+        }
+
+        function restartGame() {
+            currentLevel = 0;
+            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+            localStorage.removeItem('detektif_progress');
+            document.getElementById('certificate-overlay').classList.remove('show');
+            initLevel();
         }
 
         function renderWrongDots() {
@@ -439,154 +653,8 @@
             });
         }
 
-        function renderQuestion() {
-            const t = TEMPLATES[currentLevel];
-            const q = currentQuestions[currentQuestion];
-            currentStepIndex = 0; wrongCount = 0;
-            
-            document.getElementById('level-display').innerText = t.name;
-            document.getElementById('mascot-emoji').innerText = t.mascot.think.split('')[0];
-            document.getElementById('mascot-bubble').innerText = t.mascot.think;
-            renderWrongDots(); renderProgressDots();
-
-            const pc = document.getElementById('pattern-container');
-            pc.innerHTML = '';
-            q.pattern.forEach(item => {
-                const d = document.createElement('div');
-                if (item === "?") {
-                    d.className = 'pattern-item missing'; d.id = 'missing-slot';
-                } else {
-                    d.className = 'pattern-item'; d.innerText = item;
-                }
-                pc.appendChild(d);
-            });
-
-            const cc = document.getElementById('choices-container');
-            cc.innerHTML = '';
-            q.choices.forEach(choice => {
-                const b = document.createElement('div');
-                b.className = 'choice-btn'; b.innerText = choice;
-                b.onclick = () => checkAnswer(choice, b);
-                cc.appendChild(b);
-            });
-        }
-
-        function checkAnswer(choice, btn) {
-            if (isProcessing) return;
-            const q = currentQuestions[currentQuestion];
-            const t = TEMPLATES[currentLevel];
-
-            if (choice === q.answer) {
-                isProcessing = true; btn.classList.add('correct');
-                
-                let points = 0, type = '';
-                if (wrongCount === 0) {
-                    points = CONFIG.SCORE_FIRST; levelStats.first++; type = 'first';
-                    gameStats.correct++; document.getElementById('mascot-bubble').innerText = t.mascot.happy;
-                } else if (wrongCount <= 2) {
-                    points = CONFIG.SCORE_SECOND; levelStats.second++; type = 'second';
-                    document.getElementById('mascot-bubble').innerText = t.mascot.happy;
-                } else {
-                    points = CONFIG.SCORE_THIRD; levelStats.third++; type = 'third';
-                    document.getElementById('mascot-bubble').innerText = '😅👍';
-                }
-                
-                levelStats.score += points; gameStats.score += points;
-                gameStats.questions++; gameStats.wrongTotal += wrongCount;
-                
-                updateScoreBoard();
-                const s = document.getElementById('missing-slot');
-                if (s) { s.innerText = q.answer; s.classList.remove('missing'); s.classList.add('correct-fill'); }
-                setTimeout(() => showFeedback(true, type, points), 600);
-            } else {
-                wrongCount++; gameStats.wrongTotal++;
-                btn.classList.add('wrong');
-                renderWrongDots(); updateScoreBoard();
-                document.getElementById('mascot-bubble').innerText = t.mascot.sad;
-                
-                setTimeout(() => {
-                    btn.classList.remove('wrong');
-                    btn.classList.add('disabled');
-                }, 400);
-            }
-        }
-
-        function showFeedback(isCorrect, type, points) {
-            const o = document.getElementById('feedback-overlay');
-            const e = document.getElementById('feedback-emoji');
-            const s = document.getElementById('feedback-stars');
-            const b = document.getElementById('next-btn');
-            if (isCorrect) {
-                if (type === 'first') { e.innerText = '🤩'; s.innerText = '⭐⭐⭐'; }
-                else if (type === 'second') { e.innerText = '😄'; s.innerText = '⭐⭐'; }
-                else { e.innerText = '👍'; s.innerText = '⭐'; }
-                b.innerText = currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1 ? '▶️' : '📊';
-            }
-            o.classList.add('show');
-        }
-
-        function nextQuestion() {
-            document.getElementById('feedback-overlay').classList.remove('show');
-            isProcessing = false; wrongCount = 0;
-            if (currentQuestion < CONFIG.QUESTIONS_PER_LEVEL - 1) {
-                currentQuestion++; renderQuestion();
-            } else { showLevelComplete(); }
-        }
-
-        function showLevelComplete() {
-            const o = document.getElementById('level-complete-overlay');
-            let stars = '';
-            if (levelStats.first >= 4) { stars = '⭐⭐⭐'; gameStats.stars += 3; }
-            else if (levelStats.first >= 2) { stars = '⭐⭐'; gameStats.stars += 2; }
-            else { stars = '⭐'; gameStats.stars += 1; }
-            
-            document.getElementById('level-stars').innerText = stars;
-            document.getElementById('stat-first').innerText = levelStats.first;
-            document.getElementById('stat-second').innerText = levelStats.second;
-            document.getElementById('stat-third').innerText = levelStats.third;
-            updateScoreBoard(); o.classList.add('show');
-        }
-
-        function nextLevel() {
-            document.getElementById('level-complete-overlay').classList.remove('show');
-            if (currentLevel < TEMPLATES.length - 1) { currentLevel++; initLevel(); }
-            else { showGameComplete(); }
-        }
-
-        function restartLevel() {
-            document.getElementById('level-complete-overlay').classList.remove('show');
-            gameStats.stars -= document.getElementById('level-stars').innerText.length;
-            initLevel();
-        }
-
-        function showGameComplete() {
-            const o = document.getElementById('game-complete-overlay');
-            const maxStars = TEMPLATES.length * 3;
-            const rating = Math.max(1, Math.round((gameStats.stars / maxStars) * 3));
-            let fs = '';
-            for (let i = 0; i < rating; i++) fs += '⭐';
-            
-            document.getElementById('final-stars').innerText = fs;
-            document.getElementById('final-total-stars').innerText = gameStats.stars;
-            document.getElementById('final-total-score').innerText = gameStats.score;
-            const acc = gameStats.questions > 0 ? Math.round((gameStats.correct / gameStats.questions) * 100) : 0;
-            document.getElementById('final-accuracy').innerText = acc + '%';
-            o.classList.add('show');
-        }
-
-        function restartGame() {
-            document.getElementById('game-complete-overlay').classList.remove('show');
-            currentLevel = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
-            initLevel();
-        }
-
-        function updateScoreBoard() {
-            document.getElementById('stars-count').innerText = gameStats.stars;
-            document.getElementById('wrong-count').innerText = gameStats.wrongTotal;
-            document.getElementById('total-score').innerText = gameStats.score;
-        }
-
+        // Init
+        loadProgress();
         initLevel();
     </script>
 </body>
