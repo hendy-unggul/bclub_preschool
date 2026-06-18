@@ -13,7 +13,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         :root {
-            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D; 
+            --black: #0D0D0D; --yellow: #FFE600; --coral: #FF4D4D;
             --white: #FFFFFF; --gray: #F5F5F0; --green: #00E676;
             --orange: #FF9800; --blue: #2196F3; --purple: #9C27B0;
         }
@@ -44,135 +44,59 @@
             font-weight: 900; font-size: 16px; box-shadow: 3px 3px 0 var(--black);
         }
 
-        /* ═══════════════════════════════════════════════════════
-           LEVEL SELECT SCREEN
-        ═══════════════════════════════════════════════════════ */
-        .level-select {
-            padding: 20px;
-            flex: 1;
-            overflow-y: auto;
-        }
+        /* ═══════════ LEVEL SELECT ═══════════ */
+        .level-select { padding: 20px; flex: 1; overflow-y: auto; }
         .weekly-target {
-            background: var(--yellow);
-            border: 3px solid var(--black);
-            border-radius: 16px;
-            padding: 12px 20px;
-            text-align: center;
-            font-weight: 900;
-            font-size: 16px;
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0 var(--black);
-            animation: pulse 2s infinite;
+            background: var(--yellow); border: 3px solid var(--black);
+            border-radius: 16px; padding: 12px 20px; text-align: center;
+            font-weight: 900; font-size: 16px; margin-bottom: 20px;
+            box-shadow: 4px 4px 0 var(--black); animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        .phase-section {
-            margin-bottom: 24px;
-        }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
+        .phase-section { margin-bottom: 24px; }
         .phase-section h3 {
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            color: rgba(13,13,13,0.5);
+            font-size: 14px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px; color: rgba(13,13,13,0.5);
         }
-        .level-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+        .level-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
         .level-btn {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: var(--white);
-            border: 3px solid var(--black);
-            border-radius: 16px;
-            box-shadow: 3px 3px 0 var(--black);
-            cursor: pointer;
-            transition: all 0.15s;
-            position: relative;
+            aspect-ratio: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: var(--white); border: 3px solid var(--black);
+            border-radius: 16px; box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer; transition: all 0.15s; position: relative;
         }
-        .level-btn.locked {
-            background: var(--gray);
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .level-btn.current-week {
-            border: 4px solid var(--coral);
-            animation: targetPulse 2s infinite;
-        }
-        .level-btn:active:not(.locked) {
-            transform: translate(3px, 3px);
-            box-shadow: none;
-        }
-        .level-num {
-            font-size: 24px;
-            font-weight: 900;
-        }
-        .level-stars {
-            font-size: 12px;
-            margin-top: 4px;
-        }
+        .level-btn.locked { background: var(--gray); opacity: 0.5; cursor: not-allowed; }
+        .level-btn.current-week { border: 4px solid var(--coral); animation: targetPulse 2s infinite; }
+        .level-btn:active:not(.locked) { transform: translate(3px,3px); box-shadow: none; }
+        .level-num { font-size: 24px; font-weight: 900; }
+        .level-stars { font-size: 12px; margin-top: 4px; }
         .week-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 20px;
-            background: var(--coral);
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid var(--black);
+            position: absolute; top: -8px; right: -8px; font-size: 20px;
+            background: var(--coral); border-radius: 50%; width: 28px; height: 28px;
+            display: flex; justify-content: center; align-items: center; border: 2px solid var(--black);
         }
         .overall-progress {
-            margin-top: 20px;
-            text-align: center;
-            padding: 16px;
-            background: var(--white);
-            border-radius: 16px;
-            border: 3px solid var(--black);
-            box-shadow: 4px 4px 0 var(--black);
+            margin-top: 20px; text-align: center; padding: 16px;
+            background: var(--white); border-radius: 16px;
+            border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--black);
         }
         .progress-bar {
-            width: 100%;
-            height: 16px;
-            background: var(--gray);
-            border: 2px solid var(--black);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 8px;
+            width: 100%; height: 16px; background: var(--gray);
+            border: 2px solid var(--black); border-radius: 8px; overflow: hidden; margin-bottom: 8px;
         }
-        .progress-fill {
-            height: 100%;
-            background: var(--green);
-            transition: width 0.5s;
-        }
+        .progress-fill { height: 100%; background: var(--green); transition: width 0.5s; }
         @keyframes targetPulse {
-            0%, 100% { box-shadow: 0 0 0 0 var(--coral); }
-            50% { box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); }
+            0%,100%{box-shadow:0 0 0 0 var(--coral)}
+            50%{box-shadow:0 0 0 8px rgba(255,77,77,0)}
         }
 
-        /* ═══════════════════════════════════════════════════════
-           GAME PLAY SCREEN
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ GAME PLAY ═══════════ */
         .score-board {
-            display: flex; gap: 20px; justify-content: center;
-            padding: 10px; background: var(--white);
-            border-bottom: 3px solid var(--black);
+            display: flex; gap: 20px; justify-content: center; padding: 10px;
+            background: var(--white); border-bottom: 3px solid var(--black);
         }
-        .score-item {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 24px; font-weight: 900;
-        }
+        .score-item { display: flex; align-items: center; gap: 6px; font-size: 24px; font-weight: 900; }
         .score-item .icon { font-size: 28px; }
         .score-item.stars { color: #FF9800; }
         .score-item.hearts { color: var(--coral); }
@@ -182,61 +106,33 @@
             display: flex; justify-content: center; align-items: center;
             padding: 12px; gap: 12px;
         }
-        .mascot {
-            font-size: 64px;
-            animation: mascotBounce 2s infinite;
-            filter: drop-shadow(3px 3px 0 var(--black));
-        }
+        .mascot { font-size: 64px; animation: mascotBounce 2s infinite; filter: drop-shadow(3px 3px 0 var(--black)); }
         @keyframes mascotBounce {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+            0%,100%{transform:translateY(0) rotate(-5deg)}
+            50%{transform:translateY(-10px) rotate(5deg)}
         }
         .mascot-bubble {
             background: var(--white); border: 4px solid var(--black);
-            padding: 12px 20px; border-radius: 20px;
-            box-shadow: 4px 4px 0 var(--black);
-            position: relative; font-size: 24px;
-            max-width: 200px; text-align: center;
+            padding: 12px 20px; border-radius: 20px; box-shadow: 4px 4px 0 var(--black);
+            position: relative; font-size: 24px; max-width: 200px; text-align: center;
         }
 
-        .progress-area {
-            display: flex; justify-content: center; gap: 8px;
-            padding: 6px;
-        }
+        .progress-area { display: flex; justify-content: center; gap: 8px; padding: 6px; }
         .progress-dot {
             width: 16px; height: 16px; border-radius: 50%;
-            border: 3px solid var(--black); background: var(--white);
-            transition: all 0.3s;
+            border: 3px solid var(--black); background: var(--white); transition: all 0.3s;
         }
         .progress-dot.done { background: var(--green); transform: scale(1.2); }
-        .progress-dot.current {
-            background: var(--yellow);
-            animation: pulseDot 1s infinite;
-            transform: scale(1.3);
-        }
+        .progress-dot.current { background: var(--yellow); animation: pulseDot 1s infinite; transform: scale(1.3); }
         @keyframes pulseDot {
-            0%, 100% { box-shadow: 0 0 0 0 var(--yellow); }
-            50% { box-shadow: 0 0 0 8px rgba(255, 230, 0, 0); }
+            0%,100%{box-shadow:0 0 0 0 var(--yellow)}
+            50%{box-shadow:0 0 0 8px rgba(255,230,0,0)}
         }
 
-        .wrong-area {
-            display: flex; justify-content: center; gap: 8px;
-            min-height: 40px; align-items: center;
-        }
-        .wrong-dot {
-            width: 20px; height: 20px; border-radius: 50%;
-            background: var(--white); border: 3px solid var(--coral);
-            transition: all 0.3s;
-        }
-        .wrong-dot.filled {
-            background: var(--coral);
-            animation: wrongPulse 0.5s;
-        }
-        @keyframes wrongPulse {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
+        .wrong-area { display: flex; justify-content: center; gap: 8px; min-height: 40px; align-items: center; }
+        .wrong-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--white); border: 3px solid var(--coral); transition: all 0.3s; }
+        .wrong-dot.filled { background: var(--coral); animation: wrongPulse 0.5s; }
+        @keyframes wrongPulse { 0%{transform:scale(0)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
 
         .pattern-row {
             display: flex; gap: 12px; margin: 12px 0;
@@ -245,245 +141,104 @@
             flex-wrap: wrap; justify-content: center;
         }
         .pattern-item {
-            width: 60px; height: 60px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 40px; background: var(--white);
-            border-radius: 16px; border: 3px solid var(--black);
-            box-shadow: 2px 2px 0 var(--black);
-            transition: all 0.3s ease;
-            cursor: default;
+            width: 60px; height: 60px; display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--white); border-radius: 16px;
+            border: 3px solid var(--black); box-shadow: 2px 2px 0 var(--black);
+            transition: all 0.3s ease; cursor: default;
         }
         .pattern-item.missing {
-            background: var(--yellow);
-            border: 4px dashed var(--black);
-            animation: pulseMissing 1.5s infinite;
-            box-shadow: none;
-            cursor: pointer;
+            background: var(--yellow); border: 4px dashed var(--black);
+            animation: pulseMissing 1.5s infinite; box-shadow: none; cursor: pointer;
         }
-        .pattern-item.missing::before {
-            content: '❓';
-            font-size: 32px;
-            animation: questionWiggle 1s infinite;
-        }
-        .pattern-item.missing.filled::before {
-            content: none;
-        }
-        @keyframes pulseMissing {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        @keyframes questionWiggle {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
-        }
+        .pattern-item.missing::before { content:'❓'; font-size:32px; animation:questionWiggle 1s infinite; }
+        .pattern-item.missing.filled::before { content:none; }
+        @keyframes pulseMissing { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+        @keyframes questionWiggle { 0%,100%{transform:rotate(-10deg)} 50%{transform:rotate(10deg)} }
         .pattern-item.correct-fill {
-            background: var(--green) !important;
-            border: 3px solid var(--black) !important;
-            animation: correctPop 0.5s;
-            box-shadow: 2px 2px 0 var(--black);
+            background: var(--green) !important; border: 3px solid var(--black) !important;
+            animation: correctPop 0.5s; box-shadow: 2px 2px 0 var(--black);
         }
-        @keyframes correctPop {
-            0% { transform: scale(0.5); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
+        @keyframes correctPop { 0%{transform:scale(0.5)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
 
-        .choices-container {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 12px;
-        }
-        .choices-cue {
-            font-size: 36px;
-            animation: cueBounce 1s infinite;
-            margin-bottom: 4px;
-        }
-        @keyframes cueBounce {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-8px); opacity: 0.7; }
-        }
-        .choices-row {
-            display: flex; gap: 16px; justify-content: center;
-        }
+        .choices-container { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .choices-cue { font-size: 36px; animation: cueBounce 1s infinite; margin-bottom: 4px; }
+        @keyframes cueBounce { 0%,100%{transform:translateY(0);opacity:1} 50%{transform:translateY(-8px);opacity:0.7} }
+        .choices-row { display: flex; gap: 16px; justify-content: center; }
         .choice-btn {
-            width: 80px; height: 80px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 48px; background: var(--white);
-            border: 4px solid var(--black); border-radius: 20px;
-            box-shadow: 5px 5px 0 var(--black);
-            cursor: pointer; transition: all 0.15s;
+            width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;
+            font-size: 48px; background: var(--white); border: 4px solid var(--black);
+            border-radius: 20px; box-shadow: 5px 5px 0 var(--black); cursor: pointer; transition: all 0.15s;
         }
-        .choice-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: 1px 1px 0 var(--black);
-        }
-        .choice-btn.correct {
-            background: var(--green);
-            animation: bigPop 0.4s;
-            box-shadow: 5px 5px 0 #004d00;
-        }
-        .choice-btn.wrong {
-            background: var(--coral);
-            animation: bigShake 0.5s;
-            box-shadow: 5px 5px 0 #800000;
-        }
-        .choices-row.locked {
-            pointer-events: none !important;
-            opacity: 0.6;
-        }
-        .choices-row.locked .choice-btn {
-            cursor: not-allowed;
-        }
-        @keyframes bigPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.25); }
-            100% { transform: scale(1); }
-        }
+        .choice-btn:active { transform: translate(4px,4px); box-shadow: 1px 1px 0 var(--black); }
+        .choice-btn.correct { background: var(--green); animation: bigPop 0.4s; box-shadow: 5px 5px 0 #004d00; }
+        .choice-btn.wrong { background: var(--coral); animation: bigShake 0.5s; box-shadow: 5px 5px 0 #800000; }
+        .choices-row.locked { pointer-events: none !important; opacity: 0.6; }
+        .choices-row.locked .choice-btn { cursor: not-allowed; }
+        @keyframes bigPop { 0%{transform:scale(1)} 50%{transform:scale(1.25)} 100%{transform:scale(1)} }
         @keyframes bigShake {
-            0%, 100% { transform: translateX(0) rotate(0); }
-            20% { transform: translateX(-12px) rotate(-5deg); }
-            40% { transform: translateX(12px) rotate(5deg); }
-            60% { transform: translateX(-8px) rotate(-3deg); }
-            80% { transform: translateX(8px) rotate(3deg); }
+            0%,100%{transform:translateX(0) rotate(0)}
+            20%{transform:translateX(-12px) rotate(-5deg)}
+            40%{transform:translateX(12px) rotate(5deg)}
+            60%{transform:translateX(-8px) rotate(-3deg)}
+            80%{transform:translateX(8px) rotate(3deg)}
         }
 
-        /* ═══════════════════════════════════════════════════════
-           CREATE PATTERN MODE
-        ═══════════════════════════════════════════════════════ */
-        .create-area {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 16px;
-            padding: 20px;
-        }
-        .create-instruction {
-            font-size: 24px; font-weight: 900;
-            text-align: center;
-        }
+        /* ═══════════ CREATE MODE ═══════════ */
+        .create-area { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 20px; }
+        .create-instruction { font-size: 24px; font-weight: 900; text-align: center; }
         .pattern-builder {
-            display: flex; gap: 12px; flex-wrap: wrap;
-            justify-content: center;
-            min-height: 80px; padding: 16px;
-            background: var(--white); border-radius: 20px;
-            border: 4px dashed var(--black);
-            width: 100%; max-width: 400px;
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+            min-height: 80px; padding: 16px; background: var(--white);
+            border-radius: 20px; border: 4px dashed var(--black); width: 100%; max-width: 400px;
         }
-        .pattern-builder.locked {
-            pointer-events: none !important;
-            opacity: 0.6;
-        }
-        .pattern-palette {
-            display: flex; gap: 12px; flex-wrap: wrap;
-            justify-content: center;
-        }
-        .pattern-palette.locked {
-            pointer-events: none !important;
-            opacity: 0.6;
-        }
+        .pattern-builder.locked, .pattern-palette.locked { pointer-events: none !important; opacity: 0.6; }
+        .pattern-palette { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .palette-item {
-            width: 60px; height: 60px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 40px; background: var(--yellow);
-            border-radius: 16px; border: 3px solid var(--black);
-            cursor: pointer; transition: all 0.15s;
-            box-shadow: 3px 3px 0 var(--black);
+            width: 60px; height: 60px; display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--yellow); border-radius: 16px;
+            border: 3px solid var(--black); cursor: pointer; transition: all 0.15s; box-shadow: 3px 3px 0 var(--black);
         }
-        .palette-item:active {
-            transform: translate(3px, 3px);
-            box-shadow: none;
-        }
-        .palette-item.selected {
-            background: var(--green);
-            transform: scale(1.1);
-        }
+        .palette-item:active { transform: translate(3px,3px); box-shadow: none; }
+        .palette-item.selected { background: var(--green); transform: scale(1.1); }
         .builder-slot {
-            width: 60px; height: 60px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 40px; background: var(--white);
-            border-radius: 16px; border: 3px solid var(--black);
-            cursor: pointer; transition: all 0.15s;
-            box-shadow: 2px 2px 0 var(--black);
+            width: 60px; height: 60px; display: flex; justify-content: center; align-items: center;
+            font-size: 40px; background: var(--white); border-radius: 16px;
+            border: 3px solid var(--black); cursor: pointer; transition: all 0.15s; box-shadow: 2px 2px 0 var(--black);
         }
-        .builder-slot.empty {
-            background: var(--yellow);
-            border: 3px dashed var(--black);
-        }
-        .builder-slot.empty::before {
-            content: '❓';
-            font-size: 28px;
-        }
-        .builder-slot.selected {
-            border: 4px solid var(--blue);
-            transform: scale(1.1);
-            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);
-        }
-        .builder-slot.filled {
-            background: var(--white);
-        }
-        .builder-slot.filled::before {
-            content: none;
-        }
-        .builder-slot.correct {
-            background: var(--green) !important;
-            animation: correctPop 0.5s;
-        }
-        .builder-slot.wrong {
-            background: var(--coral) !important;
-            animation: bigShake 0.5s;
-        }
+        .builder-slot.empty { background: var(--yellow); border: 3px dashed var(--black); }
+        .builder-slot.empty::before { content:'❓'; font-size:28px; }
+        .builder-slot.selected { border: 4px solid var(--blue); transform: scale(1.1); box-shadow: 0 0 0 4px rgba(33,150,243,0.3); }
+        .builder-slot.filled { background: var(--white); }
+        .builder-slot.filled::before { content:none; }
+        .builder-slot.correct { background: var(--green) !important; animation: correctPop 0.5s; }
+        .builder-slot.wrong { background: var(--coral) !important; animation: bigShake 0.5s; }
 
+        /* ═══════════ OVERLAYS ═══════════ */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(13,13,13,0.92);
-            display: none; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 1000; padding: 20px;
+            background: rgba(13,13,13,0.92); display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000; padding: 20px;
         }
         .overlay.show { display: flex; }
-        .feedback-emoji {
-            font-size: 80px;
-            animation: celebrate 1s infinite;
-            margin-bottom: 16px;
-        }
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1) rotate(-5deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
-        }
-        .feedback-stars { font-size: 48px; margin-bottom: 16px; }
+        .feedback-emoji { font-size: 80px; animation: celebrate 1s infinite; margin-bottom: 16px; }
+        @keyframes celebrate { 0%,100%{transform:scale(1) rotate(-5deg)} 50%{transform:scale(1.2) rotate(5deg)} }
+        .feedback-stars { font-size: 48px; margin-bottom: 16px; color: var(--white); text-align: center; }
         .feedback-btn {
-            background: var(--yellow); color: var(--black);
-            border: 4px solid var(--black); border-radius: 16px;
-            padding: 16px 32px; font-size: 32px;
-            font-weight: 900; box-shadow: 4px 4px 0 var(--white);
-            cursor: pointer; margin-top: 16px;
+            background: var(--yellow); color: var(--black); border: 4px solid var(--black);
+            border-radius: 16px; padding: 16px 32px; font-size: 32px;
+            font-weight: 900; box-shadow: 4px 4px 0 var(--white); cursor: pointer; margin-top: 16px;
         }
-        .feedback-btn:active {
-            transform: translate(4px, 4px); box-shadow: none;
-        }
-        .feedback-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .feedback-btn:active { transform: translate(4px,4px); box-shadow: none; }
+        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .certificate {
-            background: var(--white); border: 4px solid var(--black);
-            border-radius: 20px; padding: 32px;
-            text-align: center; max-width: 400px;
-            box-shadow: 8px 8px 0 var(--black);
+            background: var(--white); border: 4px solid var(--black); border-radius: 20px;
+            padding: 32px; text-align: center; max-width: 400px; box-shadow: 8px 8px 0 var(--black);
         }
-        .certificate h2 {
-            font-size: 28px; font-weight: 900;
-            font-style: italic; margin-bottom: 16px;
-        }
-        .certificate .badge {
-            font-size: 80px; margin: 16px 0;
-        }
-        .certificate p {
-            font-size: 16px; color: rgba(13,13,13,0.7);
-            margin-bottom: 16px;
-        }
-        .star-rating {
-            font-size: 40px;
-            margin: 12px 0;
-        }
+        .certificate h2 { font-size: 28px; font-weight: 900; font-style: italic; margin-bottom: 16px; }
+        .certificate .badge { font-size: 80px; margin: 16px 0; }
+        .certificate p { font-size: 16px; color: rgba(13,13,13,0.7); margin-bottom: 16px; }
+        .star-rating { font-size: 40px; margin: 12px 0; }
 
         @media (max-width: 360px) {
             .pattern-item { width: 50px; height: 50px; font-size: 32px; }
@@ -508,57 +263,42 @@
             <div class="mascot">🐵</div>
             <div class="mascot-bubble">Pilih level! 🎯</div>
         </div>
-
-        <div class="weekly-target" id="weekly-target">
-            🗓️ Minggu 1: Level 1-4
-        </div>
-
+        <div class="weekly-target" id="weekly-target">🗓️ Minggu 1: Level 1-4</div>
         <div id="level-grid"></div>
-
         <div class="overall-progress">
             <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                <div class="progress-fill" id="progress-fill" style="width:0%"></div>
             </div>
             <span id="progress-text">0/16 level selesai</span>
         </div>
     </div>
 
     <!-- GAME PLAY SCREEN -->
-    <div id="game-play-screen" style="display: none;">
+    <div id="game-play-screen" style="display:none;">
         <div class="score-board">
-            <div class="score-item stars">
-                <span class="icon">⭐</span><span id="stars-count">0</span>
-            </div>
-            <div class="score-item hearts">
-                <span class="icon">❌</span><span id="wrong-count">0</span>
-            </div>
-            <div class="score-item points">
-                <span class="icon">💎</span><span id="total-score">0</span>
-            </div>
+            <div class="score-item stars"><span class="icon">⭐</span><span id="stars-count">0</span></div>
+            <div class="score-item hearts"><span class="icon">❌</span><span id="wrong-count">0</span></div>
+            <div class="score-item points"><span class="icon">💎</span><span id="total-score">0</span></div>
         </div>
-
         <div class="mascot-area">
             <div class="mascot" id="mascot-emoji">🐝</div>
             <div class="mascot-bubble" id="mascot-bubble">🤔❓</div>
         </div>
-
         <div class="progress-area" id="progress-dots"></div>
         <div class="wrong-area" id="wrong-dots">
             <div class="wrong-dot"></div>
             <div class="wrong-dot"></div>
             <div class="wrong-dot"></div>
         </div>
-
         <div class="pattern-row" id="pattern-container"></div>
-
         <div class="choices-container" id="choices-container">
             <div class="choices-cue">⬇️</div>
             <div class="choices-row" id="choices-row"></div>
         </div>
     </div>
 
-    <!-- CREATE PATTERN MODE -->
-    <div class="create-area" id="create-area" style="display: none;">
+    <!-- CREATE MODE -->
+    <div class="create-area" id="create-area" style="display:none;">
         <div class="create-instruction" id="create-instruction">Buat pola: 🍎🍌🍎🍌</div>
         <div class="pattern-builder" id="pattern-builder"></div>
         <div class="pattern-palette" id="pattern-palette"></div>
@@ -569,7 +309,7 @@
     <div class="overlay" id="feedback-overlay">
         <div class="feedback-emoji" id="feedback-emoji">🎉</div>
         <div class="feedback-stars" id="feedback-stars"></div>
-        <button class="feedback-btn" id="next-btn" onclick="nextQuestion()">▶️</button>
+        <button class="feedback-btn" id="next-btn">▶️</button>
     </div>
 
     <div class="overlay" id="certificate-overlay">
@@ -584,41 +324,38 @@
 
     <script>
         // ═══════════════════════════════════════════════════════
-        //  16 LEVELS - Progressive Unlock
+        //  16 LEVELS
         // ═══════════════════════════════════════════════════════
         const LEVELS = [
-            // FASE 1: AB Pattern (Levels 1-4)
-            { type: "fill", pattern: ["🍎","🍌","🍎","🍌","🍎","?"], answer: "🍌", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Lihat pasangan yang berulang!" },
-            { type: "fill", pattern: ["🍎","🍌","🍎","?","🍎","🍌"], answer: "🍌", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Apa setelah 🍎?" },
-            { type: "fill", pattern: ["🍎","🍌","?","🍌","🍎","🍌"], answer: "🍎", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Lihat awalnya!" },
-            { type: "fill", pattern: ["?","🍌","🍎","🍌","🍎","🍌"], answer: "🍎", choices: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Pola dimulai dengan?" },
-
-            // FASE 2: ABC & AAB (Levels 5-8)
-            { type: "fill", pattern: ["🐶","🐱","🐭","🐶","🐱","?"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "🐶🐱🐭", hint: "3 hewan yang berulang!" },
-            { type: "fill", pattern: ["🐶","🐱","?","🐶","🐱","🐭"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "🐶🐱🐭", hint: "Hewan ke-3?" },
-            { type: "fill", pattern: ["⭐","⭐","🌙","⭐","?","🌙"], answer: "⭐", choices: ["⭐","🌙","☀️"], unit: "⭐⭐🌙", hint: "Dua bintang, satu bulan!" },
-            { type: "fill", pattern: ["⭐","?","🌙","⭐","⭐","🌙"], answer: "⭐", choices: ["⭐","🌙","☀️"], unit: "⭐⭐🌙", hint: "Bintang berpasangan!" },
-
-            // FASE 3: Mixed & Create (Levels 9-12)
-            { type: "fill", pattern: ["🍎","🍌","🍎","?","🍎","🍌"], answer: "🍌", choices: ["🍎","🍌","🐶"], unit: "?", hint: "AB atau ABC?" },
-            { type: "fill", pattern: ["🐶","🐱","🐭","?","🐶","🐱"], answer: "🐭", choices: ["🐶","🐱","🐭"], unit: "?", hint: "Cari unit yang berulang!" },
-            { type: "create", target: ["🍎","🍌","🍎","🍌"], palette: ["🍎","🍌","🍇"], unit: "🍎🍌", hint: "Buat pola apel-pisang!" },
-            { type: "create", target: ["🐶","🐱","🐭","🐶","🐱","🐭"], palette: ["🐶","🐱","🐭","⭐"], unit: "🐶🐱🐭", hint: "Buat pola 3 hewan!" },
-
-            // FASE 4: Unit Recognition & Mastery (Levels 13-16)
-            { type: "fill", pattern: ["🔴","🟡","🔵","🔴","?","🔵"], answer: "🟡", choices: ["🔴","🟡","🔵"], unit: "🔴🟡🔵", hint: "Warna ke-2?" },
-            { type: "fill", pattern: ["🟢","🟢","🟡","?","🟢","🟡"], answer: "🟢", choices: ["🟢","🟡","🔵"], unit: "🟢🟢🟡", hint: "Dua hijau, satu kuning!" },
-            { type: "create", target: ["⭐","⭐","🌙","⭐","⭐","🌙"], palette: ["⭐","🌙","☀️","🍎"], unit: "⭐⭐🌙", hint: "Dua bintang, satu bulan!" },
-            { type: "certificate", unit: "all", hint: "Selamat! 🎉" }
+            // FASE 1: AB Pattern (1-4)
+            { type:"fill", pattern:["🍎","🍌","🍎","🍌","🍎","?"], answer:"🍌", choices:["🍎","🍌","🍇"], unit:"🍎🍌", hint:"Lihat pasangan yang berulang!" },
+            { type:"fill", pattern:["🍎","🍌","🍎","?","🍎","🍌"], answer:"🍌", choices:["🍎","🍌","🍇"], unit:"🍎🍌", hint:"Apa setelah 🍎?" },
+            { type:"fill", pattern:["🍎","🍌","?","🍌","🍎","🍌"], answer:"🍎", choices:["🍎","🍌","🍇"], unit:"🍎🍌", hint:"Lihat awalnya!" },
+            { type:"fill", pattern:["?","🍌","🍎","🍌","🍎","🍌"], answer:"🍎", choices:["🍎","🍌","🍇"], unit:"🍎🍌", hint:"Pola dimulai dengan?" },
+            // FASE 2: ABC & AAB (5-8)
+            { type:"fill", pattern:["🐶","🐱","🐭","🐶","🐱","?"], answer:"🐭", choices:["🐶","🐱","🐭"], unit:"🐶🐱🐭", hint:"3 hewan yang berulang!" },
+            { type:"fill", pattern:["🐶","🐱","?","🐶","🐱","🐭"], answer:"🐭", choices:["🐶","🐱","🐭"], unit:"🐶🐱🐭", hint:"Hewan ke-3?" },
+            { type:"fill", pattern:["⭐","⭐","🌙","⭐","?","🌙"], answer:"⭐", choices:["⭐","🌙","☀️"], unit:"⭐⭐🌙", hint:"Dua bintang, satu bulan!" },
+            { type:"fill", pattern:["⭐","?","🌙","⭐","⭐","🌙"], answer:"⭐", choices:["⭐","🌙","☀️"], unit:"⭐⭐🌙", hint:"Bintang berpasangan!" },
+            // FASE 3: Mixed & Create (9-12)
+            { type:"fill", pattern:["🍎","🍌","🍎","?","🍎","🍌"], answer:"🍌", choices:["🍎","🍌","🐶"], unit:"?", hint:"AB atau ABC?" },
+            { type:"fill", pattern:["🐶","🐱","🐭","?","🐶","🐱"], answer:"🐭", choices:["🐶","🐱","🐭"], unit:"?", hint:"Cari unit yang berulang!" },
+            { type:"create", target:["🍎","🍌","🍎","🍌"], palette:["🍎","🍌","🍇"], unit:"🍎🍌", hint:"Buat pola apel-pisang!" },
+            { type:"create", target:["🐶","🐱","🐭","🐶","🐱","🐭"], palette:["🐶","🐱","🐭","⭐"], unit:"🐶🐱🐭", hint:"Buat pola 3 hewan!" },
+            // FASE 4: Mastery (13-16)
+            { type:"fill", pattern:["🔴","🟡","🔵","🔴","?","🔵"], answer:"🟡", choices:["🔴","🟡","🔵"], unit:"🔴🟡🔵", hint:"Warna ke-2?" },
+            { type:"fill", pattern:["🟢","🟢","🟡","?","🟢","🟡"], answer:"🟢", choices:["🟢","🟡","🔵"], unit:"🟢🟢🟡", hint:"Dua hijau, satu kuning!" },
+            { type:"create", target:["⭐","⭐","🌙","⭐","⭐","🌙"], palette:["⭐","🌙","☀️","🍎"], unit:"⭐⭐🌙", hint:"Dua bintang, satu bulan!" },
+            { type:"certificate", unit:"all", hint:"Selamat! 🎉" }
         ];
 
         // ═══════════════════════════════════════════════════════
-        //  STATE MANAGEMENT
+        //  STATE
         // ═══════════════════════════════════════════════════════
         let currentLevel = 0;
         let currentQuestion = 0;
-        let wrongCount = 0;
-        let wrongTotal = 0;
+        let wrongCount = 0;       // wrong per question (reset per soal)
+        let wrongTotal = 0;       // total wrong per level (untuk scoreboard)
         let isProcessing = false;
         let gameStats = { stars: 0, score: 0, questions: 0, correct: 0 };
         let selectedSlot = null;
@@ -626,72 +363,51 @@
         let builtPattern = [];
         let currentLevelData = null;
         let lastClickTime = 0;
-        const CLICK_DEBOUNCE = 1000; // ms — increased for mobile
+
+        // FIX #4: Turunkan debounce dari 1000ms → 300ms
+        // Setelah correct, choicesRow.locked sudah cukup sebagai guard
+        const CLICK_DEBOUNCE = 300;
 
         // ═══════════════════════════════════════════════════════
-        //  PROGRESS SYSTEM (localStorage)
+        //  PROGRESS (localStorage)
         // ═══════════════════════════════════════════════════════
         function loadProgress() {
-            try {
-                const saved = localStorage.getItem('detektif_levels');
-                return saved ? JSON.parse(saved) : {};
-            } catch (e) {
-                console.warn('localStorage error:', e);
-                return {};
-            }
+            try { const s = localStorage.getItem('detektif_levels'); return s ? JSON.parse(s) : {}; }
+            catch(e) { return {}; }
         }
-
         function saveLevelProgress(levelIdx, stars) {
             try {
-                const progress = loadProgress();
-                progress[levelIdx] = Math.max(progress[levelIdx] || 0, stars);
-                localStorage.setItem('detektif_levels', JSON.stringify(progress));
-                console.log('Saved progress:', progress);
-            } catch (e) {
-                console.warn('Failed to save progress:', e);
-            }
+                const p = loadProgress();
+                p[levelIdx] = Math.max(p[levelIdx] || 0, stars);
+                localStorage.setItem('detektif_levels', JSON.stringify(p));
+            } catch(e) { console.warn('Save failed:', e); }
         }
-
-        function getCompletedLevels() {
-            return Object.keys(loadProgress()).length;
-        }
-
-        function getProgressPercent() {
-            return (getCompletedLevels() / 16) * 100;
-        }
-
-        function isLevelUnlocked(levelIdx) {
-            if (levelIdx === 0) return true;
-            const progress = loadProgress();
-            return progress[levelIdx - 1] > 0;
+        function getCompletedLevels() { return Object.keys(loadProgress()).length; }
+        function getProgressPercent() { return (getCompletedLevels() / 16) * 100; }
+        function isLevelUnlocked(idx) {
+            if (idx === 0) return true;
+            return loadProgress()[idx - 1] > 0;
         }
 
         // ═══════════════════════════════════════════════════════
-        //  WEEKLY TARGET SYSTEM
+        //  WEEKLY TARGET
         // ═══════════════════════════════════════════════════════
         function getCurrentWeek() {
-            const startDate = new Date('2025-01-01');
-            const now = new Date();
-            const diffWeeks = Math.floor((now - startDate) / (7 * 24 * 60 * 60 * 1000));
-            return Math.max(1, Math.min(16, diffWeeks + 1));
+            const start = new Date('2025-01-01');
+            const diff = Math.floor((new Date() - start) / (7*24*60*60*1000));
+            return Math.max(1, Math.min(16, diff + 1));
         }
-
-        function isInCurrentWeek(levelIdx) {
-            const week = getCurrentWeek();
-            const weekStart = (week - 1) * 4;
-            const weekEnd = weekStart + 3;
-            return levelIdx >= weekStart && levelIdx <= weekEnd;
+        function isInCurrentWeek(idx) {
+            const w = getCurrentWeek();
+            return idx >= (w-1)*4 && idx <= (w-1)*4+3;
         }
-
         function getWeeklyTargetHTML() {
-            const week = getCurrentWeek();
-            const startLevel = (week - 1) * 4 + 1;
-            const endLevel = Math.min(16, week * 4);
-            return `🗓️ Minggu ${week}: Level ${startLevel}-${endLevel}`;
+            const w = getCurrentWeek();
+            return `🗓️ Minggu ${w}: Level ${(w-1)*4+1}-${Math.min(16, w*4)}`;
         }
 
         // ═══════════════════════════════════════════════════════
-        //  LEVEL SELECT SCREEN
+        //  LEVEL SELECT
         // ═══════════════════════════════════════════════════════
         function showLevelSelect() {
             document.getElementById('level-select-screen').style.display = 'block';
@@ -699,91 +415,69 @@
             document.getElementById('create-area').style.display = 'none';
             document.getElementById('feedback-overlay').classList.remove('show');
             document.getElementById('certificate-overlay').classList.remove('show');
-
             document.getElementById('weekly-target').innerText = getWeeklyTargetHTML();
             document.getElementById('progress-fill').style.width = getProgressPercent() + '%';
             document.getElementById('progress-text').innerText = `${getCompletedLevels()}/16 level selesai`;
-
             renderLevelGrid();
         }
-
         function renderLevelGrid() {
             const grid = document.getElementById('level-grid');
             const progress = loadProgress();
-
             const phases = [
-                { name: "Fase 1: AB Pattern", levels: [0,1,2,3] },
-                { name: "Fase 2: ABC/AAB", levels: [4,5,6,7] },
-                { name: "Fase 3: Mix & Create", levels: [8,9,10,11] },
-                { name: "Fase 4: Mastery", levels: [12,13,14,15] }
+                { name:"Fase 1: AB Pattern", levels:[0,1,2,3] },
+                { name:"Fase 2: ABC/AAB",    levels:[4,5,6,7] },
+                { name:"Fase 3: Mix & Create",levels:[8,9,10,11] },
+                { name:"Fase 4: Mastery",    levels:[12,13,14,15] }
             ];
-
             grid.innerHTML = '';
-
             phases.forEach(phase => {
-                const phaseDiv = document.createElement('div');
-                phaseDiv.className = 'phase-section';
-                phaseDiv.innerHTML = `<h3>${phase.name}</h3>`;
-
+                const sec = document.createElement('div');
+                sec.className = 'phase-section';
+                sec.innerHTML = `<h3>${phase.name}</h3>`;
                 const row = document.createElement('div');
                 row.className = 'level-row';
-
-                phase.levels.forEach(levelIdx => {
-                    const stars = progress[levelIdx] || 0;
-                    const isUnlocked = isLevelUnlocked(levelIdx);
-                    const isCurrentWeek = isInCurrentWeek(levelIdx);
-
+                phase.levels.forEach(idx => {
+                    const stars = progress[idx] || 0;
+                    const unlocked = isLevelUnlocked(idx);
                     const btn = document.createElement('div');
-                    btn.className = `level-btn ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrentWeek ? 'current-week' : ''}`;
+                    btn.className = `level-btn ${unlocked?'unlocked':'locked'} ${isInCurrentWeek(idx)?'current-week':''}`;
                     btn.innerHTML = `
-                        <span class="level-num">${levelIdx + 1}</span>
+                        <span class="level-num">${idx+1}</span>
                         <span class="level-stars">${'⭐'.repeat(stars)}${'⚫'.repeat(3-stars)}</span>
-                        ${isCurrentWeek ? '<span class="week-badge">🎯</span>' : ''}
+                        ${isInCurrentWeek(idx)?'<span class="week-badge">🎯</span>':''}
                     `;
-
-                    if (isUnlocked) {
-                        btn.onclick = () => startLevel(levelIdx);
-                    }
-
+                    if (unlocked) btn.onclick = () => startLevel(idx);
                     row.appendChild(btn);
                 });
-
-                phaseDiv.appendChild(row);
-                grid.appendChild(phaseDiv);
+                sec.appendChild(row);
+                grid.appendChild(sec);
             });
         }
 
         // ═══════════════════════════════════════════════════════
-        //  GAME PLAY - START LEVEL
+        //  START LEVEL
         // ═══════════════════════════════════════════════════════
         function startLevel(levelIdx) {
-            console.log('=== STARTING LEVEL:', levelIdx, '===');
-
+            console.log('START LEVEL:', levelIdx);
             currentLevel = levelIdx;
             currentQuestion = 0;
             wrongCount = 0;
             wrongTotal = 0;
             isProcessing = false;
             lastClickTime = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0 };
+            gameStats = { stars:0, score:0, questions:0, correct:0 };
             selectedSlot = null;
             selectedPaletteItem = null;
             builtPattern = [];
-
-            // Clone level data
-            const originalLevel = LEVELS[currentLevel];
-            currentLevelData = JSON.parse(JSON.stringify(originalLevel));
+            currentLevelData = JSON.parse(JSON.stringify(LEVELS[currentLevel]));
 
             document.getElementById('level-select-screen').style.display = 'none';
-            document.getElementById('game-play-screen').style.display = 'block';
-            document.getElementById('create-area').style.display = 'none';
             document.getElementById('feedback-overlay').classList.remove('show');
             document.getElementById('certificate-overlay').classList.remove('show');
 
             updateScoreBoard();
             initQuestion();
         }
-
         function updateScoreBoard() {
             document.getElementById('stars-count').innerText = gameStats.stars;
             document.getElementById('wrong-count').innerText = wrongTotal;
@@ -791,58 +485,47 @@
         }
 
         // ═══════════════════════════════════════════════════════
-        //  INIT QUESTION
+        //  INIT QUESTION — reset semua state per soal
         // ═══════════════════════════════════════════════════════
         function initQuestion() {
-            console.log('=== INIT QUESTION:', currentQuestion, 'level:', currentLevel, 'type:', currentLevelData.type, '===');
+            console.log('INIT Q:', currentQuestion, 'level:', currentLevel, 'type:', currentLevelData.type);
 
-            // CRITICAL: Reset all locks
+            // FIX #2: Reset semua lock state dengan bersih sebelum soal baru
             isProcessing = false;
             lastClickTime = 0;
-            wrongCount = 0;
+            wrongCount = 0;         // ← reset per soal, bukan per level
             selectedSlot = null;
             selectedPaletteItem = null;
 
-            // Remove all locked classes from containers
             const choicesRow = document.getElementById('choices-row');
             if (choicesRow) choicesRow.classList.remove('locked');
-
             const builder = document.getElementById('pattern-builder');
             if (builder) builder.classList.remove('locked');
-
             const palette = document.getElementById('pattern-palette');
             if (palette) palette.classList.remove('locked');
 
-            document.getElementById('level-display').innerText = `${currentLevel + 1}️⃣`;
+            document.getElementById('level-display').innerText = `${currentLevel+1}️⃣`;
             document.getElementById('mascot-emoji').innerText = '🐝';
             document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
 
             renderWrongDots();
             renderProgressDots();
 
-            if (currentLevelData.type === "fill") {
-                showFillMode();
-            } else if (currentLevelData.type === "create") {
-                showCreateMode();
-            } else if (currentLevelData.type === "certificate") {
-                showCertificate();
-            }
+            if (currentLevelData.type === 'fill') showFillMode();
+            else if (currentLevelData.type === 'create') showCreateMode();
+            else if (currentLevelData.type === 'certificate') showCertificate();
         }
-
         function renderProgressDots() {
             const c = document.getElementById('progress-dots');
             c.innerHTML = '';
             for (let i = 0; i < 5; i++) {
                 const d = document.createElement('div');
-                d.className = 'progress-dot';
-                if (i < currentQuestion) d.classList.add('done');
-                else if (i === currentQuestion) d.classList.add('current');
+                d.className = 'progress-dot' + (i < currentQuestion ? ' done' : i === currentQuestion ? ' current' : '');
                 c.appendChild(d);
             }
         }
-
         function renderWrongDots() {
-            document.querySelectorAll('.wrong-dot').forEach((d, i) => {
+            document.querySelectorAll('.wrong-dot').forEach((d,i) => {
                 d.className = 'wrong-dot' + (i < wrongCount ? ' filled' : '');
             });
         }
@@ -851,18 +534,15 @@
         //  FILL MODE
         // ═══════════════════════════════════════════════════════
         function showFillMode() {
-            console.log('Show fill mode, pattern:', currentLevelData.pattern, 'answer:', currentLevelData.answer);
-
             document.getElementById('game-play-screen').style.display = 'block';
             document.getElementById('create-area').style.display = 'none';
             document.getElementById('choices-container').style.display = 'flex';
 
             const pc = document.getElementById('pattern-container');
             pc.innerHTML = '';
-
-            currentLevelData.pattern.forEach((item, idx) => {
+            currentLevelData.pattern.forEach((item) => {
                 const div = document.createElement('div');
-                if (item === "?") {
+                if (item === '?') {
                     div.className = 'pattern-item missing';
                     div.id = 'missing-slot';
                 } else {
@@ -891,34 +571,19 @@
 
         function checkFillAnswer(choice, btn) {
             const now = Date.now();
+            if (now - lastClickTime < CLICK_DEBOUNCE) return;
 
-            // GUARD #1: Debounce - block if clicked too recently
-            if (now - lastClickTime < CLICK_DEBOUNCE) {
-                console.log('BLOCKED: debounce, lastClick:', lastClickTime, 'now:', now, 'diff:', now - lastClickTime);
-                return;
-            }
-
-            // GUARD #2: Check if container is already locked (CSS class)
             const choicesRow = document.getElementById('choices-row');
-            if (choicesRow && choicesRow.classList.contains('locked')) {
-                console.log('BLOCKED: choices-row has locked class');
-                return;
-            }
+            if (choicesRow && choicesRow.classList.contains('locked')) return;
+            if (isProcessing) return;
 
-            // GUARD #3: Check isProcessing flag
-            if (isProcessing) {
-                console.log('BLOCKED: isProcessing is true');
-                return;
-            }
-
-            // LOCK: Set timestamp and flag immediately
             lastClickTime = now;
             isProcessing = true;
 
-            console.log('Check fill answer:', choice, 'expected:', currentLevelData.answer);
+            console.log('Answer:', choice, 'expected:', currentLevelData.answer);
 
             if (choice === currentLevelData.answer) {
-                // CORRECT ANSWER
+                // BENAR
                 choicesRow.classList.add('locked');
                 btn.classList.add('correct');
 
@@ -934,53 +599,46 @@
                 updateScoreBoard();
 
                 setTimeout(() => finishQuestion(true), 600);
+
             } else {
-                // WRONG ANSWER
+                // SALAH
                 wrongCount++;
                 wrongTotal++;
-
                 choicesRow.classList.add('locked');
                 btn.classList.add('wrong');
                 renderWrongDots();
                 updateScoreBoard();
 
-                // Mascot reaction
                 document.getElementById('mascot-emoji').innerText = '😿';
                 document.getElementById('mascot-bubble').innerText = 'Coba lagi! 💪';
 
-                setTimeout(() => {
-                    btn.classList.remove('wrong');
-                    document.getElementById('mascot-emoji').innerText = '🐝';
-                    document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
-
-                    // UNLOCK: Remove CSS class and reset flag
-                    choicesRow.classList.remove('locked');
-                    isProcessing = false;
-
-                    console.log('Unlocked after wrong answer, wrongCount:', wrongCount);
-                }, 400);
-
                 if (wrongCount >= 3) {
+                    // 3 kali salah → pindah soal berikutnya (tanpa unlock)
                     setTimeout(() => finishQuestion(false), 500);
+                } else {
+                    setTimeout(() => {
+                        btn.classList.remove('wrong');
+                        document.getElementById('mascot-emoji').innerText = '🐝';
+                        document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
+                        // FIX #2: Unlock setelah animasi selesai
+                        choicesRow.classList.remove('locked');
+                        isProcessing = false;
+                    }, 500);
                 }
             }
         }
 
         // ═══════════════════════════════════════════════════════
-        //  CREATE PATTERN MODE
+        //  CREATE MODE
         // ═══════════════════════════════════════════════════════
         function showCreateMode() {
-            console.log('Show create mode, target:', currentLevelData.target);
-
             document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'flex';
-
             document.getElementById('create-instruction').innerText = `Buat: ${currentLevelData.unit}...`;
 
             const builder = document.getElementById('pattern-builder');
             builder.innerHTML = '';
             builder.classList.remove('locked');
-
             builtPattern = new Array(currentLevelData.target.length).fill(null);
             selectedSlot = null;
             selectedPaletteItem = null;
@@ -989,27 +647,18 @@
                 const slot = document.createElement('div');
                 slot.className = 'builder-slot empty';
                 slot.dataset.index = i;
-                slot.onclick = function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectBuilderSlot(this);
-                };
+                slot.onclick = function(e) { e.preventDefault(); e.stopPropagation(); selectBuilderSlot(this); };
                 builder.appendChild(slot);
             }
 
             const palette = document.getElementById('pattern-palette');
             palette.innerHTML = '';
             palette.classList.remove('locked');
-
             currentLevelData.palette.forEach(item => {
                 const btn = document.createElement('div');
                 btn.className = 'palette-item';
                 btn.innerText = item;
-                btn.onclick = function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectPaletteItem(item, this);
-                };
+                btn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); selectPaletteItem(item, this); };
                 palette.appendChild(btn);
             });
 
@@ -1021,45 +670,27 @@
         function selectBuilderSlot(slot) {
             const now = Date.now();
             if (now - lastClickTime < CLICK_DEBOUNCE) return;
-
-            // GUARD: Check if builder is locked
             const builder = document.getElementById('pattern-builder');
-            if (builder && builder.classList.contains('locked')) return;
-            if (isProcessing) return;
-
+            if ((builder && builder.classList.contains('locked')) || isProcessing) return;
             lastClickTime = now;
-
-            console.log('Select slot:', slot.dataset.index);
 
             document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.remove('selected'));
             slot.classList.add('selected');
             selectedSlot = slot;
-
-            if (selectedPaletteItem) {
-                fillSlot(slot, selectedPaletteItem);
-            }
+            if (selectedPaletteItem) fillSlot(slot, selectedPaletteItem);
         }
 
         function selectPaletteItem(item, btn) {
             const now = Date.now();
             if (now - lastClickTime < CLICK_DEBOUNCE) return;
-
-            // GUARD: Check if palette is locked
             const palette = document.getElementById('pattern-palette');
-            if (palette && palette.classList.contains('locked')) return;
-            if (isProcessing) return;
-
+            if ((palette && palette.classList.contains('locked')) || isProcessing) return;
             lastClickTime = now;
-
-            console.log('Select palette item:', item);
 
             document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
             btn.classList.add('selected');
             selectedPaletteItem = item;
-
-            if (selectedSlot) {
-                fillSlot(selectedSlot, item);
-            }
+            if (selectedSlot) fillSlot(selectedSlot, item);
         }
 
         function fillSlot(slot, item) {
@@ -1067,7 +698,6 @@
             slot.classList.remove('empty');
             slot.classList.add('filled');
             builtPattern[parseInt(slot.dataset.index)] = item;
-
             selectedSlot = null;
             selectedPaletteItem = null;
             document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
@@ -1076,103 +706,71 @@
 
         function checkCreatedPattern() {
             const now = Date.now();
-            if (now - lastClickTime < CLICK_DEBOUNCE) {
-                console.log('BLOCKED: debounce on check');
-                return;
-            }
-
-            // GUARD: Check if containers are locked
+            if (now - lastClickTime < CLICK_DEBOUNCE) return;
             const builder = document.getElementById('pattern-builder');
             const palette = document.getElementById('pattern-palette');
-            if ((builder && builder.classList.contains('locked')) || 
-                (palette && palette.classList.contains('locked')) ||
-                isProcessing) {
-                console.log('BLOCKED: create mode locked');
-                return;
-            }
+            if ((builder && builder.classList.contains('locked')) ||
+                (palette && palette.classList.contains('locked')) || isProcessing) return;
 
             lastClickTime = now;
             isProcessing = true;
 
-            console.log('Check created pattern:', builtPattern, 'target:', currentLevelData.target);
-
-            const isCorrect = currentLevelData.target.every((item, idx) => builtPattern[idx] === item);
+            const isCorrect = currentLevelData.target.every((item,idx) => builtPattern[idx] === item);
 
             if (isCorrect) {
-                // Lock all containers
                 builder.classList.add('locked');
                 palette.classList.add('locked');
                 document.getElementById('check-btn').disabled = true;
                 document.getElementById('check-btn').style.opacity = '0.5';
-
-                // Mark all slots as correct
-                document.querySelectorAll('#pattern-builder .builder-slot').forEach(slot => {
-                    slot.classList.add('correct');
-                });
-
+                document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.add('correct'));
                 gameStats.correct++;
                 gameStats.score += 10;
                 updateScoreBoard();
-
                 setTimeout(() => finishQuestion(true), 800);
             } else {
                 wrongCount++;
                 wrongTotal++;
                 updateScoreBoard();
-
-                // Lock during animation
                 builder.classList.add('locked');
                 palette.classList.add('locked');
                 document.getElementById('check-btn').disabled = true;
-
-                // Mark wrong slots
-                document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot, idx) => {
-                    if (builtPattern[idx] !== currentLevelData.target[idx]) {
-                        slot.classList.add('wrong');
-                    }
+                document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot,idx) => {
+                    if (builtPattern[idx] !== currentLevelData.target[idx]) slot.classList.add('wrong');
                 });
-
                 document.getElementById('mascot-emoji').innerText = '😿';
                 document.getElementById('mascot-bubble').innerText = 'Belum tepat! Coba lagi! 💪';
 
-                setTimeout(() => {
-                    document.querySelectorAll('#pattern-builder .builder-slot').forEach(slot => {
-                        slot.classList.remove('wrong');
-                    });
-
-                    // Unlock
-                    builder.classList.remove('locked');
-                    palette.classList.remove('locked');
-                    document.getElementById('check-btn').disabled = false;
-
-                    document.getElementById('mascot-emoji').innerText = '🐝';
-                    document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
-
-                    isProcessing = false;
-                    console.log('Unlocked after wrong create check');
-                }, 800);
-
                 if (wrongCount >= 3) {
                     setTimeout(() => finishQuestion(false), 800);
+                } else {
+                    setTimeout(() => {
+                        document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.remove('wrong'));
+                        builder.classList.remove('locked');
+                        palette.classList.remove('locked');
+                        document.getElementById('check-btn').disabled = false;
+                        document.getElementById('mascot-emoji').innerText = '🐝';
+                        document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
+                        isProcessing = false;
+                    }, 800);
                 }
             }
         }
 
         // ═══════════════════════════════════════════════════════
-        //  FEEDBACK & PROGRESSION
+        //  FINISH QUESTION & FEEDBACK
         // ═══════════════════════════════════════════════════════
         function finishQuestion(success) {
-            console.log('=== FINISH QUESTION:', success, 'currentQuestion:', currentQuestion, '===');
+            console.log('FINISH Q:', success, 'q#:', currentQuestion);
+
+            // FIX #5: Selalu reset onclick sebelum set baru (hindari event stacking)
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.onclick = null;
 
             if (success) {
                 gameStats.questions++;
                 currentQuestion++;
-
-                let qStars = 3;
-                if (wrongCount > 0) qStars = 2;
-                if (wrongCount > 1) qStars = 1;
+                let qStars = wrongCount === 0 ? 3 : wrongCount === 1 ? 2 : 1;
                 gameStats.stars += qStars;
-
                 updateScoreBoard();
 
                 if (currentQuestion >= 5) {
@@ -1181,103 +779,129 @@
                     showQuestionFeedback(true, qStars);
                 }
             } else {
+                // FIX #3: Gagal → ulang level dari soal pertama, bukan generate soal baru
                 showQuestionFeedback(false, 0);
             }
         }
 
         function showQuestionFeedback(success, stars) {
-            console.log('Show feedback:', success, 'stars:', stars);
-
             const overlay = document.getElementById('feedback-overlay');
             const emoji = document.getElementById('feedback-emoji');
             const starsDiv = document.getElementById('feedback-stars');
             const nextBtn = document.getElementById('next-btn');
 
+            // FIX #5: Selalu null dulu sebelum assign
+            nextBtn.onclick = null;
+
             if (success) {
-                const emojis = ['🎉', '🌟', '🎊', '🥳', '🎈'];
+                const emojis = ['🎉','🌟','🎊','🥳','🎈'];
                 emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
                 starsDiv.innerText = '⭐'.repeat(stars);
                 nextBtn.innerText = '▶️ Lanjut';
+                nextBtn.onclick = nextQuestion;
             } else {
                 emoji.innerText = '😢';
                 starsDiv.innerText = 'Coba lagi ya! 💪';
-                nextBtn.innerText = '🔄 Ulang Level';
+                nextBtn.innerText = '🔄 Ulang';
+                // FIX #3: Ulang level dari soal pertama, bukan lanjut ke soal baru
+                nextBtn.onclick = function() {
+                    overlay.classList.remove('show');
+                    startLevel(currentLevel);   // ← restart level bukan nextQuestion()
+                };
             }
 
             overlay.classList.add('show');
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  NEXT QUESTION — generate variasi soal yang BENAR
+        // ═══════════════════════════════════════════════════════
         function nextQuestion() {
-            console.log('=== NEXT QUESTION ===');
-
+            console.log('NEXT QUESTION, q#:', currentQuestion);
             document.getElementById('feedback-overlay').classList.remove('show');
 
-            // Generate next question variation
-            if (currentLevelData.type === "fill") {
+            // FIX #1: Generate variasi soal SEBELUM initQuestion, dengan logika benar
+            if (currentLevelData.type === 'fill') {
                 generateNextFillQuestion();
             }
+            // Create mode tidak perlu regenerate — soalnya tetap sama (buat pola target)
 
             initQuestion();
         }
 
+        // FIX #1: generateNextFillQuestion yang benar
+        // Logika: ambil pattern LENGKAP (tanpa "?"), pilih posisi random, jadikan "?"
+        // Answer = item yang ada di posisi itu pada pattern lengkap
         function generateNextFillQuestion() {
             const originalLevel = LEVELS[currentLevel];
-            const pattern = [...originalLevel.pattern];
-            const missingPositions = [];
 
-            for (let i = 0; i < pattern.length; i++) {
-                if (pattern[i] !== "?") {
-                    missingPositions.push(i);
-                }
-            }
+            // Rekonstruksi pattern LENGKAP (ganti "?" dengan jawaban asli)
+            const fullPattern = originalLevel.pattern.map(item =>
+                item === '?' ? originalLevel.answer : item
+            );
 
-            const randomPos = missingPositions[Math.floor(Math.random() * missingPositions.length)];
+            // Pilih posisi random yang berbeda dari posisi "?" original jika memungkinkan
+            const originalMissingPos = originalLevel.pattern.indexOf('?');
+            const candidates = fullPattern
+                .map((_, idx) => idx)
+                .filter(idx => idx !== originalMissingPos); // hindari posisi yang sama terus
 
-            const newPattern = pattern.map((item, idx) => {
-                if (idx === randomPos) return "?";
-                return item === "?" ? originalLevel.answer : item;
-            });
+            // Jika tidak ada kandidat lain (pattern pendek), boleh pakai semua posisi
+            const pool = candidates.length > 0 ? candidates : fullPattern.map((_,i) => i);
+            const newMissingPos = pool[Math.floor(Math.random() * pool.length)];
+
+            // Bangun pattern baru dengan "?" di posisi baru
+            const newPattern = fullPattern.map((item, idx) => idx === newMissingPos ? '?' : item);
+
+            // Answer = item yang ada di posisi baru tsb dalam fullPattern
+            const newAnswer = fullPattern[newMissingPos];
+
+            // Shuffle choices, pastikan answer ada di dalamnya
+            const shuffledChoices = shuffleArray([...originalLevel.choices]);
 
             currentLevelData.pattern = newPattern;
-            currentLevelData.answer = originalLevel.answer;
-            currentLevelData.choices = shuffleArray([...originalLevel.choices]);
+            currentLevelData.answer = newAnswer;  // ← FIX UTAMA: answer ikut posisi baru
+            currentLevelData.choices = shuffledChoices;
 
-            console.log('Generated new pattern:', newPattern, 'answer:', originalLevel.answer);
+            console.log('Generated → pattern:', newPattern.join(''), 'answer:', newAnswer);
         }
 
-        function shuffleArray(array) {
-            const arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length-1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i+1));
+                [a[i],a[j]] = [a[j],a[i]];
             }
-            return arr;
+            return a;
         }
 
+        // ═══════════════════════════════════════════════════════
+        //  LEVEL COMPLETE
+        // ═══════════════════════════════════════════════════════
         function showLevelComplete() {
-            console.log('=== LEVEL COMPLETE ===');
-
             const overlay = document.getElementById('feedback-overlay');
-            const emoji = document.getElementById('feedback-emoji');
-            const starsDiv = document.getElementById('feedback-stars');
             const nextBtn = document.getElementById('next-btn');
 
-            // Calculate total stars for level (max 3)
-            const totalStars = Math.min(3, Math.max(1, Math.floor(gameStats.stars / 5)));
+            // FIX #5: Null dulu sebelum assign
+            nextBtn.onclick = null;
 
-            // Save progress
+            const totalStars = Math.min(3, Math.max(1, Math.floor(gameStats.stars / 5)));
             saveLevelProgress(currentLevel, totalStars);
 
-            emoji.innerText = '🏆';
-            starsDiv.innerHTML = `Level ${currentLevel + 1} Selesai!<br>${'⭐'.repeat(totalStars)}`;
+            document.getElementById('feedback-emoji').innerText = '🏆';
+            document.getElementById('feedback-stars').innerHTML =
+                `Level ${currentLevel+1} Selesai!<br>${'⭐'.repeat(totalStars)}`;
 
             if (currentLevel >= 15) {
                 nextBtn.innerText = '🎓 Sertifikat';
-                nextBtn.onclick = showCertificate;
+                // FIX #7: Bungkus dalam function anonim agar konsisten
+                nextBtn.onclick = function() {
+                    overlay.classList.remove('show');
+                    showCertificate();
+                };
             } else {
                 nextBtn.innerText = '▶️ Level Selanjutnya';
                 nextBtn.onclick = function() {
-                    console.log('=== CLICKED: Next Level ===');
                     overlay.classList.remove('show');
                     startLevel(currentLevel + 1);
                 };
@@ -1290,41 +914,25 @@
         //  CERTIFICATE
         // ═══════════════════════════════════════════════════════
         function showCertificate() {
-            console.log('=== SHOW CERTIFICATE ===');
-
             document.getElementById('feedback-overlay').classList.remove('show');
             document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'none';
             document.getElementById('level-select-screen').style.display = 'none';
 
             const progress = loadProgress();
-            let totalStars = 0;
-            Object.values(progress).forEach(s => totalStars += s);
-
+            let totalStars = Object.values(progress).reduce((s,v) => s+v, 0);
             document.getElementById('cert-stars').innerText = `Total: ${totalStars} ⭐`;
-            document.getElementById('cert-text').innerText = 
+            document.getElementById('cert-text').innerText =
                 `Kamu telah menyelesaikan ${getCompletedLevels()}/16 level dengan ${totalStars} bintang!`;
-
             document.getElementById('certificate-overlay').classList.add('show');
         }
 
         function restartGame() {
-            console.log('=== RESTART GAME ===');
-
             document.getElementById('certificate-overlay').classList.remove('show');
-
-            try {
-                localStorage.removeItem('detektif_levels');
-            } catch (e) {
-                console.warn('Failed to clear progress:', e);
-            }
-
-            currentLevel = 0;
-            currentQuestion = 0;
-            wrongCount = 0;
-            wrongTotal = 0;
-            gameStats = { stars: 0, score: 0, questions: 0, correct: 0 };
-
+            try { localStorage.removeItem('detektif_levels'); } catch(e) {}
+            currentLevel = 0; currentQuestion = 0;
+            wrongCount = 0; wrongTotal = 0;
+            gameStats = { stars:0, score:0, questions:0, correct:0 };
             showLevelSelect();
         }
 
@@ -1332,7 +940,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🐝 Detektif Pola v8.0 - Final Fix loaded!');
+            console.log('🐝 Detektif Pola v9.0 - All Bugs Fixed');
             showLevelSelect();
         });
     </script>
