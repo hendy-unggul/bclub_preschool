@@ -326,6 +326,7 @@
             animation: bigShake 0.5s;
             box-shadow: 5px 5px 0 #800000;
         }
+        /* LOCKED STATE - prevents ALL clicks via CSS */
         .choices-row.locked {
             pointer-events: none !important;
             opacity: 0.6;
@@ -625,6 +626,8 @@
         let selectedPaletteItem = null;
         let builtPattern = [];
         let currentLevelData = null;
+        let lastClickTime = 0;
+        const CLICK_DEBOUNCE = 500; // ms
 
         // ═══════════════════════════════════════════════════════
         //  PROGRESS SYSTEM (localStorage)
@@ -762,6 +765,7 @@
             wrongCount = 0;
             wrongTotal = 0;
             isProcessing = false;
+            lastClickTime = 0;
             gameStats = { stars: 0, score: 0, questions: 0, correct: 0 };
             selectedSlot = null;
             selectedPaletteItem = null;
@@ -795,6 +799,7 @@
 
             // CRITICAL: Reset all locks
             isProcessing = false;
+            lastClickTime = 0;
             wrongCount = 0;
             selectedSlot = null;
             selectedPaletteItem = null;
@@ -886,28 +891,36 @@
         }
 
         function checkFillAnswer(choice, btn) {
-            // GUARD #1: Check if container is already locked (CSS class)
+            const now = Date.now();
+
+            // GUARD #1: Debounce - block if clicked too recently
+            if (now - lastClickTime < CLICK_DEBOUNCE) {
+                console.log('BLOCKED: debounce, lastClick:', lastClickTime, 'now:', now, 'diff:', now - lastClickTime);
+                return;
+            }
+
+            // GUARD #2: Check if container is already locked (CSS class)
             const choicesRow = document.getElementById('choices-row');
             if (choicesRow && choicesRow.classList.contains('locked')) {
                 console.log('BLOCKED: choices-row has locked class');
                 return;
             }
 
-            // GUARD #2: Check isProcessing flag
+            // GUARD #3: Check isProcessing flag
             if (isProcessing) {
                 console.log('BLOCKED: isProcessing is true');
                 return;
             }
 
+            // LOCK: Set timestamp and flag immediately
+            lastClickTime = now;
+            isProcessing = true;
+
             console.log('Check fill answer:', choice, 'expected:', currentLevelData.answer);
 
             if (choice === currentLevelData.answer) {
                 // CORRECT ANSWER
-                isProcessing = true;
-
-                // LOCK IMMEDIATELY via CSS class on container
                 choicesRow.classList.add('locked');
-
                 btn.classList.add('correct');
 
                 const slot = document.getElementById('missing-slot');
@@ -924,13 +937,10 @@
                 setTimeout(() => finishQuestion(true), 600);
             } else {
                 // WRONG ANSWER
-                isProcessing = true;
                 wrongCount++;
                 wrongTotal++;
 
-                // LOCK IMMEDIATELY via CSS class on container
                 choicesRow.classList.add('locked');
-
                 btn.classList.add('wrong');
                 renderWrongDots();
                 updateScoreBoard();
@@ -944,7 +954,7 @@
                     document.getElementById('mascot-emoji').innerText = '🐝';
                     document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
 
-                    // UNLOCK via CSS class removal
+                    // UNLOCK: Remove CSS class and reset flag
                     choicesRow.classList.remove('locked');
                     isProcessing = false;
 
@@ -1010,10 +1020,15 @@
         }
 
         function selectBuilderSlot(slot) {
+            const now = Date.now();
+            if (now - lastClickTime < CLICK_DEBOUNCE) return;
+
             // GUARD: Check if builder is locked
             const builder = document.getElementById('pattern-builder');
             if (builder && builder.classList.contains('locked')) return;
             if (isProcessing) return;
+
+            lastClickTime = now;
 
             console.log('Select slot:', slot.dataset.index);
 
@@ -1027,10 +1042,15 @@
         }
 
         function selectPaletteItem(item, btn) {
+            const now = Date.now();
+            if (now - lastClickTime < CLICK_DEBOUNCE) return;
+
             // GUARD: Check if palette is locked
             const palette = document.getElementById('pattern-palette');
             if (palette && palette.classList.contains('locked')) return;
             if (isProcessing) return;
+
+            lastClickTime = now;
 
             console.log('Select palette item:', item);
 
@@ -1056,6 +1076,12 @@
         }
 
         function checkCreatedPattern() {
+            const now = Date.now();
+            if (now - lastClickTime < CLICK_DEBOUNCE) {
+                console.log('BLOCKED: debounce on check');
+                return;
+            }
+
             // GUARD: Check if containers are locked
             const builder = document.getElementById('pattern-builder');
             const palette = document.getElementById('pattern-palette');
@@ -1066,13 +1092,14 @@
                 return;
             }
 
+            lastClickTime = now;
+            isProcessing = true;
+
             console.log('Check created pattern:', builtPattern, 'target:', currentLevelData.target);
 
             const isCorrect = currentLevelData.target.every((item, idx) => builtPattern[idx] === item);
 
             if (isCorrect) {
-                isProcessing = true;
-
                 // Lock all containers
                 builder.classList.add('locked');
                 palette.classList.add('locked');
@@ -1090,7 +1117,6 @@
 
                 setTimeout(() => finishQuestion(true), 800);
             } else {
-                isProcessing = true;
                 wrongCount++;
                 wrongTotal++;
                 updateScoreBoard();
@@ -1307,7 +1333,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🐝 Detektif Pola v5.0 - Progression Fix loaded!');
+            console.log('🐝 Detektif Pola v6.0 - Debounce Fix loaded!');
             showLevelSelect();
         });
     </script>
