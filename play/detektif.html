@@ -251,17 +251,22 @@
             border-radius: 16px; border: 3px solid var(--black);
             box-shadow: 2px 2px 0 var(--black);
             transition: all 0.3s ease;
+            cursor: default;
         }
         .pattern-item.missing {
             background: var(--yellow);
             border: 4px dashed var(--black);
             animation: pulseMissing 1.5s infinite;
             box-shadow: none;
+            cursor: pointer;
         }
         .pattern-item.missing::before {
             content: '❓';
             font-size: 32px;
             animation: questionWiggle 1s infinite;
+        }
+        .pattern-item.missing.filled::before {
+            content: none;
         }
         @keyframes pulseMissing {
             0%, 100% { transform: scale(1); }
@@ -397,6 +402,9 @@
         }
         .builder-slot.filled {
             background: var(--white);
+        }
+        .builder-slot.filled::before {
+            content: none;
         }
         .builder-slot.correct {
             background: var(--green) !important;
@@ -585,6 +593,9 @@
             { type: "certificate", unit: "all", hint: "Selamat! 🎉" }
         ];
 
+        // ═══════════════════════════════════════════════════════
+        //  STATE MANAGEMENT
+        // ═══════════════════════════════════════════════════════
         let currentLevel = 0;
         let currentQuestion = 0;
         let wrongCount = 0;
@@ -593,6 +604,7 @@
         let selectedSlot = null;
         let selectedPaletteItem = null;
         let builtPattern = [];
+        let currentLevelData = null; // Clone of current level to avoid mutating original
 
         // ═══════════════════════════════════════════════════════
         //  PROGRESS SYSTEM (localStorage)
@@ -602,18 +614,19 @@
                 const saved = localStorage.getItem('detektif_levels');
                 return saved ? JSON.parse(saved) : {};
             } catch (e) {
+                console.warn('localStorage error:', e);
                 return {};
             }
         }
 
         function saveLevelProgress(levelIdx, stars) {
-            const progress = loadProgress();
-            progress[levelIdx] = Math.max(progress[levelIdx] || 0, stars);
-            localStorage.setItem('detektif_levels', JSON.stringify(progress));
-        }
-
-        function getLevelProgress() {
-            return loadProgress();
+            try {
+                const progress = loadProgress();
+                progress[levelIdx] = Math.max(progress[levelIdx] || 0, stars);
+                localStorage.setItem('detektif_levels', JSON.stringify(progress));
+            } catch (e) {
+                console.warn('Failed to save progress:', e);
+            }
         }
 
         function getCompletedLevels() {
@@ -661,6 +674,8 @@
             document.getElementById('level-select-screen').style.display = 'block';
             document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'none';
+            document.getElementById('feedback-overlay').classList.remove('show');
+            document.getElementById('certificate-overlay').classList.remove('show');
 
             document.getElementById('weekly-target').innerText = getWeeklyTargetHTML();
             document.getElementById('progress-fill').style.width = getProgressPercent() + '%';
@@ -671,7 +686,7 @@
 
         function renderLevelGrid() {
             const grid = document.getElementById('level-grid');
-            const progress = getLevelProgress();
+            const progress = loadProgress();
 
             const phases = [
                 { name: "Fase 1: AB Pattern", levels: [0,1,2,3] },
@@ -716,21 +731,32 @@
         }
 
         // ═══════════════════════════════════════════════════════
-        //  GAME PLAY
+        //  GAME PLAY - START LEVEL
         // ═══════════════════════════════════════════════════════
         function startLevel(levelIdx) {
+            console.log('Starting level:', levelIdx);
+
             currentLevel = levelIdx;
             currentQuestion = 0;
             wrongCount = 0;
             isProcessing = false;
             gameStats = { stars: 0, score: 0, questions: 0, correct: 0, wrongTotal: 0 };
+            selectedSlot = null;
+            selectedPaletteItem = null;
+            builtPattern = [];
+
+            // Clone level data so we can mutate it per question
+            const originalLevel = LEVELS[currentLevel];
+            currentLevelData = JSON.parse(JSON.stringify(originalLevel));
 
             document.getElementById('level-select-screen').style.display = 'none';
             document.getElementById('game-play-screen').style.display = 'block';
             document.getElementById('create-area').style.display = 'none';
+            document.getElementById('feedback-overlay').classList.remove('show');
+            document.getElementById('certificate-overlay').classList.remove('show');
 
             updateScoreBoard();
-            initLevel();
+            initQuestion();
         }
 
         function updateScoreBoard() {
@@ -739,21 +765,26 @@
             document.getElementById('total-score').innerText = gameStats.score;
         }
 
-        function initLevel() {
-            const level = LEVELS[currentLevel];
+        // ═══════════════════════════════════════════════════════
+        //  INIT QUESTION (called for each question)
+        // ═══════════════════════════════════════════════════════
+        function initQuestion() {
+            console.log('Init question:', currentQuestion, 'level:', currentLevel, 'type:', currentLevelData.type);
+
+            isProcessing = false;
 
             document.getElementById('level-display').innerText = `${currentLevel + 1}️⃣`;
             document.getElementById('mascot-emoji').innerText = '🐝';
-            document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+            document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
 
             renderWrongDots();
             renderProgressDots();
 
-            if (level.type === "fill") {
-                showFillMode(level);
-            } else if (level.type === "create") {
-                showCreateMode(level);
-            } else if (level.type === "certificate") {
+            if (currentLevelData.type === "fill") {
+                showFillMode();
+            } else if (currentLevelData.type === "create") {
+                showCreateMode();
+            } else if (currentLevelData.type === "certificate") {
                 showCertificate();
             }
         }
@@ -779,14 +810,17 @@
         // ═══════════════════════════════════════════════════════
         //  FILL MODE
         // ═══════════════════════════════════════════════════════
-        function showFillMode(level) {
+        function showFillMode() {
+            console.log('Show fill mode, pattern:', currentLevelData.pattern);
+
             document.getElementById('game-play-screen').style.display = 'block';
             document.getElementById('create-area').style.display = 'none';
             document.getElementById('choices-container').style.display = 'flex';
 
             const pc = document.getElementById('pattern-container');
             pc.innerHTML = '';
-            level.pattern.forEach((item, idx) => {
+
+            currentLevelData.pattern.forEach((item, idx) => {
                 const div = document.createElement('div');
                 if (item === "?") {
                     div.className = 'pattern-item missing';
@@ -800,19 +834,26 @@
 
             const cc = document.getElementById('choices-row');
             cc.innerHTML = '';
-            level.choices.forEach(choice => {
+
+            // Shuffle choices for variety
+            const shuffledChoices = shuffleArray([...currentLevelData.choices]);
+
+            shuffledChoices.forEach(choice => {
                 const btn = document.createElement('div');
                 btn.className = 'choice-btn';
                 btn.innerText = choice;
-                btn.onclick = () => checkFillAnswer(choice, btn, level);
+                // Use onclick directly (not addEventListener) to avoid duplicates
+                btn.onclick = function() { checkFillAnswer(choice, this); };
                 cc.appendChild(btn);
             });
         }
 
-        function checkFillAnswer(choice, btn, level) {
+        function checkFillAnswer(choice, btn) {
+            console.log('Check fill answer:', choice, 'isProcessing:', isProcessing);
+
             if (isProcessing) return;
 
-            if (choice === level.answer) {
+            if (choice === currentLevelData.answer) {
                 isProcessing = true;
                 btn.classList.add('correct');
 
@@ -842,7 +883,7 @@
                 setTimeout(() => {
                     btn.classList.remove('wrong');
                     document.getElementById('mascot-emoji').innerText = '🐝';
-                    document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+                    document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
                 }, 400);
 
                 if (wrongCount >= 3) {
@@ -854,38 +895,46 @@
         // ═══════════════════════════════════════════════════════
         //  CREATE PATTERN MODE
         // ═══════════════════════════════════════════════════════
-        function showCreateMode(level) {
+        function showCreateMode() {
+            console.log('Show create mode, target:', currentLevelData.target);
+
             document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'flex';
 
-            document.getElementById('create-instruction').innerText = `Buat: ${level.unit}...`;
+            document.getElementById('create-instruction').innerText = `Buat: ${currentLevelData.unit}...`;
 
             const builder = document.getElementById('pattern-builder');
             builder.innerHTML = '';
-            builtPattern = new Array(level.target.length).fill(null);
+
+            // Reset state
+            builtPattern = new Array(currentLevelData.target.length).fill(null);
             selectedSlot = null;
             selectedPaletteItem = null;
 
-            for (let i = 0; i < level.target.length; i++) {
+            for (let i = 0; i < currentLevelData.target.length; i++) {
                 const slot = document.createElement('div');
                 slot.className = 'builder-slot empty';
                 slot.dataset.index = i;
-                slot.onclick = () => selectBuilderSlot(slot);
+                // Use onclick directly
+                slot.onclick = function() { selectBuilderSlot(this); };
                 builder.appendChild(slot);
             }
 
             const palette = document.getElementById('pattern-palette');
             palette.innerHTML = '';
-            level.palette.forEach(item => {
+
+            currentLevelData.palette.forEach(item => {
                 const btn = document.createElement('div');
                 btn.className = 'palette-item';
                 btn.innerText = item;
-                btn.onclick = () => selectPaletteItem(item, btn);
+                btn.onclick = function() { selectPaletteItem(item, this); };
                 palette.appendChild(btn);
             });
         }
 
         function selectBuilderSlot(slot) {
+            console.log('Select slot:', slot.dataset.index);
+
             document.querySelectorAll('#pattern-builder .builder-slot').forEach(s => s.classList.remove('selected'));
             slot.classList.add('selected');
             selectedSlot = slot;
@@ -896,6 +945,8 @@
         }
 
         function selectPaletteItem(item, btn) {
+            console.log('Select palette item:', item);
+
             document.querySelectorAll('.palette-item').forEach(p => p.classList.remove('selected'));
             btn.classList.add('selected');
             selectedPaletteItem = item;
@@ -906,6 +957,8 @@
         }
 
         function fillSlot(slot, item) {
+            console.log('Fill slot:', slot.dataset.index, 'with:', item);
+
             slot.innerText = item;
             slot.classList.remove('empty');
             slot.classList.add('filled');
@@ -918,12 +971,17 @@
         }
 
         function checkCreatedPattern() {
-            const level = LEVELS[currentLevel];
-            const isCorrect = level.target.every((item, idx) => builtPattern[idx] === item);
+            console.log('Check created pattern:', builtPattern, 'target:', currentLevelData.target);
+
+            if (isProcessing) return;
+
+            const isCorrect = currentLevelData.target.every((item, idx) => builtPattern[idx] === item);
 
             if (isCorrect) {
+                isProcessing = true;
+
                 // Mark all slots as correct
-                document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot, idx) => {
+                document.querySelectorAll('#pattern-builder .builder-slot').forEach(slot => {
                     slot.classList.add('correct');
                 });
 
@@ -939,7 +997,7 @@
 
                 // Mark wrong slots
                 document.querySelectorAll('#pattern-builder .builder-slot').forEach((slot, idx) => {
-                    if (builtPattern[idx] !== level.target[idx]) {
+                    if (builtPattern[idx] !== currentLevelData.target[idx]) {
                         slot.classList.add('wrong');
                         setTimeout(() => slot.classList.remove('wrong'), 600);
                     }
@@ -950,7 +1008,7 @@
 
                 setTimeout(() => {
                     document.getElementById('mascot-emoji').innerText = '🐝';
-                    document.getElementById('mascot-bubble').innerText = level.hint || '🤔❓';
+                    document.getElementById('mascot-bubble').innerText = currentLevelData.hint || '🤔❓';
                 }, 800);
 
                 if (wrongCount >= 3) {
@@ -963,11 +1021,13 @@
         //  FEEDBACK & PROGRESSION
         // ═══════════════════════════════════════════════════════
         function finishQuestion(success) {
+            console.log('Finish question:', success, 'currentQuestion:', currentQuestion);
+
             if (success) {
                 gameStats.questions++;
                 currentQuestion++;
 
-                // Calculate stars for this question
+                // Calculate stars for this question (0 wrong = 3, 1 wrong = 2, 2 wrong = 1)
                 let qStars = 3;
                 if (wrongCount > 0) qStars = 2;
                 if (wrongCount > 1) qStars = 1;
@@ -988,6 +1048,8 @@
         }
 
         function showQuestionFeedback(success, stars) {
+            console.log('Show feedback:', success, 'stars:', stars);
+
             const overlay = document.getElementById('feedback-overlay');
             const emoji = document.getElementById('feedback-emoji');
             const starsDiv = document.getElementById('feedback-stars');
@@ -998,74 +1060,86 @@
                 emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
                 starsDiv.innerText = '⭐'.repeat(stars);
                 nextBtn.innerText = '▶️ Lanjut';
-                nextBtn.onclick = nextQuestion;
             } else {
                 emoji.innerText = '😢';
                 starsDiv.innerText = 'Coba lagi ya! 💪';
                 nextBtn.innerText = '🔄 Ulang Level';
-                nextBtn.onclick = () => startLevel(currentLevel);
             }
 
             overlay.classList.add('show');
         }
 
         function nextQuestion() {
+            console.log('Next question');
+
             document.getElementById('feedback-overlay').classList.remove('show');
 
-            const level = LEVELS[currentLevel];
-            if (level.type === "fill" || level.type === "create") {
-                // Generate next question with same pattern type but different position
-                generateNextQuestion();
-            }
+            // Reset wrong count for next question
+            wrongCount = 0;
+            updateScoreBoard();
 
-            initLevel();
+            // Generate next question variation
+            if (currentLevelData.type === "fill") {
+                generateNextFillQuestion();
+            }
+            // Create mode resets automatically in showCreateMode
+
+            initQuestion();
         }
 
-        function generateNextQuestion() {
-            const level = LEVELS[currentLevel];
+        function generateNextFillQuestion() {
+            const originalLevel = LEVELS[currentLevel];
+            const pattern = [...originalLevel.pattern];
+            const missingPositions = [];
 
-            if (level.type === "fill") {
-                // Randomize missing position
-                const pattern = [...level.pattern];
-                const missingIdx = Math.floor(Math.random() * pattern.length);
-
-                // Ensure we don't put ? at the same position twice in a row
-                const newPattern = pattern.map((item, idx) => {
-                    if (idx === missingIdx) return "?";
-                    return item === "?" ? level.answer : item;
-                });
-
-                // Update level pattern for next question
-                level.pattern = newPattern;
-
-                // Randomize choices order
-                level.choices = shuffleArray([...level.choices]);
+            // Find all non-? positions that could be missing
+            for (let i = 0; i < pattern.length; i++) {
+                if (pattern[i] !== "?") {
+                    missingPositions.push(i);
+                }
             }
-            // Create mode doesn't need regeneration - user builds from scratch each time
+
+            // Pick random position to be missing
+            const randomPos = missingPositions[Math.floor(Math.random() * missingPositions.length)];
+
+            // Create new pattern with new missing position
+            const newPattern = pattern.map((item, idx) => {
+                if (idx === randomPos) return "?";
+                return item === "?" ? originalLevel.answer : item;
+            });
+
+            currentLevelData.pattern = newPattern;
+            currentLevelData.answer = originalLevel.answer;
+            currentLevelData.choices = shuffleArray([...originalLevel.choices]);
+
+            console.log('Generated new pattern:', newPattern);
         }
 
         function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
-            return array;
+            return arr;
         }
 
         function showLevelComplete() {
+            console.log('Show level complete');
+
             const overlay = document.getElementById('feedback-overlay');
             const emoji = document.getElementById('feedback-emoji');
             const starsDiv = document.getElementById('feedback-stars');
             const nextBtn = document.getElementById('next-btn');
 
-            // Calculate total stars for level (max 15, min 5)
+            // Calculate total stars for level (max 3)
             const totalStars = Math.min(3, Math.max(1, Math.floor(gameStats.stars / 5)));
 
             // Save progress
             saveLevelProgress(currentLevel, totalStars);
 
             emoji.innerText = '🏆';
-            starsDiv.innerText = `Level ${currentLevel + 1} Selesai!\n⭐`.repeat(totalStars);
+            starsDiv.innerHTML = `Level ${currentLevel + 1} Selesai!<br>${'⭐'.repeat(totalStars)}`;
 
             if (currentLevel >= 15) {
                 nextBtn.innerText = '🎓 Sertifikat';
@@ -1085,12 +1159,14 @@
         //  CERTIFICATE
         // ═══════════════════════════════════════════════════════
         function showCertificate() {
+            console.log('Show certificate');
+
             document.getElementById('feedback-overlay').classList.remove('show');
             document.getElementById('game-play-screen').style.display = 'none';
             document.getElementById('create-area').style.display = 'none';
             document.getElementById('level-select-screen').style.display = 'none';
 
-            const progress = getLevelProgress();
+            const progress = loadProgress();
             let totalStars = 0;
             Object.values(progress).forEach(s => totalStars += s);
 
@@ -1102,10 +1178,16 @@
         }
 
         function restartGame() {
+            console.log('Restart game');
+
             document.getElementById('certificate-overlay').classList.remove('show');
 
             // Reset all progress
-            localStorage.removeItem('detektif_levels');
+            try {
+                localStorage.removeItem('detektif_levels');
+            } catch (e) {
+                console.warn('Failed to clear progress:', e);
+            }
 
             currentLevel = 0;
             currentQuestion = 0;
@@ -1119,6 +1201,7 @@
         //  INIT
         // ═══════════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Detektif Pola loaded!');
             showLevelSelect();
         });
     </script>
