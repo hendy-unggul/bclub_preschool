@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FFE600">
-    <!-- Cache buster -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -41,8 +40,10 @@
             justify-content:space-between;
             padding:14px 20px;
             border-bottom:3px solid var(--yellow);
+            flex-wrap:wrap;
+            gap:10px;
         }
-        .nav-left{display:flex;align-items:center;gap:12px}
+        .nav-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
         .nav-logo{
             font-size:26px;
             font-weight:900;
@@ -62,6 +63,7 @@
             text-decoration:none;
             letter-spacing:.5px;
             border:2px solid var(--white);
+            white-space:nowrap;
         }
         .nav-cta.pitch{
             background:var(--blue);
@@ -76,6 +78,7 @@
             border-radius:6px;
             text-decoration:none;
             letter-spacing:.5px;
+            white-space:nowrap;
         }
         .hero{
             background:var(--black);
@@ -357,6 +360,10 @@
             display:block;
             animation:bounce 2s infinite;
         }
+        @keyframes bounce{
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-10px)}
+        }
         .digital-title{
             font-size:clamp(32px,10vw,48px);
             font-weight:900;
@@ -517,7 +524,7 @@
             max-width:260px;
             margin:0 auto 24px;
         }
-        .ft-socials{display:flex;justify-content:center;gap:16px;margin-bottom:32px}
+        .ft-socials{display:flex;justify-content:center;gap:16px;margin-bottom:32px;flex-wrap:wrap}
         .ft-socials a{
             background:#1a1a1a;
             color:rgba(255,255,255,.6);
@@ -553,6 +560,9 @@
         }
         .sticky-bar .sb-wa{background:var(--yellow);color:var(--black)}
         .sticky-bar .sb-call{background:#1a1a1a;color:var(--white);border-right:1px solid #333}
+        @media (max-width: 640px){
+            .sticky-bar{display:none}
+        }
     </style>
 </head>
 <body>
@@ -561,7 +571,7 @@
     <div class="nav-left">
         <a href="#" class="nav-logo">B<span>Club</span></a>
         <a href="./play/index.html" class="nav-cta">🎮 Main Game</a>
-        <a href="./suarpitchdeck" class="bclub-cta pitch">📊 Pitch Deck</a>
+        <a href="./suarpitchdeck" class="nav-cta pitch">📊 Pitch Deck</a>
     </div>
     <a class="nav-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20pendaftaran" target="_blank">💬 WhatsApp</a>
 </nav>
