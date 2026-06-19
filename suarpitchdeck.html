@@ -41,25 +41,67 @@
         .nav-dot:hover {
             transform: scale(1.5);
         }
-        .bar-animation {
-            animation: slideIn 1s ease-out;
+        /* B Club Navigation Styles */
+        .bclub-nav{
+            position:sticky;
+            top:0;
+            z-index:99;
+            background:#0D0D0D;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:14px 20px;
+            border-bottom:3px solid #FFE600;
         }
-        @keyframes slideIn {
-            from { width: 0; }
+        .bclub-nav-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .bclub-logo{
+            font-size:22px;
+            font-weight:900;
+            color:#FFE600;
+            letter-spacing:-1px;
+            font-style:italic;
+            text-decoration:none;
+        }
+        .bclub-logo span{color:#FFFFFF}
+        .bclub-cta{
+            background:#FF4D4D;
+            color:#FFFFFF;
+            font-weight:800;
+            font-size:11px;
+            padding:7px 12px;
+            border-radius:6px;
+            text-decoration:none;
+            letter-spacing:.5px;
+            border:2px solid #FFFFFF;
+            white-space:nowrap;
+        }
+        .bclub-cta.pitch{
+            background:#2563eb;
+            border-color:#1d4ed8;
+        }
+        .bclub-wa{
+            background:#FFE600;
+            color:#0D0D0D;
+            font-weight:800;
+            font-size:12px;
+            padding:7px 14px;
+            border-radius:6px;
+            text-decoration:none;
+            letter-spacing:.5px;
+            white-space:nowrap;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 right-0 z-50 p-4">
-        <div class="bg-white/90 backdrop-blur-md rounded-full px-6 py-3 shadow-lg flex gap-3">
-            <a href="#cover" class="nav-dot w-3 h-3 rounded-full bg-indigo-600"></a>
-            <a href="#problem" class="nav-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-indigo-400"></a>
-            <a href="#solution" class="nav-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-indigo-400"></a>
-            <a href="#product" class="nav-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-indigo-400"></a>
-            <a href="#implementation" class="nav-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-indigo-400"></a>
+    <!-- B Club Navigation Bar -->
+    <nav class="bclub-nav">
+        <div class="bclub-nav-left">
+            <a href="./index.html" class="bclub-logo">B<span>Club</span></a>
+            <a href="./play/index.html" class="bclub-cta">🎮 Main Game</a>
+            <a href="./suarpitchdeck.html" class="bclub-cta pitch">📊 Pitch Deck</a>
         </div>
+        <a class="bclub-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club" target="_blank">💬 WhatsApp</a>
     </nav>
 
     <!-- Slide 1: Cover -->
@@ -71,15 +113,15 @@
         <div class="max-w-6xl mx-auto text-center text-white relative z-10 animate-fade-in">
             <div class="mb-8">
                 <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 backdrop-blur-md mb-6 border-4 border-indigo-400">
-                    <div class="text-5xl">🎯</div>
+                    <div class="text-5xl"></div>
                 </div>
             </div>
             
-            <h1 class="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
                 suar.site <span class="text-indigo-400">×</span> B Club Preschool
             </h1>
             
-            <p class="text-2xl md:text-3xl mb-8 text-gray-300 font-light">
+            <p class="text-xl md:text-3xl mb-8 text-gray-300 font-light">
                 Membangun Generasi Emas Indonesia Melalui Permainan Edukatif<br>
                 <span class="text-indigo-400 font-semibold">Berbasis Hybrid Finlandia-Jepang</span>
             </p>
@@ -89,7 +131,7 @@
                     🇫🇮 Finnish Play-Based Learning
                 </span>
                 <span class="px-6 py-3 bg-red-600/30 rounded-full border border-red-400/50 backdrop-blur-sm">
-                    🇯🇵 Japanese Character Building
+                    🇯 Japanese Character Building
                 </span>
                 <span class="px-6 py-3 bg-green-600/30 rounded-full border border-green-400/50 backdrop-blur-sm">
                     🇮🇩 Indonesian Cultural Context
@@ -110,11 +152,11 @@
     <section id="problem" class="slide bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 animate-fade-in">
-                <h2 class="text-5xl font-bold mb-4 text-gray-900">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
                     Realita Mengkhawatirkan<br>
                     <span class="gradient-text">Pendidikan Indonesia</span>
                 </h2>
-                <p class="text-2xl text-gray-600">24 Tahun Stagnan. Ini Bukan Kebetulan.</p>
+                <p class="text-xl md:text-2xl text-gray-600">24 Tahun Stagnan. Ini Bukan Kebetulan.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -148,14 +190,14 @@
             </div>
 
             <div class="bg-gray-900 text-white rounded-2xl p-8 mb-8">
-                <blockquote class="text-2xl italic mb-4">
+                <blockquote class="text-xl md:text-2xl italic mb-4">
                     "Skor Indonesia secara konsisten rendah. Sejak tahun 2000 hingga 2022, situasi pendidikan Indonesia masih kritis — pemerintah tidak boleh membingkai ini seolah-olah prestasi."
                 </blockquote>
                 <cite class="text-gray-400 not-italic">— Indra Charismiadji, Praktisi Pendidikan, Kompas 2023</cite>
             </div>
 
             <div class="text-center">
-                <div class="inline-block bg-red-100 text-red-800 px-8 py-4 rounded-full font-bold text-xl">
+                <div class="inline-block bg-red-100 text-red-800 px-8 py-4 rounded-full font-bold text-lg md:text-xl">
                     ⚠️ Masalah PISA tidak dimulai di SMA. Masalah dimulai di PAUD.
                 </div>
             </div>
@@ -165,15 +207,15 @@
     <!-- Slide 3: Root Cause Analysis -->
     <section class="slide bg-gray-50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">
                 Diagnosis <span class="text-red-600">Akar Masalah</span>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-red-600">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 text-2xl">1️⃣</div>
-                        <h3 class="text-2xl font-bold">Epistemologi Tidak Pernah Bergeser</h3>
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 text-2xl">1️</div>
+                        <h3 class="text-xl md:text-2xl font-bold">Epistemologi Tidak Pernah Bergeser</h3>
                     </div>
                     <p class="text-gray-600 mb-4">
                         Nama kurikulum berganti (KBK → KTSP → K13 → Merdeka Belajar) tapi filosofi belajar sama:
@@ -191,7 +233,7 @@
                 <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-orange-600">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4 text-2xl">2️⃣</div>
-                        <h3 class="text-2xl font-bold">Sistem Guru Tidak Bisa Jadi Enabler</h3>
+                        <h3 class="text-xl md:text-2xl font-bold">Sistem Guru Tidak Bisa Jadi Enabler</h3>
                     </div>
                     <p class="text-gray-600 mb-4">
                         Kualitas pedagogik guru nasional masih sangat rendah di literasi dan numerasi.
@@ -209,12 +251,12 @@
                     </div>
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4 text-2xl">3️⃣</div>
-                        <h3 class="text-2xl font-bold">PAUD Diabaikan Sebagai Fondasi</h3>
+                        <h3 class="text-xl md:text-2xl font-bold">PAUD Diabaikan Sebagai Fondasi</h3>
                     </div>
                     <p class="text-gray-600 mb-4">
                         Investasi terbesar seharusnya di 0-6 tahun (golden age), tapi PAUD di Indonesia masih dianggap:
                     </p>
-                    <div class="text-3xl font-bold text-yellow-600 text-center mb-4">"Tempat Titip Anak"</div>
+                    <div class="text-2xl md:text-3xl font-bold text-yellow-600 text-center mb-4">"Tempat Titip Anak"</div>
                     <div class="p-3 bg-yellow-50 rounded-lg text-yellow-800">
                         <strong>Jendela neuroplastisitas paling optimal terlewat begitu saja.</strong>
                     </div>
@@ -223,7 +265,7 @@
                 <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-purple-600">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 text-2xl">4️⃣</div>
-                        <h3 class="text-2xl font-bold">Budaya Evaluasi Berbasis Ranking</h3>
+                        <h3 class="text-xl md:text-2xl font-bold">Budaya Evaluasi Berbasis Ranking</h3>
                     </div>
                     <p class="text-gray-600 mb-4">
                         Merusak mindset sejak dini:
@@ -241,15 +283,15 @@
     <!-- Slide 4: Market Opportunity -->
     <section class="slide bg-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
                 Peluang Nyata yang Sering <span class="text-green-600">Tidak Terlihat</span>
             </h2>
-            <p class="text-center text-gray-600 mb-12 text-xl">Kondisi Indonesia justru menguntungkan — jika kita tahu membaca</p>
+            <p class="text-center text-gray-600 mb-12 text-lg md:text-xl">Kondisi Indonesia justru menguntungkan — jika kita tahu membaca</p>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 card-hover">
                     <div class="text-4xl mb-4">📱</div>
-                    <h3 class="text-2xl font-bold mb-4 text-blue-900">Mobile-First Society yang Luar Biasa</h3>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-blue-900">Mobile-First Society yang Luar Biasa</h3>
                     <p class="text-gray-700 mb-4">
                         Indonesia adalah salah satu negara dengan penetrasi smartphone tertinggi di dunia.
                     </p>
@@ -271,7 +313,7 @@
 
                 <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 card-hover">
                     <div class="text-4xl mb-4">🎭</div>
-                    <h3 class="text-2xl font-bold mb-4 text-red-900">Budaya Lokal yang Kaya</h3>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-red-900">Budaya Lokal yang Kaya</h3>
                     <p class="text-gray-700 mb-4">
                         Wayang, batik, cerita rakyat nusantara, bahasa daerah — ini bukan hambatan, <strong>ini ASET.</strong>
                     </p>
@@ -292,8 +334,8 @@
                 </div>
 
                 <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 card-hover">
-                    <div class="text-4xl mb-4">👨‍👩‍👧</div>
-                    <h3 class="text-2xl font-bold mb-4 text-purple-900">Orang Tua Milenial yang Sadar Pendidikan Dini</h3>
+                    <div class="text-4xl mb-4">👨‍👩‍</div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-purple-900">Orang Tua Milenial yang Sadar Pendidikan Dini</h3>
                     <p class="text-gray-700 mb-4">
                         Generasi orang tua baru di Indonesia jauh lebih terbuka dan kritis.
                     </p>
@@ -318,7 +360,7 @@
                         FIRST MOVER ADVANTAGE
                     </div>
                     <div class="text-4xl mb-4">🎯</div>
-                    <h3 class="text-2xl font-bold mb-4 text-green-900">Gap Besar: Belum Ada Produk Lokal Berkualitas</h3>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-green-900">Gap Besar: Belum Ada Produk Lokal Berkualitas</h3>
                     <p class="text-gray-700 mb-4">
                         Aplikasi edukasi anak berkualitas di Indonesia hampir semuanya produk asing.
                     </p>
@@ -344,18 +386,18 @@
     <!-- Slide 5: The Solution -->
     <section id="solution" class="slide bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
                 Solusi: <span class="text-indigo-400">Metode Hybrid</span>
             </h2>
-            <p class="text-center text-2xl mb-12 text-gray-300">Kami Tidak Memilih. Kami Menyempurnakan Keduanya.</p>
+            <p class="text-center text-xl md:text-2xl mb-12 text-gray-300">Kami Tidak Memilih. Kami Menyempurnakan Keduanya.</p>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12">
                 <!-- Japan -->
                 <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-red-500/50">
                     <div class="flex items-center mb-6">
-                        <div class="text-5xl mr-4">🇯🇵</div>
+                        <div class="text-5xl mr-4">🇵</div>
                         <div>
-                            <h3 class="text-3xl font-bold">Jepang</h3>
+                            <h3 class="text-2xl md:text-3xl font-bold">Jepang</h3>
                             <p class="text-red-300">Chi-Toku-Tai • Shudan-Shugi</p>
                         </div>
                     </div>
@@ -371,11 +413,11 @@
                         </div>
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</span>
-                            <span><strong>Belajar via aktivitas harian:</strong> O-Soji (bersih-bersih), Kyushoku (makan siang bersama)</span>
+                            <span><strong>Belajar via aktivitas harian:</strong> O-Soji, Kyushoku</span>
                         </div>
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">4</span>
-                            <span><strong>Pendidikan karakter</strong> tersembunyi dalam rutinitas, bukan mata pelajaran</span>
+                            <span><strong>Pendidikan karakter</strong> tersembunyi dalam rutinitas</span>
                         </div>
                     </div>
 
@@ -395,7 +437,7 @@
                     <div class="flex items-center mb-6">
                         <div class="text-5xl mr-4">🇫🇮</div>
                         <div>
-                            <h3 class="text-3xl font-bold">Finlandia</h3>
+                            <h3 class="text-2xl md:text-3xl font-bold">Finlandia</h3>
                             <p class="text-blue-300">ECEC • Educare Philosophy</p>
                         </div>
                     </div>
@@ -433,13 +475,13 @@
 
             <!-- Synthesis -->
             <div class="bg-gradient-to-r from-red-500/20 via-purple-500/20 to-blue-500/20 rounded-2xl p-8 text-center border-2 border-white/30">
-                <h3 class="text-3xl font-bold mb-4">Sintesis suar.site</h3>
-                <div class="flex flex-wrap justify-center items-center gap-4 text-2xl">
-                    <span class="px-6 py-3 bg-red-600/80 rounded-full">🇯🇵 Struktur Ritual Jepang</span>
-                    <span class="text-4xl">+</span>
-                    <span class="px-6 py-3 bg-blue-600/80 rounded-full">🇫🇮 Kebebasan Bermain Finlandia</span>
-                    <span class="text-4xl">+</span>
-                    <span class="px-6 py-3 bg-green-600/80 rounded-full">🇮🇩 Konteks Budaya Indonesia</span>
+                <h3 class="text-2xl md:text-3xl font-bold mb-4">Sintesis suar.site</h3>
+                <div class="flex flex-wrap justify-center items-center gap-4 text-lg md:text-2xl">
+                    <span class="px-4 md:px-6 py-3 bg-red-600/80 rounded-full text-sm md:text-base">🇯🇵 Struktur Ritual Jepang</span>
+                    <span class="text-3xl md:text-4xl">+</span>
+                    <span class="px-4 md:px-6 py-3 bg-blue-600/80 rounded-full text-sm md:text-base">🇫 Kebebasan Bermain Finlandia</span>
+                    <span class="text-3xl md:text-4xl">+</span>
+                    <span class="px-4 md:px-6 py-3 bg-green-600/80 rounded-full text-sm md:text-base">🇮 Konteks Budaya Indonesia</span>
                 </div>
             </div>
         </div>
@@ -448,11 +490,11 @@
     <!-- Slide 6: Comparison Chart -->
     <section class="slide bg-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
                 Perbandingan Dimensi Utama: <span class="text-red-600">Jepang</span> vs <span class="text-blue-600">Finlandia</span>
             </h2>
             
-            <div class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
                 <canvas id="comparisonChart" height="100"></canvas>
             </div>
 
@@ -476,16 +518,16 @@
     <!-- Slide 7: Product Overview -->
     <section id="product" class="slide bg-gray-50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4">
-                Produk: <span class="gradient-text">8-10 Modul Permainan Edukatif</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                Produk: <span class="gradient-text">10 Modul Permainan Edukatif</span>
             </h2>
-            <p class="text-center text-xl text-gray-600 mb-12">8 Game. 8 Keterampilan Kognitif. 1 Fondasi Kuat.</p>
+            <p class="text-center text-lg md:text-xl text-gray-600 mb-12">10 Game. 10 Keterampilan Kognitif. 1 Fondasi Kuat.</p>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Game 1 -->
                 <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">🔍</div>
+                        <div class="text-3xl"></div>
                         <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">1. Detektif Pola</h3>
@@ -516,7 +558,7 @@
                 <!-- Game 3 -->
                 <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">🎴</div>
+                        <div class="text-3xl"></div>
                         <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">3. Kartu Memori</h3>
@@ -590,7 +632,7 @@
                 <!-- Game 8 -->
                 <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">🎨</div>
+                        <div class="text-3xl"></div>
                         <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">8. Bentuk Warna-Warni</h3>
@@ -633,7 +675,7 @@
             </div>
 
             <div class="mt-8 text-center">
-                <div class="inline-flex items-center gap-4 bg-white rounded-full px-8 py-4 shadow-lg">
+                <div class="inline-flex flex-wrap items-center gap-4 bg-white rounded-full px-8 py-4 shadow-lg">
                     <span class="text-sm text-gray-600">Durasi per sesi:</span>
                     <span class="font-bold text-indigo-600">15-20 menit</span>
                     <span class="text-gray-300">|</span>
@@ -647,41 +689,41 @@
     <!-- Slide 8: Game Design Principles -->
     <section class="slide bg-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
                 Prinsip Desain <span class="gradient-text">Game-Based Learning</span>
             </h2>
 
-            <div class="grid md:grid-cols-5 gap-6 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-12">
                 <div class="text-center p-6 bg-indigo-50 rounded-2xl">
                     <div class="text-4xl mb-3">🎮</div>
-                    <h4 class="font-bold text-indigo-900 mb-2">Interaktivitas</h4>
-                    <p class="text-sm text-gray-600">Anak aktif, bukan pasif menonton</p>
+                    <h4 class="font-bold text-indigo-900 mb-2 text-sm">Interaktivitas</h4>
+                    <p class="text-xs text-gray-600">Anak aktif, bukan pasif menonton</p>
                 </div>
                 <div class="text-center p-6 bg-purple-50 rounded-2xl">
-                    <div class="text-4xl mb-3">🌊</div>
-                    <h4 class="font-bold text-purple-900 mb-2">Immersiveness</h4>
-                    <p class="text-sm text-gray-600">Masuk ke dunia cerita & budaya</p>
+                    <div class="text-4xl mb-3"></div>
+                    <h4 class="font-bold text-purple-900 mb-2 text-sm">Immersiveness</h4>
+                    <p class="text-xs text-gray-600">Masuk ke dunia cerita & budaya</p>
                 </div>
                 <div class="text-center p-6 bg-pink-50 rounded-2xl">
                     <div class="text-4xl mb-3">🧩</div>
-                    <h4 class="font-bold text-pink-900 mb-2">Adaptive Problem Solving</h4>
-                    <p class="text-sm text-gray-600">Tantangan menyesuaikan kemampuan</p>
+                    <h4 class="font-bold text-pink-900 mb-2 text-sm">Adaptive Problem Solving</h4>
+                    <p class="text-xs text-gray-600">Tantangan menyesuaikan kemampuan</p>
                 </div>
                 <div class="text-center p-6 bg-red-50 rounded-2xl">
                     <div class="text-4xl mb-3">💬</div>
-                    <h4 class="font-bold text-red-900 mb-2">Feedback</h4>
-                    <p class="text-sm text-gray-600">Umpan balik positif, bukan hukuman</p>
+                    <h4 class="font-bold text-red-900 mb-2 text-sm">Feedback</h4>
+                    <p class="text-xs text-gray-600">Umpan balik positif, bukan hukuman</p>
                 </div>
-                <div class="text-center p-6 bg-orange-50 rounded-2xl">
+                <div class="text-center p-6 bg-orange-50 rounded-2xl col-span-2 md:col-span-1">
                     <div class="text-4xl mb-3"></div>
-                    <h4 class="font-bold text-orange-900 mb-2">Freedom of Exploration</h4>
-                    <p class="text-sm text-gray-600">Kebebasan mencoba tanpa takut gagal</p>
+                    <h4 class="font-bold text-orange-900 mb-2 text-sm">Freedom of Exploration</h4>
+                    <p class="text-xs text-gray-600">Kebebasan mencoba tanpa takut gagal</p>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="bg-gradient-to-br from-red-100 to-red-50 rounded-2xl p-8 border-l-4 border-red-600">
-                    <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
                         <span class="text-3xl mr-3">🇯🇵</span>
                         Pendekatan Jepang
                     </h3>
@@ -692,7 +734,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-red-600 mr-2 font-bold">→</span>
-                            <span><strong>Nilai moral implicit</strong> — diselipkan lewat mekanisme game, bukan teks ceramah</span>
+                            <span><strong>Nilai moral implicit</strong> — diselipkan lewat mekanisme game</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-red-600 mr-2 font-bold">→</span>
@@ -702,8 +744,8 @@
                 </div>
 
                 <div class="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 border-l-4 border-blue-600">
-                    <h3 class="text-2xl font-bold mb-4 flex items-center">
-                        <span class="text-3xl mr-3">🇫🇮</span>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
+                        <span class="text-3xl mr-3">🇮</span>
                         Pendekatan Finlandia
                     </h3>
                     <ul class="space-y-3 text-gray-700">
@@ -728,7 +770,7 @@
     <!-- Slide 9: Weekly Structure -->
     <section class="slide bg-gray-50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
                 Struktur <span class="text-indigo-600">Satu Siklus Mingguan</span>
             </h2>
             <p class="text-center text-gray-600 mb-12">Progressive difficulty dengan weekend challenge</p>
@@ -772,8 +814,8 @@
             </div>
 
             <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-8 mb-8 border-2 border-yellow-500">
-                <h3 class="text-2xl font-bold mb-4 flex items-center">
-                    <span class="text-3xl mr-3">🏆</span>
+                <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
+                    <span class="text-3xl mr-3"></span>
                     Sabtu/Minggu: Weekend Challenge
                 </h3>
                 <p class="text-gray-700 mb-4">
@@ -783,7 +825,7 @@
             </div>
 
             <div class="bg-gray-900 text-white rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-6">Kenapa Random Difficulty di Weekend Challenge?</h3>
+                <h3 class="text-xl md:text-2xl font-bold mb-6">Kenapa Random Difficulty di Weekend Challenge?</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="flex items-start">
                         <span class="text-yellow-400 text-2xl mr-3">1</span>
@@ -821,20 +863,20 @@
     <!-- Slide 10: Value Proposition -->
     <section class="slide bg-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
                 Value Proposition untuk <span class="text-indigo-600">B Club Preschool</span>
             </h2>
 
             <div class="grid md:grid-cols-3 gap-8 mb-12">
                 <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center">
-                        <span class="text-3xl mr-3">🏫</span>
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
+                        <span class="text-3xl mr-3"></span>
                         Untuk B Club
                     </h3>
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Diferensiasi pasar:</strong> bukan sekadar "penitipan anak", tapi "pusat pengembangan kognitif dini"</span>
+                            <span><strong>Diferensiasi pasar:</strong> bukan sekadar "penitipan anak"</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-yellow-300 mr-2">✓</span>
@@ -852,8 +894,8 @@
                 </div>
 
                 <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center">
-                        <span class="text-3xl mr-3">👨‍👩‍👧</span>
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
+                        <span class="text-3xl mr-3">👨‍‍👧</span>
                         Untuk Orang Tua
                     </h3>
                     <ul class="space-y-4">
@@ -877,7 +919,7 @@
                 </div>
 
                 <div class="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
                         <span class="text-3xl mr-3">👶</span>
                         Untuk Anak
                     </h3>
@@ -903,7 +945,7 @@
             </div>
 
             <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-8 border-2 border-green-500">
-                <h3 class="text-2xl font-bold mb-6 text-center">Keunggulan Kompetitif B Club + suar.site</h3>
+                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">Keunggulan Kompetitif B Club + suar.site</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="flex items-center">
                         <span class="text-3xl mr-4">🥇</span>
@@ -941,12 +983,11 @@
     <!-- Slide 11: Roadmap -->
     <section id="implementation" class="slide bg-gray-50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
                 Roadmap <span class="gradient-text">Implementasi</span>
             </h2>
 
             <div class="relative">
-                <!-- Timeline line -->
                 <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-indigo-200 hidden md:block"></div>
 
                 <!-- Phase 1 -->
@@ -954,7 +995,7 @@
                     <div class="flex flex-col md:flex-row items-center">
                         <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
                             <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-2xl font-bold text-indigo-600 mb-2">Phase 1: Pilot Project</h3>
+                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 1: Pilot Project</h3>
                                 <p class="text-sm text-gray-500 mb-3">Bulan 1-2</p>
                                 <ul class="text-sm text-gray-700 space-y-2">
                                     <li>• Implementasi 6 game "Siap" di B Club Preschool</li>
@@ -976,7 +1017,7 @@
                         <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
                         <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
                             <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-2xl font-bold text-indigo-600 mb-2">Phase 2: Refinement</h3>
+                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 2: Refinement</h3>
                                 <p class="text-sm text-gray-500 mb-3">Bulan 3-4</p>
                                 <ul class="text-sm text-gray-700 space-y-2">
                                     <li>• Modifikasi "Mesin Ajaib"</li>
@@ -994,10 +1035,10 @@
                     <div class="flex flex-col md:flex-row items-center">
                         <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
                             <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-2xl font-bold text-indigo-600 mb-2">Phase 3: Full Launch</h3>
+                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 3: Full Launch</h3>
                                 <p class="text-sm text-gray-500 mb-3">Bulan 5-6</p>
                                 <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• 8 modul lengkap siap digunakan</li>
+                                    <li>• 10 modul lengkap siap digunakan</li>
                                     <li>• Dashboard perkembangan anak untuk orang tua</li>
                                     <li>• Training guru B Club</li>
                                     <li>• Official launch event</li>
@@ -1016,7 +1057,7 @@
                         <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
                         <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
                             <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-2xl font-bold text-indigo-600 mb-2">Phase 4: Scale Up</h3>
+                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 4: Scale Up</h3>
                                 <p class="text-sm text-gray-500 mb-3">Bulan 7-12</p>
                                 <ul class="text-sm text-gray-700 space-y-2">
                                     <li>• Ekspansi ke preschool lain</li>
@@ -1035,13 +1076,13 @@
     <!-- Slide 12: Closing -->
     <section class="slide bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
         <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-5xl font-bold mb-8">
+            <h2 class="text-3xl md:text-5xl font-bold mb-8">
                 "24 Tahun Terlambat untuk PISA.<br>
                 <span class="text-indigo-400">Tidak Terlambat untuk PAUD.</span>"
             </h2>
 
             <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
-                <p class="text-xl mb-6 italic">
+                <p class="text-lg md:text-xl mb-6 italic">
                     "Reformasi kosmetik tidak akan berhasil. Kita perlu mengubah fondasi di PAUD — 
                     di mana neuroplastisitas paling optimal, di mana karakter dibentuk, 
                     di mana mindset ditanam."
@@ -1050,14 +1091,14 @@
 
             <div class="grid md:grid-cols-3 gap-6 mb-12">
                 <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
-                    <div class="text-3xl mb-3">🤝</div>
+                    <div class="text-3xl mb-3"></div>
                     <h4 class="font-bold mb-2">Partnership Eksklusif</h4>
                     <p class="text-sm text-gray-300">suar.site × B Club Preschool</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
                     <div class="text-3xl mb-3">🎮</div>
                     <h4 class="font-bold mb-2">Akses Penuh</h4>
-                    <p class="text-sm text-gray-300">8-10 modul permainan edukatif hybrid</p>
+                    <p class="text-sm text-gray-300">10 modul permainan edukatif hybrid</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
                     <div class="text-3xl mb-3">📊</div>
@@ -1066,7 +1107,7 @@
                 </div>
             </div>
 
-            <div class="text-3xl font-bold mb-8">
+            <div class="text-2xl md:text-3xl font-bold mb-8">
                 Mari bersama membangun generasi yang<br>
                 <span class="text-indigo-400">tidak hanya lolos PISA,</span><br>
                 tapi siap menghadapi abad 21.
@@ -1133,9 +1174,6 @@
                             usePointStyle: true,
                             padding: 20
                         }
-                    },
-                    title: {
-                        display: false
                     }
                 },
                 scales: {
@@ -1168,43 +1206,6 @@
                     }
                 }
             }
-        });
-
-        // Smooth scroll for navigation dots
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Update active nav dot on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.nav-dot').forEach(dot => {
-                dot.classList.remove('bg-indigo-600');
-                dot.classList.add('bg-gray-300');
-                if (dot.getAttribute('href') === `#${current}`) {
-                    dot.classList.remove('bg-gray-300');
-                    dot.classList.add('bg-indigo-600');
-                }
-            });
         });
 
         // Animation on scroll
