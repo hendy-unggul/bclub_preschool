@@ -8,1223 +8,528 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .slide {
-            min-height: 100vh;
-            padding: 4rem 2rem;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .nav-dot {
-            transition: all 0.3s ease;
-        }
-        .nav-dot:hover {
-            transform: scale(1.5);
-        }
-        /* B Club Navigation Styles */
-        .bclub-nav{
-            position:sticky;
-            top:0;
-            z-index:99;
-            background:#0D0D0D;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:14px 20px;
-            border-bottom:3px solid #FFE600;
-        }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .slide { min-height: 100vh; padding: 4rem 2rem; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .animate-fade-in { animation: fadeIn 0.8s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* B Club Navigation */
+        .bclub-nav{position:sticky;top:0;z-index:99;background:#0D0D0D;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:3px solid #FFE600;flex-wrap:wrap;gap:10px}
         .bclub-nav-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-        .bclub-logo{
-            font-size:22px;
-            font-weight:900;
-            color:#FFE600;
-            letter-spacing:-1px;
-            font-style:italic;
-            text-decoration:none;
-        }
+        .bclub-logo{font-size:22px;font-weight:900;color:#FFE600;letter-spacing:-1px;font-style:italic;text-decoration:none}
         .bclub-logo span{color:#FFFFFF}
-        .bclub-cta{
-            background:#FF4D4D;
-            color:#FFFFFF;
-            font-weight:800;
-            font-size:11px;
-            padding:7px 12px;
-            border-radius:6px;
-            text-decoration:none;
-            letter-spacing:.5px;
-            border:2px solid #FFFFFF;
-            white-space:nowrap;
-        }
-        .bclub-cta.pitch{
-            background:#2563eb;
-            border-color:#1d4ed8;
-        }
-        .bclub-wa{
-            background:#FFE600;
-            color:#0D0D0D;
-            font-weight:800;
-            font-size:12px;
-            padding:7px 14px;
-            border-radius:6px;
-            text-decoration:none;
-            letter-spacing:.5px;
-            white-space:nowrap;
-        }
+        .bclub-cta{background:#FF4D4D;color:#FFFFFF;font-weight:800;font-size:11px;padding:7px 12px;border-radius:6px;text-decoration:none;letter-spacing:.5px;border:2px solid #FFFFFF;white-space:nowrap}
+        .bclub-cta.pitch{background:#2563eb;border-color:#1d4ed8}
+        .bclub-wa{background:#FFE600;color:#0D0D0D;font-weight:800;font-size:12px;padding:7px 14px;border-radius:6px;text-decoration:none;letter-spacing:.5px;white-space:nowrap}
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-    <!-- B Club Navigation Bar -->
-    <nav class="bclub-nav">
-        <div class="bclub-nav-left">
-            <a href="./index.html" class="bclub-logo">B<span>Club</span></a>
-            <a href="./play/index.html" class="bclub-cta">🎮 Main Game</a>
-            <a href="./suarpitchdeck.html" class="bclub-cta pitch">📊 Pitch Deck</a>
+<!-- B Club Navigation -->
+<nav class="bclub-nav">
+    <div class="bclub-nav-left">
+        <a href="./index.html" class="bclub-logo">B<span>Club</span></a>
+        <a href="./play/index.html" class="bclub-cta">🎮 Main Game</a>
+        <a href="./suarpitchdeck.html" class="bclub-cta pitch">📊 Pitch Deck</a>
+    </div>
+    <a class="bclub-wa" href="https://wa.me/6281234567890" target="_blank">💬 WhatsApp</a>
+</nav>
+
+<!-- Slide 1: Cover -->
+<section id="cover" class="slide bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+    <div class="max-w-6xl mx-auto text-center text-white relative z-10 animate-fade-in">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            suar.site <span class="text-indigo-400">×</span> B Club Preschool
+        </h1>
+        <p class="text-xl md:text-3xl mb-8 text-gray-300 font-light">
+            Membangun Generasi Emas Indonesia Melalui Permainan Edukatif<br>
+            <span class="text-indigo-400 font-semibold">Berbasis Hybrid Finlandia-Jepang</span>
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <span class="px-6 py-3 bg-indigo-600/30 rounded-full border border-indigo-400/50">🇫🇮 Finnish Play-Based Learning</span>
+            <span class="px-6 py-3 bg-red-600/30 rounded-full border border-red-400/50">🇯 Japanese Character Building</span>
+            <span class="px-6 py-3 bg-green-600/30 rounded-full border border-green-400/50">🇮🇩 Indonesian Cultural Context</span>
         </div>
-        <a class="bclub-wa" href="https://wa.me/6281234567890?text=Halo%20B%20Club" target="_blank">💬 WhatsApp</a>
-    </nav>
+        <p class="text-xl text-gray-400 italic">"Dari PAUD, untuk PISA masa depan"</p>
+    </div>
+</section>
 
-    <!-- Slide 1: Cover -->
-    <section id="cover" class="slide bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+<!-- Slide 2: Problem -->
+<section id="problem" class="slide bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Realita Mengkhawatirkan<br><span class="gradient-text">Pendidikan Indonesia</span></h2>
+            <p class="text-xl text-gray-600">24 Tahun Stagnan. Ini Bukan Kebetulan.</p>
         </div>
-        
-        <div class="max-w-6xl mx-auto text-center text-white relative z-10 animate-fade-in">
-            <div class="mb-8">
-                <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 backdrop-blur-md mb-6 border-4 border-indigo-400">
-                    <div class="text-5xl"></div>
-                </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="bg-red-50 rounded-2xl p-8 card-hover border-l-4 border-red-600">
+                <div class="text-5xl font-bold text-red-600 mb-2">366</div>
+                <div class="text-sm text-gray-600">Skor PISA 2022</div>
+                <div class="text-xs text-red-500">↓ Turun dari 379 (2018)</div>
+                <div class="mt-3 text-xs text-gray-500">OECD Average: <strong>472</strong></div>
             </div>
-            
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                suar.site <span class="text-indigo-400">×</span> B Club Preschool
-            </h1>
-            
-            <p class="text-xl md:text-3xl mb-8 text-gray-300 font-light">
-                Membangun Generasi Emas Indonesia Melalui Permainan Edukatif<br>
-                <span class="text-indigo-400 font-semibold">Berbasis Hybrid Finlandia-Jepang</span>
-            </p>
-            
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <span class="px-6 py-3 bg-indigo-600/30 rounded-full border border-indigo-400/50 backdrop-blur-sm">
-                    🇫🇮 Finnish Play-Based Learning
-                </span>
-                <span class="px-6 py-3 bg-red-600/30 rounded-full border border-red-400/50 backdrop-blur-sm">
-                    🇯 Japanese Character Building
-                </span>
-                <span class="px-6 py-3 bg-green-600/30 rounded-full border border-green-400/50 backdrop-blur-sm">
-                    🇮🇩 Indonesian Cultural Context
-                </span>
+            <div class="bg-orange-50 rounded-2xl p-8 card-hover border-l-4 border-orange-600">
+                <div class="text-5xl font-bold text-orange-600 mb-2">18%</div>
+                <div class="text-sm text-gray-600">Siswa Capai Level 2</div>
+                <div class="text-xs text-orange-500">OECD: 69%</div>
             </div>
-            
-            <p class="text-xl text-gray-400 italic">
-                "Dari PAUD, untuk PISA masa depan"
-            </p>
-            
-            <div class="mt-12 text-sm text-gray-500">
-                Pitch Deck 2026
+            <div class="bg-yellow-50 rounded-2xl p-8 card-hover border-l-4 border-yellow-600">
+                <div class="text-5xl font-bold text-yellow-600 mb-2">24<span class="text-2xl">th</span></div>
+                <div class="text-sm text-gray-600">Durasi Stagnasi</div>
+                <div class="text-xs text-yellow-500">Sejak 2000</div>
             </div>
-        </div>
-    </section>
-
-    <!-- Slide 2: The Problem -->
-    <section id="problem" class="slide bg-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12 animate-fade-in">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-                    Realita Mengkhawatirkan<br>
-                    <span class="gradient-text">Pendidikan Indonesia</span>
-                </h2>
-                <p class="text-xl md:text-2xl text-gray-600">24 Tahun Stagnan. Ini Bukan Kebetulan.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="bg-red-50 rounded-2xl p-8 card-hover border-l-4 border-red-600">
-                    <div class="text-5xl font-bold text-red-600 mb-2">366</div>
-                    <div class="text-sm text-gray-600 mb-2">Skor Matematika PISA 2022</div>
-                    <div class="text-xs text-red-500">↓ Turun dari 379 (2018)</div>
-                    <div class="mt-3 text-xs text-gray-500">OECD Average: <span class="font-bold">472</span></div>
-                </div>
-
-                <div class="bg-orange-50 rounded-2xl p-8 card-hover border-l-4 border-orange-600">
-                    <div class="text-5xl font-bold text-orange-600 mb-2">18%</div>
-                    <div class="text-sm text-gray-600 mb-2">Siswa Capai Level 2</div>
-                    <div class="text-xs text-orange-500">OECD Average: 69%</div>
-                    <div class="mt-3 text-xs text-gray-500">Kesenjangan: <span class="font-bold">51%</span></div>
-                </div>
-
-                <div class="bg-yellow-50 rounded-2xl p-8 card-hover border-l-4 border-yellow-600">
-                    <div class="text-5xl font-bold text-yellow-600 mb-2">24<span class="text-2xl">th</span></div>
-                    <div class="text-sm text-gray-600 mb-2">Durasi Stagnasi</div>
-                    <div class="text-xs text-yellow-500">Sejak 2000</div>
-                    <div class="mt-3 text-xs text-gray-500">Konsisten di bawah rata-rata global</div>
-                </div>
-
-                <div class="bg-purple-50 rounded-2xl p-8 card-hover border-l-4 border-purple-600">
-                    <div class="text-5xl font-bold text-purple-600 mb-2">0-6<span class="text-2xl">th</span></div>
-                    <div class="text-sm text-gray-600 mb-2">Golden Age</div>
-                    <div class="text-xs text-purple-500">Neuroplastisitas Optimal</div>
-                    <div class="mt-3 text-xs text-gray-500">Terlewat begitu saja</div>
-                </div>
-            </div>
-
-            <div class="bg-gray-900 text-white rounded-2xl p-8 mb-8">
-                <blockquote class="text-xl md:text-2xl italic mb-4">
-                    "Skor Indonesia secara konsisten rendah. Sejak tahun 2000 hingga 2022, situasi pendidikan Indonesia masih kritis — pemerintah tidak boleh membingkai ini seolah-olah prestasi."
-                </blockquote>
-                <cite class="text-gray-400 not-italic">— Indra Charismiadji, Praktisi Pendidikan, Kompas 2023</cite>
-            </div>
-
-            <div class="text-center">
-                <div class="inline-block bg-red-100 text-red-800 px-8 py-4 rounded-full font-bold text-lg md:text-xl">
-                    ⚠️ Masalah PISA tidak dimulai di SMA. Masalah dimulai di PAUD.
-                </div>
+            <div class="bg-purple-50 rounded-2xl p-8 card-hover border-l-4 border-purple-600">
+                <div class="text-5xl font-bold text-purple-600 mb-2">0-6<span class="text-2xl">th</span></div>
+                <div class="text-sm text-gray-600">Golden Age</div>
+                <div class="text-xs text-purple-500">Neuroplastisitas Optimal</div>
             </div>
         </div>
-    </section>
+        <div class="bg-gray-900 text-white rounded-2xl p-8 mb-8">
+            <blockquote class="text-xl md:text-2xl italic mb-4">"Skor Indonesia secara konsisten rendah. Sejak tahun 2000 hingga 2022, situasi pendidikan Indonesia masih kritis."</blockquote>
+            <cite class="text-gray-400 not-italic">— Indra Charismiadji, Kompas 2023</cite>
+        </div>
+        <div class="text-center">
+            <div class="inline-block bg-red-100 text-red-800 px-8 py-4 rounded-full font-bold text-lg">⚠️ Masalah PISA tidak dimulai di SMA. Masalah dimulai di PAUD.</div>
+        </div>
+    </div>
+</section>
 
-    <!-- Slide 3: Root Cause Analysis -->
-    <section class="slide bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">
-                Diagnosis <span class="text-red-600">Akar Masalah</span>
-            </h2>
+<!-- Slide 3: Root Cause -->
+<section class="slide bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">Diagnosis <span class="text-red-600">Akar Masalah</span></h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-red-600">
+                <h3 class="text-xl md:text-2xl font-bold mb-4">1️ Epistemologi Tidak Bergeser</h3>
+                <p class="text-gray-600 mb-4">KBK → KTSP → K13 → Merdeka Belajar, tapi filosofi sama:</p>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Teacher-centric</li>
+                    <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Hafalan</li>
+                    <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Validasi eksternal</li>
+                </ul>
+                <div class="mt-4 p-3 bg-red-50 rounded-lg text-red-800 font-semibold text-center">Reformasi kosmetik, bukan struktural</div>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-orange-600">
+                <h3 class="text-xl md:text-2xl font-bold mb-4">2️ Sistem Guru Bukan Enabler</h3>
+                <p class="text-gray-600 mb-4">Kualitas pedagogik guru rendah di literasi & numerasi.</p>
+                <ul class="space-y-2 text-gray-700">
+                    <li>! Sertifikasi tidak mengubah fundamental</li>
+                    <li>! Pelatihan tidak berubah struktural</li>
+                    <li>! Guru tidak bisa jadi agen perubahan</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-yellow-600 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-yellow-600 text-white px-4 py-1 rounded-bl-lg text-sm font-bold">PALING KRITIS</div>
+                <h3 class="text-xl md:text-2xl font-bold mb-4">3️⃣ PAUD Diabaikan</h3>
+                <p class="text-gray-600 mb-4">Investasi terbesar seharusnya di 0-6 tahun, tapi PAUD dianggap:</p>
+                <div class="text-2xl md:text-3xl font-bold text-yellow-600 text-center mb-4">"Tempat Titip Anak"</div>
+                <div class="p-3 bg-yellow-50 rounded-lg text-yellow-800"><strong>Jendela neuroplastisitas terlewat begitu saja.</strong></div>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-purple-600">
+                <h3 class="text-xl md:text-2xl font-bold mb-4">4️⃣ Budaya Ranking Merusak Mindset</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>→ Anak diajar belajar untuk nilai, bukan untuk tahu</li>
+                    <li>→ Ketakutan gagal ditanam sejak TK</li>
+                    <li>→ Bertolak belakang 180° dengan growth mindset</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Slide 4: Opportunity -->
+<section class="slide bg-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Peluang Nyata yang Sering <span class="text-green-600">Tidak Terlihat</span></h2>
+        <p class="text-center text-gray-600 mb-12 text-lg">Kondisi Indonesia justru menguntungkan</p>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 card-hover">
+                <div class="text-4xl mb-4"></div>
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-blue-900">Mobile-First Society</h3>
+                <p class="text-gray-700">Indonesia = penetrasi smartphone tertinggi di dunia. Anak PAUD sudah pegang gadget sejak dini.</p>
+                <ul class="mt-4 space-y-2 text-gray-700">
+                    <li>✓ Game edukasi bypass sistem sekolah formal</li>
+                    <li>✓ Langsung menjangkau anak</li>
+                </ul>
+            </div>
+            <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 card-hover">
+                <div class="text-4xl mb-4">🎭</div>
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-red-900">Budaya Lokal = ASET</h3>
+                <p class="text-gray-700">Wayang, batik, cerita rakyat — ini bukan hambatan, ini ASET.</p>
+                <ul class="mt-4 space-y-2 text-gray-700">
+                    <li>✓ Anak belajar lewat "milk mereka"</li>
+                    <li>✓ Identitas budaya terbangun sejak dini</li>
+                </ul>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 card-hover">
+                <div class="text-4xl mb-4">👨👩‍👧</div>
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-purple-900">Orang Tua Milenial Sadar Pendidikan</h3>
+                <p class="text-gray-700">Generasi baru lebih terbuka, kritis, dan bersedia investasi untuk tumbuh kembang anak.</p>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-8 card-hover relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-green-600 text-white px-4 py-1 rounded-bl-lg text-sm font-bold">FIRST MOVER</div>
+                <div class="text-4xl mb-4">🎯</div>
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-green-900">Gap Besar: Belum Ada Produk Lokal</h3>
+                <p class="text-gray-700">Duolingo, Khan Academy Kids = tidak paham konteks Indonesia. Produk lokal yang dominan <strong>belum ada</strong>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 5: Solution -->
+<section id="solution" class="slide bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Solusi: <span class="text-indigo-400">Metode Hybrid</span></h2>
+        <p class="text-center text-xl mb-12 text-gray-300">Kami Tidak Memilih. Kami Menyempurnakan Keduanya.</p>
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-red-500/50">
+                <div class="flex items-center mb-6">
+                    <div class="text-5xl mr-4">🇵</div>
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-bold">Jepang</h3>
+                        <p class="text-red-300">Chi-Toku-Tai • Shudan-Shugi</p>
+                    </div>
+                </div>
+                <ul class="space-y-3 mb-6">
+                    <li>1. <strong>Karakter moral:</strong> Intelektual, moral, fisik seimbang</li>
+                    <li>2. <strong>Disiplin terstruktur</strong> melalui rutinitas</li>
+                    <li>3. <strong>O-Soji & Kyushoku</strong> (aktivitas harian)</li>
+                    <li>4. <strong>Pendidikan karakter</strong> tersembunyi dalam rutinitas</li>
+                </ul>
+                <div class="border-t border-white/20 pt-4 flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Kemandirian</span>
+                    <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Keberanian</span>
+                    <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Disiplin</span>
+                    <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Kooperasi</span>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-blue-500/50">
+                <div class="flex items-center mb-6">
+                    <div class="text-5xl mr-4">🇫🇮</div>
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-bold">Finlandia</h3>
+                        <p class="text-blue-300">ECEC • Educare Philosophy</p>
+                    </div>
+                </div>
+                <ul class="space-y-3 mb-6">
+                    <li>1. <strong>Play-based learning:</strong> Bermain = belajar</li>
+                    <li>2. <strong>Anak-sentris & holistik</strong> tanpa tekanan</li>
+                    <li>3. <strong>Akademik formal</strong> mulai usia 7 tahun</li>
+                    <li>4. <strong>Emotional well-being</strong> = kognitif</li>
+                </ul>
+                <div class="border-t border-white/20 pt-4 flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Problem-solving</span>
+                    <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Kreativitas</span>
+                    <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Self-regulation</span>
+                    <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Resiliensi</span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-red-500/20 via-purple-500/20 to-blue-500/20 rounded-2xl p-8 text-center border-2 border-white/30">
+            <h3 class="text-2xl md:text-3xl font-bold mb-4">Sintesis suar.site</h3>
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <span class="px-6 py-3 bg-red-600/80 rounded-full">🇯🇵 Struktur Ritual</span>
+                <span class="text-4xl">+</span>
+                <span class="px-6 py-3 bg-blue-600/80 rounded-full">🇫🇮 Kebebasan Bermain</span>
+                <span class="text-4xl">+</span>
+                <span class="px-6 py-3 bg-green-600/80 rounded-full">🇩 Konteks Budaya</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 6: Chart -->
+<section class="slide bg-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Perbandingan Dimensi: <span class="text-red-600">Jepang</span> vs <span class="text-blue-600">Finlandia</span></h2>
+        <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+            <canvas id="comparisonChart" height="100"></canvas>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 7: Products -->
+<section id="product" class="slide bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Produk: <span class="gradient-text">10 Modul Permainan</span></h2>
+        <p class="text-center text-xl text-gray-600 mb-12">10 Game. 10 Keterampilan Kognitif. 1 Fondasi Kuat.</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl"></div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">1. Detektif Pola</h3>
+                <p class="text-sm text-gray-600 mb-3">Pattern Recognition</p>
+                <p class="text-xs text-gray-500">Pola batik, tenun, motif kain daerah</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500 relative">
+                <div class="absolute top-0 right-0 bg-green-600 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">TERKUAT</div>
+                <div class="flex justify-between mb-4"><div class="text-3xl">‍🍳</div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">2. Masak Bareng</h3>
+                <p class="text-sm text-gray-600 mb-3">Sequencing</p>
+                <p class="text-xs text-gray-500">Opor ayam, gado-gado, tempe goreng</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">🎴</div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">3. Kartu Memori</h3>
+                <p class="text-sm text-gray-600 mb-3">Spatial & Visual Memory</p>
+                <p class="text-xs text-gray-500">Hewan endemik nusantara, wayang</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-yellow-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">⚙️</div><span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">MODIFIKASI</span></div>
+                <h3 class="text-xl font-bold mb-2">4. Mesin Ajaib</h3>
+                <p class="text-sm text-gray-600 mb-3">Logical Deduction</p>
+                <p class="text-xs text-gray-500">Konteks alam: hujan → tanah basah</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">📦</div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">5. Pilih & Kelompokkan</h3>
+                <p class="text-sm text-gray-600 mb-3">Categorization</p>
+                <p class="text-xs text-gray-500">Pasar tradisional: sayur, bumbu, buah</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-red-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl"></div><span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">RANCANG ULANG</span></div>
+                <h3 class="text-xl font-bold mb-2">6. Labirin Detektif</h3>
+                <p class="text-sm text-gray-600 mb-3">Problem Solving</p>
+                <p class="text-xs text-gray-500">Perlu kolaborasi, bukan solo</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">🔢</div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">7. Hitung Cerla</h3>
+                <p class="text-sm text-gray-600 mb-3">Counting & Number Sense</p>
+                <p class="text-xs text-gray-500">Biji salak, kelerek, batu kali</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">🎨</div><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span></div>
+                <h3 class="text-xl font-bold mb-2">8. Bentuk Warna-Warni</h3>
+                <p class="text-sm text-gray-600 mb-3">Shape & Color</p>
+                <p class="text-xs text-gray-500">Warna bahasa daerah, arsitektur lokal</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-yellow-500">
+                <div class="flex justify-between mb-4"><div class="text-3xl">📏</div><span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">MODIFIKASI</span></div>
+                <h3 class="text-xl font-bold mb-2">9. Besar Kecil</h3>
+                <p class="text-sm text-gray-600 mb-3">Size & Comparison</p>
+                <p class="text-xs text-gray-500">Naratif: "Galih Bimo menyeberangi jembatan"</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-red-500 lg:col-span-3">
+                <div class="flex justify-between mb-4"><div class="text-3xl">⏰</div><span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">RANCANG ULANG</span></div>
+                <h3 class="text-xl font-bold mb-2">10. Jam Belajar</h3>
+                <p class="text-sm text-gray-600 mb-3">Time & Sequence</p>
+                <p class="text-xs text-gray-500">Terlalu formal, perlu pendekatan Finlandia via aktivitas</p>
+            </div>
+        </div>
+        <div class="mt-8 text-center">
+            <div class="inline-flex flex-wrap items-center gap-4 bg-white rounded-full px-8 py-4 shadow-lg">
+                <span class="text-sm text-gray-600">Durasi per sesi:</span>
+                <span class="font-bold text-indigo-600">15-20 menit</span>
+                <span class="text-gray-300">|</span>
+                <span class="text-sm text-gray-600">Co-play:</span>
+                <span class="font-bold text-indigo-600">Semua modul</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 8: Principles -->
+<section class="slide bg-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Prinsip Desain <span class="gradient-text">Game-Based Learning</span></h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
+            <div class="text-center p-6 bg-indigo-50 rounded-2xl"><div class="text-4xl mb-3">🎮</div><h4 class="font-bold text-sm">Interaktivitas</h4></div>
+            <div class="text-center p-6 bg-purple-50 rounded-2xl"><div class="text-4xl mb-3">🌊</div><h4 class="font-bold text-sm">Immersiveness</h4></div>
+            <div class="text-center p-6 bg-pink-50 rounded-2xl"><div class="text-4xl mb-3">🧩</div><h4 class="font-bold text-sm">Adaptive</h4></div>
+            <div class="text-center p-6 bg-red-50 rounded-2xl"><div class="text-4xl mb-3">💬</div><h4 class="font-bold text-sm">Feedback</h4></div>
+            <div class="text-center p-6 bg-orange-50 rounded-2xl col-span-2 md:col-span-1"><div class="text-4xl mb-3">🕊️</div><h4 class="font-bold text-sm">Freedom</h4></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-gradient-to-br from-red-100 to-red-50 rounded-2xl p-8 border-l-4 border-red-600">
+                <h3 class="text-xl md:text-2xl font-bold mb-4">🇵 Pendekatan Jepang</h3>
+                <ul class="space-y-3">
+                    <li>→ Struktur ritual konsisten</li>
+                    <li>→ Nilai moral implicit via mekanisme game</li>
+                    <li>→ Drilling terstruktur untuk kebiasaan</li>
+                </ul>
+            </div>
+            <div class="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 border-l-4 border-blue-600">
+                <h3 class="text-xl md:text-2xl font-bold mb-4">🇫🇮 Pendekatan Finlandia</h3>
+                <ul class="space-y-3">
+                    <li>→ Kebebasan bermain tanpa tekanan</li>
+                    <li>→ Zero-punishment design</li>
+                    <li>→ Self-directed learning & eksplorasi</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 9: Weekly Structure -->
+<section class="slide bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Struktur <span class="text-indigo-600">Satu Siklus Mingguan</span></h2>
+        <p class="text-center text-gray-600 mb-12">Progressive difficulty dengan weekend challenge</p>
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-blue-500">
+                <h3 class="text-2xl font-bold mb-4 text-blue-600">Senin</h3>
+                <p><strong>Sesi 1</strong></p>
+                <ul class="text-sm space-y-2 mt-2">
+                    <li>• Perkenalan level baru</li>
+                    <li>• Difficulty rendah</li>
+                    <li>• Tidak ada timer</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-indigo-500">
+                <h3 class="text-2xl font-bold mb-4 text-indigo-600">Rabu</h3>
+                <p><strong>Sesi 2</strong></p>
+                <ul class="text-sm space-y-2 mt-2">
+                    <li>• Difficulty naik</li>
+                    <li>• Soft timer sebagai feedback</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-purple-500">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">Jumat</h3>
+                <p><strong>Sesi 3</strong></p>
+                <ul class="text-sm space-y-2 mt-2">
+                    <li>• Difficulty tinggi</li>
+                    <li>• Timer aktif</li>
+                    <li>• Anak mulai mahir</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-8 mb-8 border-2 border-yellow-500">
+            <h3 class="text-xl md:text-2xl font-bold mb-4">🏆 Sabtu/Minggu: Weekend Challenge</h3>
+            <p>Semua soal dari minggu ini — urutan random, kecepatan dinilai, sesi bersama orang tua.</p>
+        </div>
+        <div class="bg-gray-900 text-white rounded-2xl p-8">
+            <h3 class="text-xl md:text-2xl font-bold mb-6">Kenapa Random Difficulty?</h3>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-red-600">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 text-2xl">1️</div>
-                        <h3 class="text-xl md:text-2xl font-bold">Epistemologi Tidak Pernah Bergeser</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Nama kurikulum berganti (KBK → KTSP → K13 → Merdeka Belajar) tapi filosofi belajar sama:
-                    </p>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Teacher-centric</li>
-                        <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Hafalan</li>
-                        <li class="flex items-center"><span class="text-red-500 mr-2">✗</span> Validasi eksternal</li>
-                    </ul>
-                    <div class="mt-4 p-3 bg-red-50 rounded-lg text-red-800 font-semibold text-center">
-                        Reformasi kosmetik, bukan struktural
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-orange-600">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4 text-2xl">2️⃣</div>
-                        <h3 class="text-xl md:text-2xl font-bold">Sistem Guru Tidak Bisa Jadi Enabler</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Kualitas pedagogik guru nasional masih sangat rendah di literasi dan numerasi.
-                    </p>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-center"><span class="text-orange-500 mr-2">!</span> Sertifikasi tidak mengubah fundamental</li>
-                        <li class="flex items-center"><span class="text-orange-500 mr-2">!</span> Pelatihan guru tidak berubah struktural</li>
-                        <li class="flex items-center"><span class="text-orange-500 mr-2">!</span> Tidak mungkin guru jadi agen perubahan</li>
-                    </ul>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-yellow-600 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-yellow-600 text-white px-4 py-1 rounded-bl-lg text-sm font-bold">
-                        PALING KRITIS
-                    </div>
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4 text-2xl">3️⃣</div>
-                        <h3 class="text-xl md:text-2xl font-bold">PAUD Diabaikan Sebagai Fondasi</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Investasi terbesar seharusnya di 0-6 tahun (golden age), tapi PAUD di Indonesia masih dianggap:
-                    </p>
-                    <div class="text-2xl md:text-3xl font-bold text-yellow-600 text-center mb-4">"Tempat Titip Anak"</div>
-                    <div class="p-3 bg-yellow-50 rounded-lg text-yellow-800">
-                        <strong>Jendela neuroplastisitas paling optimal terlewat begitu saja.</strong>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-purple-600">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 text-2xl">4️⃣</div>
-                        <h3 class="text-xl md:text-2xl font-bold">Budaya Evaluasi Berbasis Ranking</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Merusak mindset sejak dini:
-                    </p>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-center"><span class="text-purple-500 mr-2">→</span> Anak diajar belajar untuk nilai, bukan untuk tahu</li>
-                        <li class="flex items-center"><span class="text-purple-500 mr-2">→</span> Ketakutan gagal ditanam sejak TK</li>
-                        <li class="flex items-center"><span class="text-purple-500 mr-2">→</span> Bertolak belakang 180° dengan growth mindset abad 21</li>
-                    </ul>
-                </div>
+                <div><span class="text-yellow-400 text-2xl mr-2">1</span><strong>Mencegah menghafal urutan</strong><p class="text-sm text-gray-300">Randomisasi memaksa retrieval genuine dari memori.</p></div>
+                <div><span class="text-yellow-400 text-2xl mr-2">2</span><strong>Interleaving effect</strong><p class="text-sm text-gray-300">Variasi acak = retensi 40-50% lebih kuat.</p></div>
+                <div><span class="text-yellow-400 text-2xl mr-2">3</span><strong>Meniru dunia nyata</strong><p class="text-sm text-gray-300">Masalah tidak datang terstruktur.</p></div>
+                <div><span class="text-yellow-400 text-2xl mr-2">4</span><strong>Setiap sesi berbeda</strong><p class="text-sm text-gray-300">Variabilitas = engagement tinggi.</p></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Slide 4: Market Opportunity -->
-    <section class="slide bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
-                Peluang Nyata yang Sering <span class="text-green-600">Tidak Terlihat</span>
-            </h2>
-            <p class="text-center text-gray-600 mb-12 text-lg md:text-xl">Kondisi Indonesia justru menguntungkan — jika kita tahu membaca</p>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 card-hover">
-                    <div class="text-4xl mb-4">📱</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-blue-900">Mobile-First Society yang Luar Biasa</h3>
-                    <p class="text-gray-700 mb-4">
-                        Indonesia adalah salah satu negara dengan penetrasi smartphone tertinggi di dunia.
-                    </p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">✓</span>
-                            <span>Anak-anak PAUD sudah pegang gadget sejak dini</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">✓</span>
-                            <span>Game edukasi bisa <strong>bypass sistem sekolah</strong> formal</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">✓</span>
-                            <span>Langsung menjangkau anak tanpa hambatan birokrasi</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 card-hover">
-                    <div class="text-4xl mb-4">🎭</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-red-900">Budaya Lokal yang Kaya</h3>
-                    <p class="text-gray-700 mb-4">
-                        Wayang, batik, cerita rakyat nusantara, bahasa daerah — ini bukan hambatan, <strong>ini ASET.</strong>
-                    </p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">✓</span>
-                            <span>Anak mau belajar sesuatu yang terasa "milk mereka"</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">✓</span>
-                            <span>Metode asing yang dibangun budaya lokal tidak terasa sebagai imposisi</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">✓</span>
-                            <span>Identitas budaya terbangun sejak dini</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 card-hover">
-                    <div class="text-4xl mb-4">👨‍👩‍</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-purple-900">Orang Tua Milenial yang Sadar Pendidikan Dini</h3>
-                    <p class="text-gray-700 mb-4">
-                        Generasi orang tua baru di Indonesia jauh lebih terbuka dan kritis.
-                    </p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-purple-600 mr-2 font-bold">✓</span>
-                            <span>Mencari alternatif dari sistem sekolah konvensional</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-600 mr-2 font-bold">✓</span>
-                            <span>Bersedia investasi untuk tumbuh kembang anak</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-600 mr-2 font-bold">✓</span>
-                            <span>Tech-savvy dan terbuka pada solusi digital</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-8 card-hover relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-green-600 text-white px-4 py-1 rounded-bl-lg text-sm font-bold">
-                        FIRST MOVER ADVANTAGE
-                    </div>
-                    <div class="text-4xl mb-4">🎯</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-green-900">Gap Besar: Belum Ada Produk Lokal Berkualitas</h3>
-                    <p class="text-gray-700 mb-4">
-                        Aplikasi edukasi anak berkualitas di Indonesia hampir semuanya produk asing.
-                    </p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-green-600 mr-2 font-bold">✓</span>
-                            <span>Duolingo, Khan Academy Kids = tidak paham konteks Indonesia</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-600 mr-2 font-bold">✓</span>
-                            <span>Produk lokal yang memahami budaya + pedagogik mutakhir <strong>belum ada yang dominan</strong></span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-600 mr-2 font-bold">✓</span>
-                            <span><strong>Timing sempurna. Pasar siap. Kompetitor lokal belum ada.</strong></span>
-                        </li>
-                    </ul>
-                </div>
+<!-- Slide 10: Value Proposition -->
+<section class="slide bg-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Value Proposition untuk <span class="text-indigo-600">B Club Preschool</span></h2>
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-2xl p-8 card-hover">
+                <h3 class="text-xl md:text-2xl font-bold mb-6"> Untuk B Club</h3>
+                <ul class="space-y-3">
+                    <li>✓ Diferensiasi pasar</li>
+                    <li>✓ Kurikulum hybrid siap pakai</li>
+                    <li>✓ Konten lokal relevan</li>
+                    <li>✓ Data perkembangan terdigitalisasi</li>
+                </ul>
+            </div>
+            <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl p-8 card-hover">
+                <h3 class="text-xl md:text-2xl font-bold mb-6">👨‍👩‍👧 Untuk Orang Tua</h3>
+                <ul class="space-y-3">
+                    <li>✓ Solusi konkret</li>
+                    <li>✓ Co-play: bonding + belajar</li>
+                    <li>✓ Investasi terukur</li>
+                    <li>✓ Alternatif dari konvensional</li>
+                </ul>
+            </div>
+            <div class="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-2xl p-8 card-hover">
+                <h3 class="text-xl md:text-2xl font-bold mb-6">👶 Untuk Anak</h3>
+                <ul class="space-y-3">
+                    <li>✓ Stimulasi kognitif di golden age</li>
+                    <li>✓ Growth mindset</li>
+                    <li>✓ Karakter + kognitif seimbang</li>
+                    <li>✓ Belajar lewat bermain</li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- Slide 5: The Solution -->
-    <section id="solution" class="slide bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
-                Solusi: <span class="text-indigo-400">Metode Hybrid</span>
-            </h2>
-            <p class="text-center text-xl md:text-2xl mb-12 text-gray-300">Kami Tidak Memilih. Kami Menyempurnakan Keduanya.</p>
-
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <!-- Japan -->
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-red-500/50">
-                    <div class="flex items-center mb-6">
-                        <div class="text-5xl mr-4">🇵</div>
-                        <div>
-                            <h3 class="text-2xl md:text-3xl font-bold">Jepang</h3>
-                            <p class="text-red-300">Chi-Toku-Tai • Shudan-Shugi</p>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-4 mb-6">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">1</span>
-                            <span><strong>Karakter moral:</strong> Intelektual, moral, fisik seimbang</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">2</span>
-                            <span><strong>Disiplin terstruktur</strong> melalui rutinitas</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</span>
-                            <span><strong>Belajar via aktivitas harian:</strong> O-Soji, Kyushoku</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">4</span>
-                            <span><strong>Pendidikan karakter</strong> tersembunyi dalam rutinitas</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t border-white/20 pt-4">
-                        <p class="text-sm text-gray-300 mb-2">Nilai inti yang ditanamkan:</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Kemandirian</span>
-                            <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Keberanian</span>
-                            <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Disiplin</span>
-                            <span class="px-3 py-1 bg-red-500/30 rounded-full text-sm">Kooperasi</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Finland -->
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-blue-500/50">
-                    <div class="flex items-center mb-6">
-                        <div class="text-5xl mr-4">🇫🇮</div>
-                        <div>
-                            <h3 class="text-2xl md:text-3xl font-bold">Finlandia</h3>
-                            <p class="text-blue-300">ECEC • Educare Philosophy</p>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-4 mb-6">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">1</span>
-                            <span><strong>Play-based learning:</strong> Bermain adalah metode belajar utama</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">2</span>
-                            <span><strong>Anak-sentris & holistik bebas</strong> tanpa tekanan</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</span>
-                            <span><strong>Anak mulai akademik formal</strong> di usia 7 tahun</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-sm font-bold">4</span>
-                            <span><strong>Emotional well-being</strong> setara pentingnya dengan kognitif</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t border-white/20 pt-4">
-                        <p class="text-sm text-gray-300 mb-2">Kompetensi yang dikembangkan:</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Problem-solving</span>
-                            <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Kreativitas</span>
-                            <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Self-regulation</span>
-                            <span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Resiliensi</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Synthesis -->
-            <div class="bg-gradient-to-r from-red-500/20 via-purple-500/20 to-blue-500/20 rounded-2xl p-8 text-center border-2 border-white/30">
-                <h3 class="text-2xl md:text-3xl font-bold mb-4">Sintesis suar.site</h3>
-                <div class="flex flex-wrap justify-center items-center gap-4 text-lg md:text-2xl">
-                    <span class="px-4 md:px-6 py-3 bg-red-600/80 rounded-full text-sm md:text-base">🇯🇵 Struktur Ritual Jepang</span>
-                    <span class="text-3xl md:text-4xl">+</span>
-                    <span class="px-4 md:px-6 py-3 bg-blue-600/80 rounded-full text-sm md:text-base">🇫 Kebebasan Bermain Finlandia</span>
-                    <span class="text-3xl md:text-4xl">+</span>
-                    <span class="px-4 md:px-6 py-3 bg-green-600/80 rounded-full text-sm md:text-base">🇮 Konteks Budaya Indonesia</span>
-                </div>
+        <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-8 border-2 border-green-500">
+            <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">Keunggulan Kompetitif</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="flex items-center"><span class="text-3xl mr-4">🥇</span><div><h4 class="font-bold">First-Mover Advantage</h4><p class="text-sm text-gray-600">Satu-satunya preschool hybrid terdigitalisasi</p></div></div>
+                <div class="flex items-center"><span class="text-3xl mr-4">🇮🇩</span><div><h4 class="font-bold">100% Kontekstual Indonesia</h4><p class="text-sm text-gray-600">Batik, masakan lokal, cerita rakyat</p></div></div>
+                <div class="flex items-center"><span class="text-3xl mr-4"></span><div><h4 class="font-bold">Co-Play Involvement</h4><p class="text-sm text-gray-600">Melibatkan orang tua</p></div></div>
+                <div class="flex items-center"><span class="text-3xl mr-4">🎯</span><div><h4 class="font-bold">Gap Pasar Belum Terisi</h4><p class="text-sm text-gray-600">Belum ada pemain lokal dominan</p></div></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Slide 6: Comparison Chart -->
-    <section class="slide bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-                Perbandingan Dimensi Utama: <span class="text-red-600">Jepang</span> vs <span class="text-blue-600">Finlandia</span>
-            </h2>
-            
-            <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
-                <canvas id="comparisonChart" height="100"></canvas>
+<!-- Slide 11: Roadmap -->
+<section id="implementation" class="slide bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Roadmap <span class="gradient-text">Implementasi</span></h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-indigo-600">
+                <h3 class="text-xl font-bold text-indigo-600 mb-2">Phase 1: Pilot</h3>
+                <p class="text-sm text-gray-500 mb-3">Bulan 1-2</p>
+                <ul class="text-sm space-y-2"><li>• 6 game "Siap"</li><li>• Feedback guru & ortu</li><li>• Monitoring anak</li></ul>
             </div>
-
-            <div class="mt-8 grid md:grid-cols-3 gap-6">
-                <div class="text-center p-6 bg-red-50 rounded-xl">
-                    <h4 class="font-bold text-red-900 mb-2">Jepang Unggul Di:</h4>
-                    <p class="text-sm text-gray-700">Struktur & Disiplin (90), Pendidikan Karakter (95), Rutinitas & Kebiasaan (92)</p>
-                </div>
-                <div class="text-center p-6 bg-purple-50 rounded-xl">
-                    <h4 class="font-bold text-purple-900 mb-2">Hybrid Menyeimbangkan:</h4>
-                    <p class="text-sm text-gray-700">Kolaborasi Sosial, Emotional Well-being, Kreativitas & Eksplorasi</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-xl">
-                    <h4 class="font-bold text-blue-900 mb-2">Finlandia Unggul Di:</h4>
-                    <p class="text-sm text-gray-700">Kebebasan Bermain (95), Individual-sentris (85), Kreativitas (90)</p>
-                </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-purple-600">
+                <h3 class="text-xl font-bold text-purple-600 mb-2">Phase 2: Refinement</h3>
+                <p class="text-sm text-gray-500 mb-3">Bulan 3-4</p>
+                <ul class="text-sm space-y-2"><li>• Modifikasi "Mesin Ajaib"</li><li>• Rancang ulang "Labirin"</li><li>• Dashboard fitur</li></ul>
             </div>
-        </div>
-    </section>
-
-    <!-- Slide 7: Product Overview -->
-    <section id="product" class="slide bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
-                Produk: <span class="gradient-text">10 Modul Permainan Edukatif</span>
-            </h2>
-            <p class="text-center text-lg md:text-xl text-gray-600 mb-12">10 Game. 10 Keterampilan Kognitif. 1 Fondasi Kuat.</p>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Game 1 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl"></div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">1. Detektif Pola</h3>
-                    <p class="text-sm text-gray-600 mb-3">Pattern Recognition</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: eksplorasi</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: observasi</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Wrapping Indonesia: pola batik, tenun, motif kain daerah</p>
-                </div>
-
-                <!-- Game 2 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500 relative">
-                    <div class="absolute top-0 right-0 bg-green-600 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">TERKUAT</div>
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">👨‍🍳</div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">2. Masak Bareng</h3>
-                    <p class="text-sm text-gray-600 mb-3">Sequencing (3-5 langkah)</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: real-life</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: Kyushoku</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Resep lokal: opor ayam, gado-gado, tempe goreng</p>
-                </div>
-
-                <!-- Game 3 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl"></div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">3. Kartu Memori</h3>
-                    <p class="text-sm text-gray-600 mb-3">Spatial & Visual Memory</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: bermain</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: fokus</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Kartu bergambar hewan endemik nusantara, wayang</p>
-                </div>
-
-                <!-- Game 4 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-yellow-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">⚙️</div>
-                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">MODIFIKASI</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">4. Mesin Ajaib</h3>
-                    <p class="text-sm text-gray-600 mb-3">Logical Deduction</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: inquiry</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: sebab-akibat</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Ganti mesin dengan konteks alam: "kalau hujan, tanah jadi basah"</p>
-                </div>
-
-                <!-- Game 5 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">📦</div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">5. Pilih & Kelompokkan</h3>
-                    <p class="text-sm text-gray-600 mb-3">Categorization</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: discovery</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: O-Soji</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Konteks pasar tradisional: pilih sayur, kelompokkan bumbu</p>
-                </div>
-
-                <!-- Game 6 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-red-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">🌀</div>
-                        <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">RANCANG ULANG</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">6. Labirin Detektif</h3>
-                    <p class="text-sm text-gray-600 mb-3">Problem Solving</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded">Perlu kolaborasi</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Rancang ulang: labirin sederhana dengan co-play, bukan solo frustrasi</p>
-                </div>
-
-                <!-- Game 7 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">🔢</div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">7. Hitung Cerla</h3>
-                    <p class="text-sm text-gray-600 mb-3">Counting & Number Sense</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: konkret</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: ritual hitung</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Hitung benda konkret lokal: biji salak, kelerek, batu kali</p>
-                </div>
-
-                <!-- Game 8 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl"></div>
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">SIAP</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">8. Bentuk Warna-Warni</h3>
-                    <p class="text-sm text-gray-600 mb-3">Shape & Color</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: eksplorasi</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: estetika</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Warna dalam bahasa daerah & bentuk arsitektur lokal</p>
-                </div>
-
-                <!-- Game 9 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-yellow-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">📏</div>
-                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">MODIFIKASI</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">9. Besar Kecil</h3>
-                    <p class="text-sm text-gray-600 mb-3">Size & Comparison</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Finlandia: konteks nyata</span>
-                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded">Jepang: drilling</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Tambah naratif cerita: "Galih Bimo mau menyeberangi jembatan"</p>
-                </div>
-
-                <!-- Game 10 -->
-                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-red-500">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-3xl">⏰</div>
-                        <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">RANCANG ULANG</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">10. Jam Belajar</h3>
-                    <p class="text-sm text-gray-600 mb-3">Time & Sequence</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded">Konsep abstrak</span>
-                    </div>
-                    <p class="text-xs text-gray-500">Masalah: terlalu formal. Perlu pendekatan Finlandia melalui aktivitas</p>
-                </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-pink-600">
+                <h3 class="text-xl font-bold text-pink-600 mb-2">Phase 3: Full Launch</h3>
+                <p class="text-sm text-gray-500 mb-3">Bulan 5-6</p>
+                <ul class="text-sm space-y-2"><li>• 10 modul lengkap</li><li>• Dashboard ortu</li><li>• Training guru</li></ul>
             </div>
-
-            <div class="mt-8 text-center">
-                <div class="inline-flex flex-wrap items-center gap-4 bg-white rounded-full px-8 py-4 shadow-lg">
-                    <span class="text-sm text-gray-600">Durasi per sesi:</span>
-                    <span class="font-bold text-indigo-600">15-20 menit</span>
-                    <span class="text-gray-300">|</span>
-                    <span class="text-sm text-gray-600">Co-play dengan orang tua:</span>
-                    <span class="font-bold text-indigo-600">Semua modul</span>
-                </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-green-600">
+                <h3 class="text-xl font-bold text-green-600 mb-2">Phase 4: Scale</h3>
+                <p class="text-sm text-gray-500 mb-3">Bulan 7-12</p>
+                <ul class="text-sm space-y-2"><li>• Ekspansi preschool lain</li><li>• Konten budaya daerah</li><li>• Scaling nasional</li></ul>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Slide 8: Game Design Principles -->
-    <section class="slide bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-                Prinsip Desain <span class="gradient-text">Game-Based Learning</span>
-            </h2>
-
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-12">
-                <div class="text-center p-6 bg-indigo-50 rounded-2xl">
-                    <div class="text-4xl mb-3">🎮</div>
-                    <h4 class="font-bold text-indigo-900 mb-2 text-sm">Interaktivitas</h4>
-                    <p class="text-xs text-gray-600">Anak aktif, bukan pasif menonton</p>
-                </div>
-                <div class="text-center p-6 bg-purple-50 rounded-2xl">
-                    <div class="text-4xl mb-3"></div>
-                    <h4 class="font-bold text-purple-900 mb-2 text-sm">Immersiveness</h4>
-                    <p class="text-xs text-gray-600">Masuk ke dunia cerita & budaya</p>
-                </div>
-                <div class="text-center p-6 bg-pink-50 rounded-2xl">
-                    <div class="text-4xl mb-3">🧩</div>
-                    <h4 class="font-bold text-pink-900 mb-2 text-sm">Adaptive Problem Solving</h4>
-                    <p class="text-xs text-gray-600">Tantangan menyesuaikan kemampuan</p>
-                </div>
-                <div class="text-center p-6 bg-red-50 rounded-2xl">
-                    <div class="text-4xl mb-3">💬</div>
-                    <h4 class="font-bold text-red-900 mb-2 text-sm">Feedback</h4>
-                    <p class="text-xs text-gray-600">Umpan balik positif, bukan hukuman</p>
-                </div>
-                <div class="text-center p-6 bg-orange-50 rounded-2xl col-span-2 md:col-span-1">
-                    <div class="text-4xl mb-3"></div>
-                    <h4 class="font-bold text-orange-900 mb-2 text-sm">Freedom of Exploration</h4>
-                    <p class="text-xs text-gray-600">Kebebasan mencoba tanpa takut gagal</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gradient-to-br from-red-100 to-red-50 rounded-2xl p-8 border-l-4 border-red-600">
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
-                        <span class="text-3xl mr-3">🇯🇵</span>
-                        Pendekatan Jepang
-                    </h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">→</span>
-                            <span><strong>Struktur ritual</strong> yang konsisten</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">→</span>
-                            <span><strong>Nilai moral implicit</strong> — diselipkan lewat mekanisme game</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-red-600 mr-2 font-bold">→</span>
-                            <span><strong>Drilling terstruktur</strong> untuk membangun kebiasaan</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 border-l-4 border-blue-600">
-                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
-                        <span class="text-3xl mr-3">🇮</span>
-                        Pendekatan Finlandia
-                    </h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">→</span>
-                            <span><strong>Kebebasan bermain</strong> tanpa tekanan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">→</span>
-                            <span><strong>Zero-punishment design</strong> — salah = ajakan mencoba lagi</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-600 mr-2 font-bold">→</span>
-                            <span><strong>Self-directed learning</strong> & eksplorasi</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!-- Slide 12: Closing -->
+<section class="slide bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
+    <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-8">"24 Tahun Terlambat untuk PISA.<br><span class="text-indigo-400">Tidak Terlambat untuk PAUD.</span>"</h2>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
+            <p class="text-lg md:text-xl italic">"Reformasi kosmetik tidak akan berhasil. Kita perlu mengubah fondasi di PAUD — di mana neuroplastisitas paling optimal, di mana karakter dibentuk, di mana mindset ditanam."</p>
         </div>
-    </section>
-
-    <!-- Slide 9: Weekly Structure -->
-    <section class="slide bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                Struktur <span class="text-indigo-600">Satu Siklus Mingguan</span>
-            </h2>
-            <p class="text-center text-gray-600 mb-12">Progressive difficulty dengan weekend challenge</p>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-blue-500">
-                    <h3 class="text-2xl font-bold mb-4 text-blue-600">Senin</h3>
-                    <div class="space-y-3 text-gray-700">
-                        <p><strong>Sesi 1</strong></p>
-                        <ul class="text-sm space-y-2">
-                            <li class="flex items-center"><span class="text-blue-500 mr-2">•</span>Perkenalan level baru</li>
-                            <li class="flex items-center"><span class="text-blue-500 mr-2">•</span>Difficulty rendah</li>
-                            <li class="flex items-center"><span class="text-blue-500 mr-2">•</span>Tidak ada timer</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-indigo-500">
-                    <h3 class="text-2xl font-bold mb-4 text-indigo-600">Rabu</h3>
-                    <div class="space-y-3 text-gray-700">
-                        <p><strong>Sesi 2</strong></p>
-                        <ul class="text-sm space-y-2">
-                            <li class="flex items-center"><span class="text-indigo-500 mr-2">•</span>Difficulty naik</li>
-                            <li class="flex items-center"><span class="text-indigo-500 mr-2">•</span>Mulai ada soft timer</li>
-                            <li class="flex items-center"><span class="text-indigo-500 mr-2">•</span>Sebagai feedback</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-purple-500">
-                    <h3 class="text-2xl font-bold mb-4 text-purple-600">Jumat</h3>
-                    <div class="space-y-3 text-gray-700">
-                        <p><strong>Sesi 3</strong></p>
-                        <ul class="text-sm space-y-2">
-                            <li class="flex items-center"><span class="text-purple-500 mr-2">•</span>Difficulty tinggi</li>
-                            <li class="flex items-center"><span class="text-purple-500 mr-2">•</span>Timer aktif</li>
-                            <li class="flex items-center"><span class="text-purple-500 mr-2">•</span>Anak mulai terasa mahir</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-8 mb-8 border-2 border-yellow-500">
-                <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center">
-                    <span class="text-3xl mr-3"></span>
-                    Sabtu/Minggu: Weekend Challenge
-                </h3>
-                <p class="text-gray-700 mb-4">
-                    <strong>Semua soal dari minggu ini</strong> — urutan random, kecepatan dinilai, sesi bersama orang tua.
-                    Hasil dibandingkan dengan skor terbaik minggu sebelumnya.
-                </p>
-            </div>
-
-            <div class="bg-gray-900 text-white rounded-2xl p-8">
-                <h3 class="text-xl md:text-2xl font-bold mb-6">Kenapa Random Difficulty di Weekend Challenge?</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="flex items-start">
-                        <span class="text-yellow-400 text-2xl mr-3">1</span>
-                        <div>
-                            <h4 class="font-bold mb-2">Mencegah "menghafal urutan"</h4>
-                            <p class="text-sm text-gray-300">Jika soal selalu berurutan mudah→sulit, otak belajar memprediksi urutan, bukan memahami konten. Randomisasi memaksa retrieval genuine dari memori.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <span class="text-yellow-400 text-2xl mr-3">2</span>
-                        <div>
-                            <h4 class="font-bold mb-2">Interleaving effect</h4>
-                            <p class="text-sm text-gray-300">Penelitian kognitif menunjukkan belajar dengan variasi acak menghasilkan retensi <strong>40-50% lebih kuat</strong> dibanding blocked practice.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <span class="text-yellow-400 text-2xl mr-3">3</span>
-                        <div>
-                            <h4 class="font-bold mb-2">Meniru dunia nyata</h4>
-                            <p class="text-sm text-gray-300">Di kehidupan nyata, masalah tidak datang dalam urutan terstruktur. Random challenge melatih transfer of knowledge ke konteks baru.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <span class="text-yellow-400 text-2xl mr-3">4</span>
-                        <div>
-                            <h4 class="font-bold mb-2">Membuat setiap sesi terasa berbeda</h4>
-                            <p class="text-sm text-gray-300">Anak tidak bisa bosan karena tidak pernah tahu soal apa yang akan muncul berikutnya. Variabilitas = engagement tinggi.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-6"><div class="text-3xl mb-3">🤝</div><h4 class="font-bold mb-2">Partnership Eksklusif</h4><p class="text-sm text-gray-300">suar.site × B Club</p></div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-6"><div class="text-3xl mb-3">🎮</div><h4 class="font-bold mb-2">Akses Penuh</h4><p class="text-sm text-gray-300">10 modul hybrid</p></div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-6"><div class="text-3xl mb-3">📊</div><h4 class="font-bold mb-2">Dashboard</h4><p class="text-sm text-gray-300">Perkembangan terukur</p></div>
         </div>
-    </section>
-
-    <!-- Slide 10: Value Proposition -->
-    <section class="slide bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-                Value Proposition untuk <span class="text-indigo-600">B Club Preschool</span>
-            </h2>
-
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
-                        <span class="text-3xl mr-3"></span>
-                        Untuk B Club
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Diferensiasi pasar:</strong> bukan sekadar "penitipan anak"</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Kurikulum hybrid internasional</strong> siap pakai</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Konten lokal yang relevan</strong> & familiar</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Data perkembangan anak</strong> terdigitalisasi</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
-                        <span class="text-3xl mr-3">👨‍‍👧</span>
-                        Untuk Orang Tua
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Solusi konkret</strong> atas keresahan pendidikan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Co-play:</strong> bonding + belajar bersamaan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Investasi terukur</strong> untuk masa depan anak</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Alternatif</strong> dari sistem konvensional</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-2xl p-8 card-hover">
-                    <h3 class="text-xl md:text-2xl font-bold mb-6 flex items-center">
-                        <span class="text-3xl mr-3">👶</span>
-                        Untuk Anak
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Stimulasi kognitif</strong> di golden age (4-6 tahun)</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Growth mindset</strong>, bukan fear of failure</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Karakter + kognitif</strong> seimbang</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-yellow-300 mr-2">✓</span>
-                            <span><strong>Belajar lewat bermain</strong>, bukan tekanan</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-8 border-2 border-green-500">
-                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">Keunggulan Kompetitif B Club + suar.site</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="flex items-center">
-                        <span class="text-3xl mr-4">🥇</span>
-                        <div>
-                            <h4 class="font-bold text-gray-900">First-Mover Advantage</h4>
-                            <p class="text-sm text-gray-600">Satu-satunya preschool dengan kurikulum Hybrid Finlandia-Jepang terdigitalisasi</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-3xl mr-4">🇮🇩</span>
-                        <div>
-                            <h4 class="font-bold text-gray-900">100% Kontekstual Indonesia</h4>
-                            <p class="text-sm text-gray-600">Batik, masakan lokal, cerita rakyat, bahasa daerah</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-3xl mr-4">👥</span>
-                        <div>
-                            <h4 class="font-bold text-gray-900">Co-Play Involvement</h4>
-                            <p class="text-sm text-gray-600">Melibatkan orang tua, bukan mengisolasi anak di gadget</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-3xl mr-4">🎯</span>
-                        <div>
-                            <h4 class="font-bold text-gray-900">Gap Pasar yang Belum Terisi</h4>
-                            <p class="text-sm text-gray-600">Belum ada pemain lokal dominan di segmen ini</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="text-2xl md:text-3xl font-bold mb-8">Mari bersama membangun generasi yang<br><span class="text-indigo-400">tidak hanya lolos PISA,</span><br>tapi siap menghadapi abad 21.</div>
+        <div class="mt-12 pt-8 border-t border-white/20">
+            <p class="text-gray-400 mb-4">Siap berkolaborasi?</p>
+            <p class="text-2xl font-bold text-indigo-400">suar.site</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Slide 11: Roadmap -->
-    <section id="implementation" class="slide bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-                Roadmap <span class="gradient-text">Implementasi</span>
-            </h2>
+<footer class="bg-gray-900 text-white py-8 text-center">
+    <p class="text-gray-400">© 2026 suar.site × B Club Preschool</p>
+</footer>
 
-            <div class="relative">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-indigo-200 hidden md:block"></div>
-
-                <!-- Phase 1 -->
-                <div class="relative mb-12">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                            <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 1: Pilot Project</h3>
-                                <p class="text-sm text-gray-500 mb-3">Bulan 1-2</p>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• Implementasi 6 game "Siap" di B Club Preschool</li>
-                                    <li>• Feedback dari guru & orang tua</li>
-                                    <li>• Monitoring perkembangan anak</li>
-                                    <li>• Data collection & analysis</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
-                        <div class="md:w-1/2 md:pl-12"></div>
-                    </div>
-                </div>
-
-                <!-- Phase 2 -->
-                <div class="relative mb-12">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12"></div>
-                        <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
-                        <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
-                            <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 2: Refinement</h3>
-                                <p class="text-sm text-gray-500 mb-3">Bulan 3-4</p>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• Modifikasi "Mesin Ajaib"</li>
-                                    <li>• Rancang ulang "Labirin Detektif"</li>
-                                    <li>• Berdasarkan data pilot</li>
-                                    <li>• Penambahan fitur dashboard</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phase 3 -->
-                <div class="relative mb-12">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                            <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 3: Full Launch</h3>
-                                <p class="text-sm text-gray-500 mb-3">Bulan 5-6</p>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• 10 modul lengkap siap digunakan</li>
-                                    <li>• Dashboard perkembangan anak untuk orang tua</li>
-                                    <li>• Training guru B Club</li>
-                                    <li>• Official launch event</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
-                        <div class="md:w-1/2 md:pl-12"></div>
-                    </div>
-                </div>
-
-                <!-- Phase 4 -->
-                <div class="relative">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12"></div>
-                        <div class="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10"></div>
-                        <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
-                            <div class="bg-white rounded-2xl p-6 shadow-lg inline-block">
-                                <h3 class="text-xl md:text-2xl font-bold text-indigo-600 mb-2">Phase 4: Scale Up</h3>
-                                <p class="text-sm text-gray-500 mb-3">Bulan 7-12</p>
-                                <ul class="text-sm text-gray-700 space-y-2">
-                                    <li>• Ekspansi ke preschool lain</li>
-                                    <li>• Konten baru berbasis budaya daerah lain</li>
-                                    <li>• Partnership dengan dinas pendidikan</li>
-                                    <li>• Scaling nasional</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12: Closing -->
-    <section class="slide bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-3xl md:text-5xl font-bold mb-8">
-                "24 Tahun Terlambat untuk PISA.<br>
-                <span class="text-indigo-400">Tidak Terlambat untuk PAUD.</span>"
-            </h2>
-
-            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
-                <p class="text-lg md:text-xl mb-6 italic">
-                    "Reformasi kosmetik tidak akan berhasil. Kita perlu mengubah fondasi di PAUD — 
-                    di mana neuroplastisitas paling optimal, di mana karakter dibentuk, 
-                    di mana mindset ditanam."
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
-                    <div class="text-3xl mb-3"></div>
-                    <h4 class="font-bold mb-2">Partnership Eksklusif</h4>
-                    <p class="text-sm text-gray-300">suar.site × B Club Preschool</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
-                    <div class="text-3xl mb-3">🎮</div>
-                    <h4 class="font-bold mb-2">Akses Penuh</h4>
-                    <p class="text-sm text-gray-300">10 modul permainan edukatif hybrid</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
-                    <div class="text-3xl mb-3">📊</div>
-                    <h4 class="font-bold mb-2">Dashboard Monitoring</h4>
-                    <p class="text-sm text-gray-300">Perkembangan kognitif anak terukur</p>
-                </div>
-            </div>
-
-            <div class="text-2xl md:text-3xl font-bold mb-8">
-                Mari bersama membangun generasi yang<br>
-                <span class="text-indigo-400">tidak hanya lolos PISA,</span><br>
-                tapi siap menghadapi abad 21.
-            </div>
-
-            <div class="mt-12 pt-8 border-t border-white/20">
-                <p class="text-gray-400 mb-4">Siap berkolaborasi?</p>
-                <p class="text-2xl font-bold text-indigo-400">suar.site</p>
-                <p class="text-sm text-gray-500 mt-2">Hybrid Finlandia-Jepang untuk Pendidikan Indonesia</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8 text-center">
-        <p class="text-gray-400">© 2026 suar.site × B Club Preschool. All rights reserved.</p>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        // Chart.js Configuration
-        const ctx = document.getElementById('comparisonChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [
-                    'Struktur & Disiplin',
-                    'Kebebasan Bermain',
-                    'Pendidikan Karakter',
-                    'Kreativitas & Eksplorasi',
-                    'Kolaborasi Sosial',
-                    'Individual-sentris',
-                    'Emotional Well-being',
-                    'Rutinitas & Kebiasaan'
-                ],
-                datasets: [
-                    {
-                        label: 'Jepang',
-                        data: [90, 45, 95, 40, 88, 30, 65, 92],
-                        backgroundColor: 'rgba(220, 38, 38, 0.7)',
-                        borderColor: 'rgb(220, 38, 38)',
-                        borderWidth: 2
-                    },
-                    {
-                        label: 'Finlandia',
-                        data: [35, 95, 50, 90, 70, 85, 95, 55],
-                        backgroundColor: 'rgba(37, 99, 235, 0.7)',
-                        borderColor: 'rgb(37, 99, 235)',
-                        borderWidth: 2
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: {
-                                size: 14,
-                                family: 'Inter'
-                            },
-                            usePointStyle: true,
-                            padding: 20
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            },
-                            font: {
-                                family: 'Inter',
-                                size: 12
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0,0,0,0.05)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                family: 'Inter',
-                                size: 11
-                            }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
+<script>
+    const ctx = document.getElementById('comparisonChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Struktur & Disiplin','Kebebasan Bermain','Pendidikan Karakter','Kreativitas & Eksplorasi','Kolaborasi Sosial','Individual-sentris','Emotional Well-being','Rutinitas & Kebiasaan'],
+            datasets: [
+                { label: 'Jepang', data: [90,45,95,40,88,30,65,92], backgroundColor: 'rgba(220,38,38,0.7)', borderColor: 'rgb(220,38,38)', borderWidth: 2 },
+                { label: 'Finlandia', data: [35,95,50,90,70,85,95,55], backgroundColor: 'rgba(37,99,235,0.7)', borderColor: 'rgb(37,99,235)', borderWidth: 2 }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top', labels: { font: { size: 14, family: 'Inter' }, usePointStyle: true, padding: 20 } } },
+            scales: {
+                y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
+                x: { ticks: { font: { family: 'Inter', size: 11 } }, grid: { display: false } }
             }
-        });
-
-        // Animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card-hover').forEach((el) => {
-            observer.observe(el);
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
